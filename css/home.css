@@ -15,9 +15,6 @@ body:not(.ptv-native-login-page) .homePage .itemsContainer {
   box-shadow: none !important;
 }
 
-/* do NOT add overlay pseudo-elements here
-   they can visually bury or interfere with rows */
-
 /* =========================================================
    SECTION SPACING
    ========================================================= */
@@ -62,13 +59,12 @@ body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
   height: 2px;
   margin-top: 6px;
   border-radius: 999px;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(134, 227, 255, 0.9) 0%,
-      rgba(143, 124, 255, 0.8) 60%,
-      rgba(243, 163, 220, 0.7) 100%
-    );
+  background: linear-gradient(
+    90deg,
+    rgba(134, 227, 255, 0.9) 0%,
+    rgba(143, 124, 255, 0.8) 60%,
+    rgba(243, 163, 220, 0.7) 100%
+  );
   box-shadow: 0 0 12px rgba(143, 124, 255, 0.12);
 }
 
@@ -76,7 +72,6 @@ body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
    ROW / SHELF SAFETY
    ========================================================= */
 
-/* keep rows visible and leave Jellyfin's structure alone */
 body:not(.ptv-native-login-page) .homePage .itemsContainer,
 body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons,
 body:not(.ptv-native-login-page) .homePage .itemsContainer > *,
@@ -85,20 +80,15 @@ body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons > * {
   box-shadow: none !important;
 }
 
-/* do NOT wrap every row in padded panels
-   that can break spacing/rendering on some builds */
-
 /* =========================================================
    CARDS
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .cardBox,
-body:not(.ptv-native-login-page) .homePage .cardScalable,
-body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
+body:not(.ptv-native-login-page) .homePage .cardScalable {
   border-radius: var(--ptv-radius-card) !important;
   border: 1px solid var(--ptv-card-border) !important;
   box-shadow: var(--ptv-card-shadow) !important;
-  overflow: hidden !important;
   background: rgba(20, 26, 46, 0.20) !important;
   transition:
     border-color 0.18s ease,
@@ -109,18 +99,21 @@ body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
 }
 
 body:not(.ptv-native-login-page) .homePage .cardBox:hover,
-body:not(.ptv-native-login-page) .homePage .cardScalable:hover,
-body:not(.ptv-native-login-page) .homePage .cardOverlayContainer:hover {
+body:not(.ptv-native-login-page) .homePage .cardScalable:hover {
   border-color: var(--ptv-card-border-hover) !important;
   box-shadow: var(--ptv-card-shadow-hover) !important;
   transform: translateY(-3px) scale(1.01) !important;
   filter: brightness(1.03) !important;
 }
 
-body:not(.ptv-native-login-page) .homePage .cardImage,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer,
 body:not(.ptv-native-login-page) .homePage .cardPadder,
+body:not(.ptv-native-login-page) .homePage .cardImage {
+  border-radius: var(--ptv-radius-card) !important;
+}
+
 body:not(.ptv-native-login-page) .homePage .cardContent {
-  border-radius: inherit !important;
+  border-radius: 0 0 var(--ptv-radius-card) var(--ptv-radius-card) !important;
 }
 
 /* =========================================================
@@ -154,13 +147,12 @@ body:not(.ptv-native-login-page) .homePage .itemProgressBar {
 
 body:not(.ptv-native-login-page) .homePage .itemProgressBarForeground {
   border-radius: 999px !important;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(134, 227, 255, 0.95) 0%,
-      rgba(143, 124, 255, 0.92) 55%,
-      rgba(243, 163, 220, 0.88) 100%
-    ) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(134, 227, 255, 0.95) 0%,
+    rgba(143, 124, 255, 0.92) 55%,
+    rgba(243, 163, 220, 0.88) 100%
+  ) !important;
   box-shadow: 0 0 12px rgba(143, 124, 255, 0.16);
 }
 
@@ -192,16 +184,55 @@ body:not(.ptv-native-login-page) .homePage .sectionTabs .emby-button:hover {
 
 body:not(.ptv-native-login-page) .homePage .emby-tab-button-active,
 body:not(.ptv-native-login-page) .homePage .emby-tab-button[aria-selected="true"] {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(134, 227, 255, 0.14) 0%,
-      rgba(143, 124, 255, 0.18) 55%,
-      rgba(243, 163, 220, 0.12) 100%
-    ) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(134, 227, 255, 0.14) 0%,
+    rgba(143, 124, 255, 0.18) 55%,
+    rgba(243, 163, 220, 0.12) 100%
+  ) !important;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.06),
     0 8px 18px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* =========================================================
+   POSTER SAFETY RESET
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .cardImageContainer,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
+  background: transparent !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .cardImage,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer img,
+body:not(.ptv-native-login-page) .homePage img.cardImage {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  position: relative !important;
+  z-index: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  mix-blend-mode: normal !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .blurhash-canvas,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::before,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::after,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer::before,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer::after {
+  pointer-events: none !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .cardOverlayButton {
+  z-index: 2 !important;
 }
 
 /* =========================================================
