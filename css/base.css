@@ -87,26 +87,25 @@ svg {
   max-width: 100%;
 }
 
-/* only protect horizontal overflow on common wrappers */
+/* only protect horizontal overflow on common wrappers 
 .mainDrawer,
 .skinHeader,
 .dialog,
 .formDialog,
 .paperList,
-.cardBox,
 .cardScalable,
 .cardOverlayContainer,
 .visualCardBox {
   overflow-x: hidden;
 }
 
-/* sidebar scroll only */
+sidebar scroll only 
 .mainDrawer-scrollContainer,
 .mainDrawer .navMenu,
 .mainDrawer .drawerContent {
   overflow-y: auto !important;
   overflow-x: hidden !important;
-}
+}*/
 
 /* =========================================================
    SHARED TYPOGRAPHY / READABILITY
@@ -166,7 +165,7 @@ h4 {
    Keep generic and non-destructive
    ========================================================= */
 
-.cardBox,
+/*.cardBox,
 .cardScalable,
 .cardOverlayContainer,
 .visualCardBox {
@@ -179,23 +178,23 @@ h4 {
 .visualCardBox img {
   display: block;
 }
-
+*/
 /* =========================================================
    SAFE JELLYFIN CONTENT HELPERS
    ========================================================= */
 
 /* prevent homepage rows from collapsing from other rules */
-.itemsContainer {
+/*.itemsContainer {
   display: block;
-}
+}*/
 
-/* safe width behavior for common content wrappers */
+/* safe width behavior for common content wrappers 
 .pageContainer,
 .view,
 .page,
 .pageBody {
   min-width: 0;
-}
+}*/
 
 /* =========================================================
    FOCUS STATES
