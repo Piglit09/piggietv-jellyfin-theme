@@ -1089,6 +1089,26 @@ body:not(.ptv-native-login-page) .activeSession .sessionCard {
     );
 }
 
+/* ===== settings.css ===== */
+body:not(.ptv-native-login-page) .settingsContainer,
+body:not(.ptv-native-login-page) .userSettingsContainer,
+body:not(.ptv-native-login-page) .sectionedSettings,
+body:not(.ptv-native-login-page) .content-primary {
+  max-width: 1100px !important;
+  margin: 0 auto !important;
+}
+
+body:not(.ptv-native-login-page) .settingsContainer .listItem,
+body:not(.ptv-native-login-page) .userSettingsContainer .listItem {
+  border-radius: 14px !important;
+  background: rgba(255,255,255,0.03) !important;
+}
+
+body:not(.ptv-native-login-page) .settingsContainer .listItem:hover,
+body:not(.ptv-native-login-page) .userSettingsContainer .listItem:hover {
+  background: rgba(255,255,255,0.05) !important;
+}
+
 /* ===== login.css ===== */
 /* =========================================================
    PIGGIETV — LOGIN
