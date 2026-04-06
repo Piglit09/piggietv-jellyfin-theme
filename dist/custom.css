@@ -2,7 +2,7 @@
 /* ===== base.css ===== */
 /* =========================================================
    PIGGIETV — BASE
-   Core tokens, global safety, shared polish
+   Core tokens, safe global polish, shared effects
    ========================================================= */
 
 :root {
@@ -68,12 +68,12 @@
 }
 
 /* =========================================================
-   GLOBAL SAFETY
+   SAFE GLOBAL FOUNDATION
    ========================================================= */
 
-html,
 body {
-  overflow-x: hidden !important;
+  color: var(--ptv-text);
+  overflow-x: hidden;
 }
 
 *,
@@ -89,19 +89,20 @@ svg {
   max-width: 100%;
 }
 
-/* Keep app scroll usable outside the custom login page */
-body:not(.ptv-native-login-page),
-body:not(.ptv-native-login-page) .skinBody,
-body:not(.ptv-native-login-page) .mainAnimatedPage,
-body:not(.ptv-native-login-page) .page,
-body:not(.ptv-native-login-page) .pageBody,
-body:not(.ptv-native-login-page) .pageContainer,
-body:not(.ptv-native-login-page) .scrollFrameY,
-body:not(.ptv-native-login-page) .scrollY {
-  overflow-y: auto !important;
-  max-height: none !important;
+/* only protect horizontal overflow on common wrappers */
+.mainDrawer,
+.skinHeader,
+.dialog,
+.formDialog,
+.paperList,
+.cardBox,
+.cardScalable,
+.cardOverlayContainer,
+.visualCardBox {
+  overflow-x: hidden;
 }
 
+/* sidebar scroll only */
 .mainDrawer-scrollContainer,
 .mainDrawer .navMenu,
 .mainDrawer .drawerContent {
@@ -112,10 +113,6 @@ body:not(.ptv-native-login-page) .scrollY {
 /* =========================================================
    SHARED TYPOGRAPHY / READABILITY
    ========================================================= */
-
-body {
-  color: var(--ptv-text);
-}
 
 a {
   color: inherit;
@@ -135,7 +132,10 @@ a {
 
 .sectionTitle,
 .sectionTitleText,
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: rgba(255, 255, 255, 0.96);
 }
 
@@ -165,7 +165,7 @@ h1, h2, h3, h4 {
 
 /* =========================================================
    SHARED CARD BEHAVIOR
-   Keep this generic; page-specific visuals stay elsewhere
+   Keep generic and non-destructive
    ========================================================= */
 
 .cardBox,
@@ -173,7 +173,6 @@ h1, h2, h3, h4 {
 .cardOverlayContainer,
 .visualCardBox {
   border-radius: var(--ptv-radius-card) !important;
-  overflow: hidden !important;
 }
 
 .cardBox img,
@@ -181,6 +180,23 @@ h1, h2, h3, h4 {
 .cardOverlayContainer img,
 .visualCardBox img {
   display: block;
+}
+
+/* =========================================================
+   SAFE JELLYFIN CONTENT HELPERS
+   ========================================================= */
+
+/* prevent homepage rows from collapsing from other rules */
+.itemsContainer {
+  display: block;
+}
+
+/* safe width behavior for common content wrappers */
+.pageContainer,
+.view,
+.page,
+.pageBody {
+  min-width: 0;
 }
 
 /* =========================================================
@@ -1167,7 +1183,7 @@ body.ptv-native-login-page .backgroundContainer,
 body.ptv-native-login-page .dialog {
   background:
     linear-gradient(rgba(8, 14, 36, 0.42), rgba(7, 26, 58, 0.60)),
-    url("https://piggietv.com/theme/assets/backgrounds/login-bg.jpg") center center / cover no-repeat fixed !important;
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.jpg") center center / cover no-repeat fixed !important;
 }
 
 body.ptv-native-login-page,
@@ -1200,7 +1216,7 @@ body.ptv-native-login-page::after {
   transform-origin: center;
   background:
     linear-gradient(rgba(8, 14, 36, 0.08), rgba(7, 26, 58, 0.10)),
-    url("https://piggietv.com/theme/assets/backgrounds/login-bg.jpg") center center / cover no-repeat fixed;
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.jpg") center center / cover no-repeat fixed;
   animation: ptvZoom 30s ease-in-out infinite;
 }
 
