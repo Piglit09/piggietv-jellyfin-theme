@@ -1,0 +1,67 @@
+name: Deploy PiggieTV Theme
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version
+        id: version
+        run: |
+          VERSION=$(cat version.txt | tr -d ' \n\r')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Deploying version: $VERSION"
+
+      - name: Build CSS
+        run: |
+          mkdir -p dist
+          cat \
+            css/base.css \
+            css/layout.css \
+            css/sidebar.css \
+            css/home.css \
+            css/dashboard.css \
+            css/login.css \
+            css/details/hero.css \
+            css/details/base.css \
+            css/details/series.css \
+            css/details/movies.css \
+            css/details/episodes.css \
+            css/responsive.css \
+            > dist/custom.css
+
+      - name: Build JS
+        run: |
+          if [ -f js/custom.js ]; then
+            cp js/custom.js dist/custom.js
+          else
+            touch dist/custom.js
+          fi
+
+      - name: Write version file
+        run: |
+          cat > dist/version.json <<EOF
+          {
+            "version": "${{ steps.version.outputs.version }}"
+          }
+          EOF
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.THEME_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ vars.THEME_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy files
+        run: |
+          rsync -avz --delete dist/ ${{ secrets.THEME_SSH_USER }}@${{ vars.THEME_HOST }}:${{ vars.THEME_PATH }}/dist/
+          rsync -avz --delete assets/ ${{ secrets.THEME_SSH_USER }}@${{ vars.THEME_HOST }}:${{ vars.THEME_PATH }}/assets/
