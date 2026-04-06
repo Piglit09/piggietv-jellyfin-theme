@@ -1,0 +1,286 @@
+/* =========================================================
+   PIGGIETV — HOME
+   Homepage rows, shelves, cards, and section polish
+   ========================================================= */
+
+/* =========================================================
+   HOME PAGE ROOT
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage,
+body:not(.ptv-native-login-page) .homePage .verticalSection,
+body:not(.ptv-native-login-page) .homePage .section0,
+body:not(.ptv-native-login-page) .homePage .itemsContainer {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body:not(.ptv-native-login-page) .homePage {
+  position: relative !important;
+  z-index: 1 !important;
+  padding-bottom: 18px !important;
+}
+
+/* subtle visual lift behind the main home content */
+body:not(.ptv-native-login-page) .homePage::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 8px;
+  bottom: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018) 0%,
+      rgba(255, 255, 255, 0.008) 100%
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 18px 40px rgba(0, 0, 0, 0.10);
+  opacity: 0.9;
+}
+
+/* keep content above glass strip */
+body:not(.ptv-native-login-page) .homePage > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   HOME SECTION SPACING
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .verticalSection,
+body:not(.ptv-native-login-page) .homePage .section,
+body:not(.ptv-native-login-page) .homePage .section0 {
+  margin-bottom: 18px !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer {
+  margin-top: 6px !important;
+}
+
+/* =========================================================
+   SECTION TITLES
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .sectionTitle,
+body:not(.ptv-native-login-page) .homePage .sectionTitleText,
+body:not(.ptv-native-login-page) .homePage .section0 .sectionTitle {
+  color: rgba(255, 255, 255, 0.97) !important;
+  letter-spacing: 0.01em !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.24) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .sectionTitle {
+  margin-bottom: 8px !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .sectionTitleText {
+  font-weight: 750 !important;
+}
+
+/* small accent line under visible section headers */
+body:not(.ptv-native-login-page) .homePage .sectionTitleContainer {
+  position: relative !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.9) 0%,
+      rgba(143, 124, 255, 0.8) 60%,
+      rgba(243, 163, 220, 0.7) 100%
+    );
+  box-shadow: 0 0 12px rgba(143, 124, 255, 0.12);
+}
+
+/* =========================================================
+   SHELF / ROW POLISH
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer,
+body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons {
+  background: transparent !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer > *,
+body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons > * {
+  position: relative;
+}
+
+/* card rows feel grouped but still light */
+body:not(.ptv-native-login-page) .homePage .verticalSection {
+  padding: 10px 10px 8px !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018) 0%,
+      rgba(255, 255, 255, 0.005) 100%
+    ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.015);
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .cardBox,
+body:not(.ptv-native-login-page) .homePage .cardScalable,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
+  border-radius: var(--ptv-radius-card) !important;
+  border: 1px solid var(--ptv-card-border) !important;
+  box-shadow: var(--ptv-card-shadow) !important;
+  overflow: hidden !important;
+  background: rgba(20, 26, 46, 0.28) !important;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease,
+    filter 0.18s ease,
+    background 0.18s ease !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .cardBox:hover,
+body:not(.ptv-native-login-page) .homePage .cardScalable:hover,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer:hover {
+  border-color: var(--ptv-card-border-hover) !important;
+  box-shadow: var(--ptv-card-shadow-hover) !important;
+  transform: translateY(-3px) scale(1.01) !important;
+  filter: brightness(1.03) !important;
+}
+
+/* keep images clean */
+body:not(.ptv-native-login-page) .homePage .cardImage,
+body:not(.ptv-native-login-page) .homePage .cardPadder,
+body:not(.ptv-native-login-page) .homePage .cardContent {
+  border-radius: inherit !important;
+}
+
+/* =========================================================
+   CARD TEXT
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .cardText,
+body:not(.ptv-native-login-page) .homePage .cardTextCentered,
+body:not(.ptv-native-login-page) .homePage .cardFooter,
+body:not(.ptv-native-login-page) .homePage .listItemBodyText {
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .cardText-secondary,
+body:not(.ptv-native-login-page) .homePage .listItemBodyText.secondary,
+body:not(.ptv-native-login-page) .homePage .secondaryText {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* =========================================================
+   PROGRESS BARS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .itemProgressBar {
+  height: 7px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.10) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .itemProgressBarForeground {
+  border-radius: 999px !important;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.95) 0%,
+      rgba(143, 124, 255, 0.92) 55%,
+      rgba(243, 163, 220, 0.88) 100%
+    ) !important;
+  box-shadow:
+    0 0 12px rgba(143, 124, 255, 0.16);
+}
+
+/* =========================================================
+   HORIZONTAL TAB / FILTER AREA
+   Keeps the top home controls matching the theme
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .emby-tabs-slider,
+body:not(.ptv-native-login-page) .homePage .sectionTabs {
+  background: transparent !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .emby-tab-button,
+body:not(.ptv-native-login-page) .homePage .sectionTabs .emby-button {
+  border-radius: 14px !important;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .emby-tab-button:hover,
+body:not(.ptv-native-login-page) .homePage .sectionTabs .emby-button:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16) !important;
+  transform: translateY(-1px) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .emby-tab-button-active,
+body:not(.ptv-native-login-page) .homePage .emby-tab-button[aria-selected="true"] {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.14) 0%,
+      rgba(143, 124, 255, 0.18) 55%,
+      rgba(243, 163, 220, 0.12) 100%
+    ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 8px 18px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* =========================================================
+   HOME PAGE PADDING / BREATHING ROOM
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage,
+body:not(.ptv-native-login-page) .homePage .padded-left,
+body:not(.ptv-native-login-page) .homePage .padded-right,
+body:not(.ptv-native-login-page) .homePage .padded-bottom-page {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* =========================================================
+   MOBILE / SMALL SCREEN SAFETY
+   ========================================================= */
+
+@media (max-width: 900px) {
+  body:not(.ptv-native-login-page) .homePage::before {
+    left: 10px;
+    right: 10px;
+    border-radius: 18px;
+  }
+
+  body:not(.ptv-native-login-page) .homePage .verticalSection {
+    padding: 8px 8px 6px !important;
+    border-radius: 14px !important;
+  }
+
+  body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
+    width: 42px;
+  }
+}

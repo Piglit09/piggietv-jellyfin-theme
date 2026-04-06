@@ -1,0 +1,21 @@
+/* =========================================================
+   PIGGIETV — DEV ENTRY
+   (Use only during development)
+   ========================================================= */
+
+@import url("base.css");
+@import url("layout.css");
+@import url("sidebar.css");
+@import url("home.css");
+@import url("dashboard.css");
+@import url("login.css");
+
+/* details */
+@import url("details/hero.css");
+@import url("details/base.css");
+@import url("details/series.css");
+@import url("details/movies.css");
+@import url("details/episodes.css");
+
+/* responsive LAST */
+@import url("responsive.css");

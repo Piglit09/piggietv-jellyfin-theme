@@ -1,0 +1,172 @@
+/* =========================================================
+   PIGGIETV — SIDEBAR
+   Drawer navigation + logo + hover system
+   ========================================================= */
+
+/* =========================================================
+   SIDEBAR CONTAINER
+   ========================================================= */
+
+.mainDrawer {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 22, 40, 0.94),
+      rgba(24, 28, 48, 0.96)
+    ) !important;
+
+  border-right: 1px solid rgba(255,255,255,0.06) !important;
+
+  box-shadow:
+    8px 0 28px rgba(0,0,0,0.35),
+    inset -1px 0 0 rgba(255,255,255,0.04);
+}
+
+/* subtle glow edge */
+.mainDrawer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  bottom: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(143,124,255,0.25),
+      transparent 40%,
+      transparent 60%,
+      rgba(134,227,255,0.18)
+    );
+
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+#ptv-sidebar-logo {
+  padding: 14px 10px 6px !important;
+  text-align: center;
+}
+
+#ptv-sidebar-logo img {
+  width: 165px !important;
+  max-width: 85% !important;
+  height: auto;
+
+  filter:
+    drop-shadow(0 10px 28px rgba(0,0,0,0.45))
+    drop-shadow(0 0 18px rgba(143,124,255,0.25))
+    brightness(1.05);
+
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+#ptv-sidebar-logo img:hover {
+  transform: translateY(-2px) scale(1.03);
+  filter:
+    drop-shadow(0 14px 36px rgba(0,0,0,0.55))
+    drop-shadow(0 0 24px rgba(143,124,255,0.35))
+    brightness(1.08);
+}
+
+/* =========================================================
+   NAV ITEMS
+   ========================================================= */
+
+.mainDrawer .navMenuOption {
+  position: relative !important;
+
+  border-radius: 12px !important;
+  margin: 4px 8px !important;
+  padding: 10px 12px !important;
+
+  color: rgba(255,255,255,0.85) !important;
+
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease !important;
+}
+
+/* hover */
+.mainDrawer .navMenuOption:hover {
+  transform: translateX(4px);
+
+  background: rgba(255,255,255,0.05) !important;
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.25),
+    0 0 12px rgba(143,124,255,0.08);
+
+  color: rgba(255,255,255,0.95) !important;
+}
+
+/* active */
+.mainDrawer .navMenuOption-selected,
+.mainDrawer .navMenuOption[aria-selected="true"] {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134,227,255,0.14) 0%,
+      rgba(143,124,255,0.18) 55%,
+      rgba(243,163,220,0.12) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 8px 22px rgba(0,0,0,0.28),
+    0 0 18px rgba(143,124,255,0.12);
+
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   ICONS
+   ========================================================= */
+
+.mainDrawer .navMenuOption i,
+.mainDrawer .navMenuOption .md-icon {
+  opacity: 0.8;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.mainDrawer .navMenuOption:hover i,
+.mainDrawer .navMenuOption:hover .md-icon {
+  opacity: 1;
+  transform: translateX(1px);
+}
+
+/* =========================================================
+   SCROLL AREA
+   ========================================================= */
+
+.mainDrawer .navMenu {
+  padding-bottom: 20px !important;
+}
+
+/* =========================================================
+   MOBILE SAFETY
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .mainDrawer {
+    box-shadow:
+      0 12px 40px rgba(0,0,0,0.45),
+      inset -1px 0 0 rgba(255,255,255,0.04);
+  }
+
+  #ptv-sidebar-logo img {
+    width: 140px !important;
+  }
+
+  .mainDrawer .navMenuOption {
+    margin: 4px 6px !important;
+    padding: 9px 10px !important;
+  }
+}

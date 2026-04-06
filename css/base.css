@@ -1,0 +1,282 @@
+/* =========================================================
+   PIGGIETV — BASE
+   Core tokens, global safety, shared polish
+   ========================================================= */
+
+:root {
+  /* text */
+  --ptv-text: rgba(255, 255, 255, 0.92);
+  --ptv-text-soft: rgba(255, 255, 255, 0.72);
+  --ptv-text-dim: rgba(255, 255, 255, 0.48);
+
+  /* brand */
+  --ptv-cyan: #86e3ff;
+  --ptv-purple: #8f7cff;
+  --ptv-pink: #f3a3dc;
+
+  /* surfaces / borders */
+  --ptv-border: rgba(255, 255, 255, 0.10);
+  --ptv-border-soft: rgba(255, 255, 255, 0.04);
+  --ptv-shadow: rgba(0, 0, 0, 0.28);
+
+  /* radius */
+  --ptv-radius-sm: 12px;
+  --ptv-radius-md: 16px;
+  --ptv-radius-lg: 20px;
+  --ptv-radius-card: 14px;
+  --ptv-radius-pill: 999px;
+
+  /* cards */
+  --ptv-card-border: rgba(255, 255, 255, 0.09);
+  --ptv-card-border-soft: rgba(255, 255, 255, 0.06);
+  --ptv-card-border-hover: rgba(143, 124, 255, 0.30);
+  --ptv-card-inner: rgba(255, 255, 255, 0.025);
+
+  --ptv-card-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px var(--ptv-card-inner);
+
+  --ptv-card-shadow-hover:
+    0 16px 40px rgba(0, 0, 0, 0.50),
+    0 0 20px rgba(143, 124, 255, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  /* glows */
+  --ptv-glow-cyan: 0 0 18px rgba(134, 227, 255, 0.18);
+  --ptv-glow-purple: 0 0 20px rgba(143, 124, 255, 0.18);
+  --ptv-glow-pink: 0 0 20px rgba(243, 163, 220, 0.14);
+  --ptv-glow-soft: 0 0 30px rgba(143, 124, 255, 0.08);
+
+  /* gradients */
+  --ptv-gradient-brand:
+    linear-gradient(135deg, var(--ptv-cyan) 0%, var(--ptv-purple) 48%, var(--ptv-pink) 100%);
+  --ptv-gradient-soft:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.10) 0%,
+      rgba(143, 124, 255, 0.14) 55%,
+      rgba(243, 163, 220, 0.10) 100%
+    );
+
+  /* motion */
+  --ptv-speed-fast: 0.16s;
+  --ptv-speed-base: 0.22s;
+  --ptv-speed-slow: 0.32s;
+  --ptv-ease: ease;
+}
+
+/* =========================================================
+   GLOBAL SAFETY
+   ========================================================= */
+
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* Keep app scroll usable outside the custom login page */
+body:not(.ptv-native-login-page),
+body:not(.ptv-native-login-page) .skinBody,
+body:not(.ptv-native-login-page) .mainAnimatedPage,
+body:not(.ptv-native-login-page) .page,
+body:not(.ptv-native-login-page) .pageBody,
+body:not(.ptv-native-login-page) .pageContainer,
+body:not(.ptv-native-login-page) .scrollFrameY,
+body:not(.ptv-native-login-page) .scrollY {
+  overflow-y: auto !important;
+  max-height: none !important;
+}
+
+.mainDrawer-scrollContainer,
+.mainDrawer .navMenu,
+.mainDrawer .drawerContent {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* =========================================================
+   SHARED TYPOGRAPHY / READABILITY
+   ========================================================= */
+
+body {
+  color: var(--ptv-text);
+}
+
+a {
+  color: inherit;
+}
+
+.secondaryText,
+.fieldDescription,
+.checkboxLabel,
+.listItemBodyText-secondary,
+.itemMiscText,
+.cardText-secondary,
+.formDialogHeader-clear,
+.guide-programNameSecondary,
+.guideChannelNumber {
+  color: var(--ptv-text-soft) !important;
+}
+
+.sectionTitle,
+.sectionTitleText,
+h1, h2, h3, h4 {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+/* =========================================================
+   SHARED BUTTON / CHIP POLISH
+   ========================================================= */
+
+.emby-button,
+.button-flat,
+.raised,
+.btnTag,
+.tag,
+.mediaInfoItem {
+  transition:
+    background var(--ptv-speed-fast) var(--ptv-ease),
+    color var(--ptv-speed-fast) var(--ptv-ease),
+    border-color var(--ptv-speed-fast) var(--ptv-ease),
+    box-shadow var(--ptv-speed-fast) var(--ptv-ease),
+    transform var(--ptv-speed-fast) var(--ptv-ease);
+}
+
+.btnTag,
+.tag,
+.mediaInfoItem {
+  border-radius: var(--ptv-radius-pill);
+}
+
+/* =========================================================
+   SHARED CARD BEHAVIOR
+   Keep this generic; page-specific visuals stay elsewhere
+   ========================================================= */
+
+.cardBox,
+.cardScalable,
+.cardOverlayContainer,
+.visualCardBox {
+  border-radius: var(--ptv-radius-card) !important;
+  overflow: hidden !important;
+}
+
+.cardBox img,
+.cardScalable img,
+.cardOverlayContainer img,
+.visualCardBox img {
+  display: block;
+}
+
+/* =========================================================
+   FOCUS STATES
+   ========================================================= */
+
+.emby-input:focus,
+textarea:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible,
+.emby-button:focus-visible {
+  outline: none !important;
+  box-shadow:
+    0 0 0 3px rgba(134, 227, 255, 0.12),
+    0 0 0 1px rgba(134, 227, 255, 0.28) !important;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(143, 124, 255, 0.6) 0%,
+    rgba(134, 227, 255, 0.6) 100%
+  );
+  border-radius: 6px;
+}
+
+* {
+  scrollbar-color: rgba(143, 124, 255, 0.65) transparent;
+  scrollbar-width: thin;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes ptvGradientDrift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ptvZoom {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes ptvLogoFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+@keyframes ptvLogoBreathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.90;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes ptvLogoImageFloat {
+  0%, 100% { transform: scale(1.02) translateY(0); }
+  50%      { transform: scale(1.03) translateY(-3px); }
+}
+
+@keyframes ptvButtonSweep {
+  0%   { left: -160%; }
+  100% { left: 160%; }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

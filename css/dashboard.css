@@ -1,0 +1,227 @@
+/* =========================================================
+   PIGGIETV — ADMIN DASHBOARD
+   Clean, minimal, consistent with main theme
+   ========================================================= */
+
+/* =========================================================
+   ROOT / BACKGROUND
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument,
+body:not(.ptv-native-login-page) #dashboardPage {
+  background: #020b14 !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* =========================================================
+   ADMIN SIDEBAR (SEPARATE STYLE FROM MAIN SIDEBAR)
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .adminDrawer {
+  width: 290px !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3,10,18,0.96),
+      rgba(5,12,22,0.98)
+    ) !important;
+
+  border-right: 1px solid rgba(255,255,255,0.06) !important;
+
+  box-shadow:
+    8px 0 30px rgba(0,0,0,0.35);
+}
+
+/* nav items */
+body:not(.ptv-native-login-page) .adminDrawer .navMenuOption {
+  min-height: 50px !important;
+  margin: 4px 6px !important;
+  padding: 10px 12px !important;
+
+  border-radius: 12px !important;
+
+  background: transparent !important;
+  color: rgba(255,255,255,0.75) !important;
+
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease !important;
+}
+
+/* hover */
+body:not(.ptv-native-login-page) .adminDrawer .navMenuOption:hover {
+  background: rgba(255,255,255,0.05) !important;
+  color: rgba(255,255,255,0.95) !important;
+}
+
+/* active */
+body:not(.ptv-native-login-page) .adminDrawer .navMenuOption-selected {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134,227,255,0.18),
+      rgba(143,124,255,0.22)
+    ) !important;
+
+  color: #fff !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* remove logo (keeps admin clean) */
+body:not(.ptv-native-login-page) .adminDrawerLogo,
+body:not(.ptv-native-login-page) #ptv-sidebar-logo {
+  display: none !important;
+}
+
+/* =========================================================
+   PANELS / CARDS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardSection,
+body:not(.ptv-native-login-page) .dashboardCard,
+body:not(.ptv-native-login-page) .statCard,
+body:not(.ptv-native-login-page) .itemCountCard,
+body:not(.ptv-native-login-page) .visualCardBox,
+body:not(.ptv-native-login-page) .paperList,
+body:not(.ptv-native-login-page) .activeSession {
+  background: #05101a !important;
+
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* list rows */
+body:not(.ptv-native-login-page) .dashboardSection .listItem,
+body:not(.ptv-native-login-page) #dashboardPage .listItem {
+  background: transparent !important;
+  border-radius: 14px !important;
+
+  transition: background 0.16s ease;
+}
+
+body:not(.ptv-native-login-page) .dashboardSection .listItem:hover,
+body:not(.ptv-native-login-page) #dashboardPage .listItem:hover {
+  background: rgba(255,255,255,0.04) !important;
+}
+
+/* =========================================================
+   TEXT / HEADERS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument h2,
+body:not(.ptv-native-login-page) .dashboardDocument h3,
+body:not(.ptv-native-login-page) .dashboardDocument .sectionTitle {
+  color: rgba(255,255,255,0.95) !important;
+  font-weight: 600 !important;
+}
+
+body:not(.ptv-native-login-page) .dashboardDocument .secondaryText {
+  color: rgba(255,255,255,0.65) !important;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-button,
+body:not(.ptv-native-login-page) #dashboardPage .emby-button {
+  border-radius: 999px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134,227,255,0.95),
+      rgba(143,124,255,0.92)
+    ) !important;
+
+  color: #fff !important;
+  border: none !important;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.25);
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease !important;
+}
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 26px rgba(0,0,0,0.35);
+}
+
+/* =========================================================
+   INPUTS / FORMS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-input,
+body:not(.ptv-native-login-page) .dashboardDocument textarea,
+body:not(.ptv-native-login-page) .dashboardDocument select {
+  background: #07131d !important;
+
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+
+  color: #fff !important;
+
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease !important;
+}
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-input:focus,
+body:not(.ptv-native-login-page) .dashboardDocument textarea:focus,
+body:not(.ptv-native-login-page) .dashboardDocument select:focus {
+  border-color: rgba(134,227,255,0.55) !important;
+  box-shadow:
+    0 0 0 3px rgba(134,227,255,0.12) !important;
+}
+
+/* =========================================================
+   ACTIVE SESSION CARD (highlight)
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .activeSession .cardBox,
+body:not(.ptv-native-login-page) .activeSession .sessionCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(90,130,255,0.24),
+      rgba(195,110,255,0.18)
+    ),
+    #07131d !important;
+
+  border-radius: 16px !important;
+}
+
+/* =========================================================
+   SCROLLBAR (GLOBAL MATCH)
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(143,124,255,0.6),
+      rgba(134,227,255,0.6)
+    );
+}

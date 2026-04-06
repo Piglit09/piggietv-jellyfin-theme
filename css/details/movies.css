@@ -1,0 +1,141 @@
+/* =========================================================
+   PIGGIETV — DETAILS / MOVIES
+   Movie-only layout (no NextUp / no Season sections)
+   ========================================================= */
+
+/* =========================================================
+   MOVIE PAGE DETECTION
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason)) {
+  --ptv-movie-offset: 520px;
+  --ptv-movie-width: min(760px, calc(100vw - var(--ptv-movie-offset) - 60px));
+}
+
+/* =========================================================
+   POSTER (small floating style)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailImageContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemPosterContainer {
+  width: 72px !important;
+  max-width: 72px !important;
+  position: absolute !important;
+  top: 180px !important;
+  left: 12px !important;
+  z-index: 3;
+}
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailImageContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemPosterContainer img {
+  border-radius: 12px !important;
+}
+
+/* =========================================================
+   TEXT / META COLUMN
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailSectionContent,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemDetailsGroup,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.overviewText,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.overviewRow,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.mediaInfoItems,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemTags,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.genres {
+  margin-left: var(--ptv-movie-offset) !important;
+  width: var(--ptv-movie-width) !important;
+  max-width: var(--ptv-movie-width) !important;
+}
+
+/* =========================================================
+   OVERVIEW TUNING
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemOverview {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  font-size: 0.97rem !important;
+  line-height: 1.52 !important;
+}
+
+/* =========================================================
+   LOWER SECTIONS (cast / recommendations)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+~ .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+~ .detailSections,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPageContent:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.verticalSectionContainer {
+  margin-left: var(--ptv-movie-offset) !important;
+  max-width: var(--ptv-movie-width) !important;
+  margin-top: 12px !important;
+}
+
+/* =========================================================
+   SAFETY (prevents drift issues)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.sectionTitleContainer {
+  margin-left: var(--ptv-movie-offset) !important;
+}

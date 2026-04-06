@@ -1,0 +1,161 @@
+/* =========================================================
+   PIGGIETV — DETAILS / HERO
+   Shared hero/backdrop treatment for detail pages only
+   ========================================================= */
+
+/* =========================================================
+   DETAIL HERO WRAPPERS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .detailPageWrapperContainer,
+body:not(.ptv-native-login-page) .detailPagePrimaryContainer,
+body:not(.ptv-native-login-page) .detailPageContent,
+body:not(.ptv-native-login-page) .itemBackdrop,
+body:not(.ptv-native-login-page) .detailRibbon,
+body:not(.ptv-native-login-page) .detailPagePrimaryInfo {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* =========================================================
+   HERO BACKDROP IMAGE
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop {
+  position: relative !important;
+  min-height: 100vh !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .backdropImage {
+  filter: blur(7px) saturate(115%) brightness(42%) !important;
+  transform: scale(1.03) !important;
+  transform-origin: center center !important;
+}
+
+/* =========================================================
+   HERO OVERLAY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 8, 16, 0.92) 0%,
+      rgba(7, 10, 18, 0.76) 20%,
+      rgba(7, 10, 18, 0.38) 46%,
+      rgba(7, 10, 18, 0.12) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(6, 8, 15, 0.08) 0%,
+      rgba(6, 8, 15, 0.00) 32%,
+      rgba(6, 8, 15, 0.76) 100%
+    ) !important;
+}
+
+/* subtle color wash */
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(143, 124, 255, 0.10), transparent 34%),
+    radial-gradient(circle at 80% 18%, rgba(134, 227, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 68% 78%, rgba(243, 163, 220, 0.06), transparent 26%);
+}
+
+/* =========================================================
+   HERO CONTENT SHELL
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent {
+  position: relative !important;
+  z-index: 2 !important;
+  max-width: 1340px !important;
+  margin: 0 auto !important;
+  padding: 34px 28px 0 28px !important;
+}
+
+/* keep actual hero content above overlays */
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   TITLE HANDOFF
+   Generic titles are hidden here.
+   Page-specific files can re-enable where needed.
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer .itemName,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer .nameContainer,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer h1 {
+  display: none !important;
+}
+
+/* =========================================================
+   HERO TRANSITIONS / STABILITY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent,
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop {
+  isolation: isolate;
+}
+
+/* prevent weird stacking from badges/ribbons floating above overlay */
+body:not(.ptv-native-login-page) .layout-desktop .detailRibbon,
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop::before,
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop::after {
+  z-index: 1 !important;
+}
+
+/* =========================================================
+   MOBILE / NARROW SAFETY
+   ========================================================= */
+
+@media (max-width: 900px) {
+  body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop {
+    min-height: auto !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .backdropImage {
+    filter: blur(4px) saturate(108%) brightness(46%) !important;
+    transform: scale(1.01) !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::before {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(6, 8, 15, 0.30) 0%,
+        rgba(6, 8, 15, 0.20) 30%,
+        rgba(6, 8, 15, 0.86) 100%
+      ) !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::after {
+    background:
+      radial-gradient(circle at 50% 14%, rgba(143, 124, 255, 0.08), transparent 34%),
+      radial-gradient(circle at 72% 24%, rgba(134, 227, 255, 0.06), transparent 28%);
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent {
+    padding: 18px 16px 0 16px !important;
+  }
+}

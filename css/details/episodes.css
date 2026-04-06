@@ -1,0 +1,212 @@
+/* =========================================================
+   PIGGIETV — DETAILS / EPISODES
+   Episode + "more from season" pages
+   ========================================================= */
+
+/* =========================================================
+   EPISODE PAGE DETECTION
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason),
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo) {
+  --ptv-episode-offset: 520px;
+  --ptv-episode-width: min(820px, calc(100vw - var(--ptv-episode-offset) - 60px));
+}
+
+/* =========================================================
+   SMALL THUMB (NOT A POSTER)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailImageContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemPosterContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailImageContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemPosterContainer {
+  width: 58px !important;
+  max-width: 58px !important;
+  position: absolute !important;
+  top: 190px !important;
+  left: 12px !important;
+  z-index: 3;
+}
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailImageContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemPosterContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailImageContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemPosterContainer img {
+  border-radius: 10px !important;
+}
+
+/* =========================================================
+   TEXT / META COLUMN
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailSectionContent,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemDetailsGroup,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.overviewText,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.overviewRow,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.mediaInfoItems,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemTags,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.genres,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailSectionContent,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemDetailsGroup,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.overviewText,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.overviewRow,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.mediaInfoItems,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemTags,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.genres {
+  margin-left: var(--ptv-episode-offset) !important;
+  width: var(--ptv-episode-width) !important;
+  max-width: var(--ptv-episode-width) !important;
+}
+
+/* =========================================================
+   OVERVIEW TUNING
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailOverview {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  font-size: 0.97rem !important;
+  line-height: 1.52 !important;
+}
+
+/* =========================================================
+   LOWER SECTIONS (cast / more from season)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+~ .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+~ .detailSections,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPageContent:has(.moreFromSeason)
+.verticalSectionContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+~ .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+~ .detailSections,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPageContent:has(.itemVideoInfo)
+.verticalSectionContainer {
+  margin-left: var(--ptv-episode-offset) !important;
+  max-width: var(--ptv-episode-width) !important;
+  margin-top: 10px !important;
+}
+
+/* =========================================================
+   SAFETY (prevents drift)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.sectionTitleContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.sectionTitleContainer {
+  margin-left: var(--ptv-episode-offset) !important;
+}
