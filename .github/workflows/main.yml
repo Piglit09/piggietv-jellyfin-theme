@@ -61,7 +61,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ vars.THEME_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy files
+      - name: Deploy to theme-web
         run: |
-          rsync -avz --delete dist/ ${{ secrets.THEME_SSH_USER }}@${{ vars.THEME_HOST }}:${{ vars.THEME_PATH }}/dist/
-          rsync -avz --delete assets/ ${{ secrets.THEME_SSH_USER }}@${{ vars.THEME_HOST }}:${{ vars.THEME_PATH }}/assets/
+          mkdir -p /var/www/piggietv-theme/dist
+          rsync -av --delete dist/ /var/www/piggietv-theme/dist/
