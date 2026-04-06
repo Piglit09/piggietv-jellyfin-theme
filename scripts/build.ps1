@@ -1,8 +1,6 @@
-# =========================================================
 # PIGGIETV THEME BUILD SCRIPT
-# =========================================================
 
-Write-Host "🔧 Building PiggieTV Theme..." -ForegroundColor Cyan
+Write-Host "Building PiggieTV Theme..." -ForegroundColor Cyan
 
 # Paths
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -17,10 +15,7 @@ if (!(Test-Path $distPath)) {
     New-Item -ItemType Directory -Path $distPath | Out-Null
 }
 
-# =========================================================
-# BUILD CSS
-# =========================================================
-
+# Build CSS
 $cssOrder = @(
     "base.css",
     "layout.css",
@@ -38,9 +33,8 @@ $cssOrder = @(
 
 $cssOutput = "$distPath\custom.css"
 
-Write-Host "📦 Building CSS..." -ForegroundColor Yellow
+Write-Host "Building CSS..." -ForegroundColor Yellow
 
-# Clear existing file
 if (Test-Path $cssOutput) {
     Remove-Item $cssOutput
 }
@@ -49,37 +43,31 @@ foreach ($file in $cssOrder) {
     $fullPath = Join-Path $cssPath $file
 
     if (Test-Path $fullPath) {
-        Write-Host "  + $file"
-
-        Add-Content $cssOutput "`n/* ===== $file ===== */`n"
+        Write-Host ("  + " + $file)
+        Add-Content -Path $cssOutput -Value ""
+        Add-Content -Path $cssOutput -Value ("/* ===== " + $file + " ===== */")
         Get-Content $fullPath | Add-Content $cssOutput
     }
     else {
-        Write-Host "  ⚠ Missing: $file" -ForegroundColor DarkYellow
+        Write-Host ("  Missing: " + $file) -ForegroundColor DarkYellow
     }
 }
 
-# =========================================================
-# BUILD JS
-# =========================================================
-
+# Build JS
 $jsInput = "$jsPath\custom.js"
 $jsOutput = "$distPath\custom.js"
 
-Write-Host "📦 Building JS..." -ForegroundColor Yellow
+Write-Host "Building JS..." -ForegroundColor Yellow
 
 if (Test-Path $jsInput) {
     Copy-Item $jsInput $jsOutput -Force
     Write-Host "  + custom.js"
 }
 else {
-    Write-Host "  ⚠ No custom.js found (skipped)" -ForegroundColor DarkYellow
+    Write-Host "  No custom.js found (skipped)" -ForegroundColor DarkYellow
 }
 
-# =========================================================
-# DONE
-# =========================================================
-
+# Done
 Write-Host ""
-Write-Host "✅ Build complete!" -ForegroundColor Green
-Write-Host "👉 Output: dist/custom.css + dist/custom.js"
+Write-Host "Build complete!" -ForegroundColor Green
+Write-Host "Output: dist/custom.css + dist/custom.js"

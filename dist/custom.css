@@ -1,0 +1,2850 @@
+
+/* ===== base.css ===== */
+/* =========================================================
+   PIGGIETV — BASE
+   Core tokens, global safety, shared polish
+   ========================================================= */
+
+:root {
+  /* text */
+  --ptv-text: rgba(255, 255, 255, 0.92);
+  --ptv-text-soft: rgba(255, 255, 255, 0.72);
+  --ptv-text-dim: rgba(255, 255, 255, 0.48);
+
+  /* brand */
+  --ptv-cyan: #86e3ff;
+  --ptv-purple: #8f7cff;
+  --ptv-pink: #f3a3dc;
+
+  /* surfaces / borders */
+  --ptv-border: rgba(255, 255, 255, 0.10);
+  --ptv-border-soft: rgba(255, 255, 255, 0.04);
+  --ptv-shadow: rgba(0, 0, 0, 0.28);
+
+  /* radius */
+  --ptv-radius-sm: 12px;
+  --ptv-radius-md: 16px;
+  --ptv-radius-lg: 20px;
+  --ptv-radius-card: 14px;
+  --ptv-radius-pill: 999px;
+
+  /* cards */
+  --ptv-card-border: rgba(255, 255, 255, 0.09);
+  --ptv-card-border-soft: rgba(255, 255, 255, 0.06);
+  --ptv-card-border-hover: rgba(143, 124, 255, 0.30);
+  --ptv-card-inner: rgba(255, 255, 255, 0.025);
+
+  --ptv-card-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px var(--ptv-card-inner);
+
+  --ptv-card-shadow-hover:
+    0 16px 40px rgba(0, 0, 0, 0.50),
+    0 0 20px rgba(143, 124, 255, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  /* glows */
+  --ptv-glow-cyan: 0 0 18px rgba(134, 227, 255, 0.18);
+  --ptv-glow-purple: 0 0 20px rgba(143, 124, 255, 0.18);
+  --ptv-glow-pink: 0 0 20px rgba(243, 163, 220, 0.14);
+  --ptv-glow-soft: 0 0 30px rgba(143, 124, 255, 0.08);
+
+  /* gradients */
+  --ptv-gradient-brand:
+    linear-gradient(135deg, var(--ptv-cyan) 0%, var(--ptv-purple) 48%, var(--ptv-pink) 100%);
+  --ptv-gradient-soft:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.10) 0%,
+      rgba(143, 124, 255, 0.14) 55%,
+      rgba(243, 163, 220, 0.10) 100%
+    );
+
+  /* motion */
+  --ptv-speed-fast: 0.16s;
+  --ptv-speed-base: 0.22s;
+  --ptv-speed-slow: 0.32s;
+  --ptv-ease: ease;
+}
+
+/* =========================================================
+   GLOBAL SAFETY
+   ========================================================= */
+
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* Keep app scroll usable outside the custom login page */
+body:not(.ptv-native-login-page),
+body:not(.ptv-native-login-page) .skinBody,
+body:not(.ptv-native-login-page) .mainAnimatedPage,
+body:not(.ptv-native-login-page) .page,
+body:not(.ptv-native-login-page) .pageBody,
+body:not(.ptv-native-login-page) .pageContainer,
+body:not(.ptv-native-login-page) .scrollFrameY,
+body:not(.ptv-native-login-page) .scrollY {
+  overflow-y: auto !important;
+  max-height: none !important;
+}
+
+.mainDrawer-scrollContainer,
+.mainDrawer .navMenu,
+.mainDrawer .drawerContent {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* =========================================================
+   SHARED TYPOGRAPHY / READABILITY
+   ========================================================= */
+
+body {
+  color: var(--ptv-text);
+}
+
+a {
+  color: inherit;
+}
+
+.secondaryText,
+.fieldDescription,
+.checkboxLabel,
+.listItemBodyText-secondary,
+.itemMiscText,
+.cardText-secondary,
+.formDialogHeader-clear,
+.guide-programNameSecondary,
+.guideChannelNumber {
+  color: var(--ptv-text-soft) !important;
+}
+
+.sectionTitle,
+.sectionTitleText,
+h1, h2, h3, h4 {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+/* =========================================================
+   SHARED BUTTON / CHIP POLISH
+   ========================================================= */
+
+.emby-button,
+.button-flat,
+.raised,
+.btnTag,
+.tag,
+.mediaInfoItem {
+  transition:
+    background var(--ptv-speed-fast) var(--ptv-ease),
+    color var(--ptv-speed-fast) var(--ptv-ease),
+    border-color var(--ptv-speed-fast) var(--ptv-ease),
+    box-shadow var(--ptv-speed-fast) var(--ptv-ease),
+    transform var(--ptv-speed-fast) var(--ptv-ease);
+}
+
+.btnTag,
+.tag,
+.mediaInfoItem {
+  border-radius: var(--ptv-radius-pill);
+}
+
+/* =========================================================
+   SHARED CARD BEHAVIOR
+   Keep this generic; page-specific visuals stay elsewhere
+   ========================================================= */
+
+.cardBox,
+.cardScalable,
+.cardOverlayContainer,
+.visualCardBox {
+  border-radius: var(--ptv-radius-card) !important;
+  overflow: hidden !important;
+}
+
+.cardBox img,
+.cardScalable img,
+.cardOverlayContainer img,
+.visualCardBox img {
+  display: block;
+}
+
+/* =========================================================
+   FOCUS STATES
+   ========================================================= */
+
+.emby-input:focus,
+textarea:focus,
+select:focus,
+button:focus-visible,
+a:focus-visible,
+.emby-button:focus-visible {
+  outline: none !important;
+  box-shadow:
+    0 0 0 3px rgba(134, 227, 255, 0.12),
+    0 0 0 1px rgba(134, 227, 255, 0.28) !important;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(143, 124, 255, 0.6) 0%,
+    rgba(134, 227, 255, 0.6) 100%
+  );
+  border-radius: 6px;
+}
+
+* {
+  scrollbar-color: rgba(143, 124, 255, 0.65) transparent;
+  scrollbar-width: thin;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes ptvGradientDrift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ptvZoom {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes ptvLogoFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+@keyframes ptvLogoBreathe {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.90;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes ptvLogoImageFloat {
+  0%, 100% { transform: scale(1.02) translateY(0); }
+  50%      { transform: scale(1.03) translateY(-3px); }
+}
+
+@keyframes ptvButtonSweep {
+  0%   { left: -160%; }
+  100% { left: 160%; }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== layout.css ===== */
+/* =========================================================
+   PIGGIETV — LAYOUT / APP SHELL
+   Global background, header, tabs, and app structure
+   ========================================================= */
+
+/* =========================================================
+   APP BACKGROUND
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .skinBody {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(143,124,255,0.10), transparent 32%),
+    radial-gradient(circle at 82% 22%, rgba(134,227,255,0.08), transparent 28%),
+    radial-gradient(circle at 70% 78%, rgba(243,163,220,0.06), transparent 26%),
+    linear-gradient(180deg, rgba(8,12,26,0.88), rgba(10,14,30,0.96)) !important;
+
+  min-height: 100vh;
+}
+
+/* =========================================================
+   HEADER (TOP BAR)
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .skinHeader {
+  backdrop-filter: blur(16px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+
+  background: rgba(10, 14, 30, 0.55) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+
+  box-shadow:
+    0 6px 24px rgba(0,0,0,0.28),
+    inset 0 -1px 0 rgba(255,255,255,0.04);
+
+  transition: background 0.25s ease, backdrop-filter 0.25s ease;
+}
+
+/* slight stronger header on scroll (if Jellyfin toggles class) */
+.skinHeader-withBackground,
+.skinHeader.scrolled {
+  background: rgba(10, 14, 30, 0.75) !important;
+}
+
+/* header content spacing */
+body:not(.ptv-native-login-page) .skinHeader .headerTop {
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+}
+
+/* =========================================================
+   HEADER BUTTONS / ICONS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .skinHeader .emby-button,
+body:not(.ptv-native-login-page) .skinHeader button {
+  border-radius: 12px !important;
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+body:not(.ptv-native-login-page) .skinHeader .emby-button:hover,
+body:not(.ptv-native-login-page) .skinHeader button:hover {
+  background: rgba(255,255,255,0.06) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25) !important;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   TOP TABS (HOME / FAVORITES / CUSTOM TABS)
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .headerTabs {
+  margin-top: 6px !important;
+}
+
+/* base tab */
+body:not(.ptv-native-login-page) .headerTabs .emby-tab-button {
+  border-radius: 14px !important;
+  padding: 8px 14px !important;
+
+  color: rgba(255,255,255,0.78) !important;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+/* hover */
+body:not(.ptv-native-login-page) .headerTabs .emby-tab-button:hover {
+  background: rgba(255,255,255,0.06) !important;
+  color: rgba(255,255,255,0.95) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25) !important;
+  transform: translateY(-1px);
+}
+
+/* active tab */
+body:not(.ptv-native-login-page) .headerTabs .emby-tab-button-active,
+body:not(.ptv-native-login-page) .headerTabs .emby-tab-button[aria-selected="true"] {
+  color: #ffffff !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134,227,255,0.14) 0%,
+      rgba(143,124,255,0.18) 55%,
+      rgba(243,163,220,0.14) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 8px 22px rgba(0,0,0,0.28),
+    0 0 18px rgba(143,124,255,0.12);
+}
+
+/* =========================================================
+   PAGE CONTAINER CONSISTENCY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .pageContainer,
+body:not(.ptv-native-login-page) .mainAnimatedPage,
+body:not(.ptv-native-login-page) .page {
+  background: transparent !important;
+}
+
+/* remove harsh default panel backgrounds */
+body:not(.ptv-native-login-page) .cardContent,
+body:not(.ptv-native-login-page) .dialog,
+body:not(.ptv-native-login-page) .paperList {
+  background: transparent !important;
+}
+
+/* =========================================================
+   SCROLL FADE (subtle top/bottom fade)
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .mainAnimatedPage::before,
+body:not(.ptv-native-login-page) .mainAnimatedPage::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 40px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+body:not(.ptv-native-login-page) .mainAnimatedPage::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(8,12,26,0.9), transparent);
+}
+
+body:not(.ptv-native-login-page) .mainAnimatedPage::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(8,12,26,0.9), transparent);
+}
+
+/* =========================================================
+   MOBILE / SMALL SCREEN
+   ========================================================= */
+
+@media (max-width: 900px) {
+  body:not(.ptv-native-login-page) .skinHeader {
+    backdrop-filter: blur(12px) !important;
+  }
+
+  body:not(.ptv-native-login-page) .headerTabs .emby-tab-button {
+    padding: 6px 10px !important;
+    border-radius: 12px !important;
+  }
+}
+
+/* ===== sidebar.css ===== */
+/* =========================================================
+   PIGGIETV — SIDEBAR
+   Drawer navigation + logo + hover system
+   ========================================================= */
+
+/* =========================================================
+   SIDEBAR CONTAINER
+   ========================================================= */
+
+.mainDrawer {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 22, 40, 0.94),
+      rgba(24, 28, 48, 0.96)
+    ) !important;
+
+  border-right: 1px solid rgba(255,255,255,0.06) !important;
+
+  box-shadow:
+    8px 0 28px rgba(0,0,0,0.35),
+    inset -1px 0 0 rgba(255,255,255,0.04);
+}
+
+/* subtle glow edge */
+.mainDrawer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  bottom: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(143,124,255,0.25),
+      transparent 40%,
+      transparent 60%,
+      rgba(134,227,255,0.18)
+    );
+
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+#ptv-sidebar-logo {
+  padding: 14px 10px 6px !important;
+  text-align: center;
+}
+
+#ptv-sidebar-logo img {
+  width: 165px !important;
+  max-width: 85% !important;
+  height: auto;
+
+  filter:
+    drop-shadow(0 10px 28px rgba(0,0,0,0.45))
+    drop-shadow(0 0 18px rgba(143,124,255,0.25))
+    brightness(1.05);
+
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+#ptv-sidebar-logo img:hover {
+  transform: translateY(-2px) scale(1.03);
+  filter:
+    drop-shadow(0 14px 36px rgba(0,0,0,0.55))
+    drop-shadow(0 0 24px rgba(143,124,255,0.35))
+    brightness(1.08);
+}
+
+/* =========================================================
+   NAV ITEMS
+   ========================================================= */
+
+.mainDrawer .navMenuOption {
+  position: relative !important;
+
+  border-radius: 12px !important;
+  margin: 4px 8px !important;
+  padding: 10px 12px !important;
+
+  color: rgba(255,255,255,0.85) !important;
+
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease !important;
+}
+
+/* hover */
+.mainDrawer .navMenuOption:hover {
+  transform: translateX(4px);
+
+  background: rgba(255,255,255,0.05) !important;
+
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.25),
+    0 0 12px rgba(143,124,255,0.08);
+
+  color: rgba(255,255,255,0.95) !important;
+}
+
+/* active */
+.mainDrawer .navMenuOption-selected,
+.mainDrawer .navMenuOption[aria-selected="true"] {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134,227,255,0.14) 0%,
+      rgba(143,124,255,0.18) 55%,
+      rgba(243,163,220,0.12) 100%
+    ) !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 8px 22px rgba(0,0,0,0.28),
+    0 0 18px rgba(143,124,255,0.12);
+
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   ICONS
+   ========================================================= */
+
+.mainDrawer .navMenuOption i,
+.mainDrawer .navMenuOption .md-icon {
+  opacity: 0.8;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+
+.mainDrawer .navMenuOption:hover i,
+.mainDrawer .navMenuOption:hover .md-icon {
+  opacity: 1;
+  transform: translateX(1px);
+}
+
+/* =========================================================
+   SCROLL AREA
+   ========================================================= */
+
+.mainDrawer .navMenu {
+  padding-bottom: 20px !important;
+}
+
+/* =========================================================
+   MOBILE SAFETY
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .mainDrawer {
+    box-shadow:
+      0 12px 40px rgba(0,0,0,0.45),
+      inset -1px 0 0 rgba(255,255,255,0.04);
+  }
+
+  #ptv-sidebar-logo img {
+    width: 140px !important;
+  }
+
+  .mainDrawer .navMenuOption {
+    margin: 4px 6px !important;
+    padding: 9px 10px !important;
+  }
+}
+
+/* ===== home.css ===== */
+/* =========================================================
+   PIGGIETV — HOME
+   Homepage rows, shelves, cards, and section polish
+   ========================================================= */
+
+/* =========================================================
+   HOME PAGE ROOT
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage,
+body:not(.ptv-native-login-page) .homePage .verticalSection,
+body:not(.ptv-native-login-page) .homePage .section0,
+body:not(.ptv-native-login-page) .homePage .itemsContainer {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body:not(.ptv-native-login-page) .homePage {
+  position: relative !important;
+  z-index: 1 !important;
+  padding-bottom: 18px !important;
+}
+
+/* subtle visual lift behind the main home content */
+body:not(.ptv-native-login-page) .homePage::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 8px;
+  bottom: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018) 0%,
+      rgba(255, 255, 255, 0.008) 100%
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 18px 40px rgba(0, 0, 0, 0.10);
+  opacity: 0.9;
+}
+
+/* keep content above glass strip */
+body:not(.ptv-native-login-page) .homePage > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   HOME SECTION SPACING
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .verticalSection,
+body:not(.ptv-native-login-page) .homePage .section,
+body:not(.ptv-native-login-page) .homePage .section0 {
+  margin-bottom: 18px !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer {
+  margin-top: 6px !important;
+}
+
+/* =========================================================
+   SECTION TITLES
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .sectionTitle,
+body:not(.ptv-native-login-page) .homePage .sectionTitleText,
+body:not(.ptv-native-login-page) .homePage .section0 .sectionTitle {
+  color: rgba(255, 255, 255, 0.97) !important;
+  letter-spacing: 0.01em !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.24) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .sectionTitle {
+  margin-bottom: 8px !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .sectionTitleText {
+  font-weight: 750 !important;
+}
+
+/* small accent line under visible section headers */
+body:not(.ptv-native-login-page) .homePage .sectionTitleContainer {
+  position: relative !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
+  content: "";
+  display: block;
+  width: 54px;
+  height: 2px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.9) 0%,
+      rgba(143, 124, 255, 0.8) 60%,
+      rgba(243, 163, 220, 0.7) 100%
+    );
+  box-shadow: 0 0 12px rgba(143, 124, 255, 0.12);
+}
+
+/* =========================================================
+   SHELF / ROW POLISH
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer,
+body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons {
+  background: transparent !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer > *,
+body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons > * {
+  position: relative;
+}
+
+/* card rows feel grouped but still light */
+body:not(.ptv-native-login-page) .homePage .verticalSection {
+  padding: 10px 10px 8px !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018) 0%,
+      rgba(255, 255, 255, 0.005) 100%
+    ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.015);
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .cardBox,
+body:not(.ptv-native-login-page) .homePage .cardScalable,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
+  border-radius: var(--ptv-radius-card) !important;
+  border: 1px solid var(--ptv-card-border) !important;
+  box-shadow: var(--ptv-card-shadow) !important;
+  overflow: hidden !important;
+  background: rgba(20, 26, 46, 0.28) !important;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease,
+    filter 0.18s ease,
+    background 0.18s ease !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .cardBox:hover,
+body:not(.ptv-native-login-page) .homePage .cardScalable:hover,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer:hover {
+  border-color: var(--ptv-card-border-hover) !important;
+  box-shadow: var(--ptv-card-shadow-hover) !important;
+  transform: translateY(-3px) scale(1.01) !important;
+  filter: brightness(1.03) !important;
+}
+
+/* keep images clean */
+body:not(.ptv-native-login-page) .homePage .cardImage,
+body:not(.ptv-native-login-page) .homePage .cardPadder,
+body:not(.ptv-native-login-page) .homePage .cardContent {
+  border-radius: inherit !important;
+}
+
+/* =========================================================
+   CARD TEXT
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .cardText,
+body:not(.ptv-native-login-page) .homePage .cardTextCentered,
+body:not(.ptv-native-login-page) .homePage .cardFooter,
+body:not(.ptv-native-login-page) .homePage .listItemBodyText {
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .cardText-secondary,
+body:not(.ptv-native-login-page) .homePage .listItemBodyText.secondary,
+body:not(.ptv-native-login-page) .homePage .secondaryText {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+/* =========================================================
+   PROGRESS BARS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .itemProgressBar {
+  height: 7px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.10) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .itemProgressBarForeground {
+  border-radius: 999px !important;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.95) 0%,
+      rgba(143, 124, 255, 0.92) 55%,
+      rgba(243, 163, 220, 0.88) 100%
+    ) !important;
+  box-shadow:
+    0 0 12px rgba(143, 124, 255, 0.16);
+}
+
+/* =========================================================
+   HORIZONTAL TAB / FILTER AREA
+   Keeps the top home controls matching the theme
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .emby-tabs-slider,
+body:not(.ptv-native-login-page) .homePage .sectionTabs {
+  background: transparent !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .emby-tab-button,
+body:not(.ptv-native-login-page) .homePage .sectionTabs .emby-button {
+  border-radius: 14px !important;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .emby-tab-button:hover,
+body:not(.ptv-native-login-page) .homePage .sectionTabs .emby-button:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16) !important;
+  transform: translateY(-1px) !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .emby-tab-button-active,
+body:not(.ptv-native-login-page) .homePage .emby-tab-button[aria-selected="true"] {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.14) 0%,
+      rgba(143, 124, 255, 0.18) 55%,
+      rgba(243, 163, 220, 0.12) 100%
+    ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 8px 18px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* =========================================================
+   HOME PAGE PADDING / BREATHING ROOM
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage,
+body:not(.ptv-native-login-page) .homePage .padded-left,
+body:not(.ptv-native-login-page) .homePage .padded-right,
+body:not(.ptv-native-login-page) .homePage .padded-bottom-page {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* =========================================================
+   MOBILE / SMALL SCREEN SAFETY
+   ========================================================= */
+
+@media (max-width: 900px) {
+  body:not(.ptv-native-login-page) .homePage::before {
+    left: 10px;
+    right: 10px;
+    border-radius: 18px;
+  }
+
+  body:not(.ptv-native-login-page) .homePage .verticalSection {
+    padding: 8px 8px 6px !important;
+    border-radius: 14px !important;
+  }
+
+  body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
+    width: 42px;
+  }
+}
+
+/* ===== dashboard.css ===== */
+/* =========================================================
+   PIGGIETV — ADMIN DASHBOARD
+   Clean, minimal, consistent with main theme
+   ========================================================= */
+
+/* =========================================================
+   ROOT / BACKGROUND
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument,
+body:not(.ptv-native-login-page) #dashboardPage {
+  background: #020b14 !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* =========================================================
+   ADMIN SIDEBAR (SEPARATE STYLE FROM MAIN SIDEBAR)
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .adminDrawer {
+  width: 290px !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3,10,18,0.96),
+      rgba(5,12,22,0.98)
+    ) !important;
+
+  border-right: 1px solid rgba(255,255,255,0.06) !important;
+
+  box-shadow:
+    8px 0 30px rgba(0,0,0,0.35);
+}
+
+/* nav items */
+body:not(.ptv-native-login-page) .adminDrawer .navMenuOption {
+  min-height: 50px !important;
+  margin: 4px 6px !important;
+  padding: 10px 12px !important;
+
+  border-radius: 12px !important;
+
+  background: transparent !important;
+  color: rgba(255,255,255,0.75) !important;
+
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease !important;
+}
+
+/* hover */
+body:not(.ptv-native-login-page) .adminDrawer .navMenuOption:hover {
+  background: rgba(255,255,255,0.05) !important;
+  color: rgba(255,255,255,0.95) !important;
+}
+
+/* active */
+body:not(.ptv-native-login-page) .adminDrawer .navMenuOption-selected {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134,227,255,0.18),
+      rgba(143,124,255,0.22)
+    ) !important;
+
+  color: #fff !important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* remove logo (keeps admin clean) */
+body:not(.ptv-native-login-page) .adminDrawerLogo,
+body:not(.ptv-native-login-page) #ptv-sidebar-logo {
+  display: none !important;
+}
+
+/* =========================================================
+   PANELS / CARDS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardSection,
+body:not(.ptv-native-login-page) .dashboardCard,
+body:not(.ptv-native-login-page) .statCard,
+body:not(.ptv-native-login-page) .itemCountCard,
+body:not(.ptv-native-login-page) .visualCardBox,
+body:not(.ptv-native-login-page) .paperList,
+body:not(.ptv-native-login-page) .activeSession {
+  background: #05101a !important;
+
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* list rows */
+body:not(.ptv-native-login-page) .dashboardSection .listItem,
+body:not(.ptv-native-login-page) #dashboardPage .listItem {
+  background: transparent !important;
+  border-radius: 14px !important;
+
+  transition: background 0.16s ease;
+}
+
+body:not(.ptv-native-login-page) .dashboardSection .listItem:hover,
+body:not(.ptv-native-login-page) #dashboardPage .listItem:hover {
+  background: rgba(255,255,255,0.04) !important;
+}
+
+/* =========================================================
+   TEXT / HEADERS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument h2,
+body:not(.ptv-native-login-page) .dashboardDocument h3,
+body:not(.ptv-native-login-page) .dashboardDocument .sectionTitle {
+  color: rgba(255,255,255,0.95) !important;
+  font-weight: 600 !important;
+}
+
+body:not(.ptv-native-login-page) .dashboardDocument .secondaryText {
+  color: rgba(255,255,255,0.65) !important;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-button,
+body:not(.ptv-native-login-page) #dashboardPage .emby-button {
+  border-radius: 999px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134,227,255,0.95),
+      rgba(143,124,255,0.92)
+    ) !important;
+
+  color: #fff !important;
+  border: none !important;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.25);
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease !important;
+}
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 26px rgba(0,0,0,0.35);
+}
+
+/* =========================================================
+   INPUTS / FORMS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-input,
+body:not(.ptv-native-login-page) .dashboardDocument textarea,
+body:not(.ptv-native-login-page) .dashboardDocument select {
+  background: #07131d !important;
+
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 14px !important;
+
+  color: #fff !important;
+
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease !important;
+}
+
+body:not(.ptv-native-login-page) .dashboardDocument .emby-input:focus,
+body:not(.ptv-native-login-page) .dashboardDocument textarea:focus,
+body:not(.ptv-native-login-page) .dashboardDocument select:focus {
+  border-color: rgba(134,227,255,0.55) !important;
+  box-shadow:
+    0 0 0 3px rgba(134,227,255,0.12) !important;
+}
+
+/* =========================================================
+   ACTIVE SESSION CARD (highlight)
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .activeSession .cardBox,
+body:not(.ptv-native-login-page) .activeSession .sessionCard {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(90,130,255,0.24),
+      rgba(195,110,255,0.18)
+    ),
+    #07131d !important;
+
+  border-radius: 16px !important;
+}
+
+/* =========================================================
+   SCROLLBAR (GLOBAL MATCH)
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(143,124,255,0.6),
+      rgba(134,227,255,0.6)
+    );
+}
+
+/* ===== login.css ===== */
+/* =========================================================
+   PIGGIETV — LOGIN
+   Native Jellyfin login page
+   ========================================================= */
+
+/* =========================================================
+   PAGE BACKDROP
+   ========================================================= */
+
+body.ptv-native-login-page,
+body.ptv-native-login-page .skinBody,
+body.ptv-native-login-page #loginPage,
+body.ptv-native-login-page .backgroundContainer,
+body.ptv-native-login-page .dialog {
+  background:
+    linear-gradient(rgba(8, 14, 36, 0.42), rgba(7, 26, 58, 0.60)),
+    url("https://piggietv.com/theme/assets/backgrounds/login-bg.jpg") center center / cover no-repeat fixed !important;
+}
+
+body.ptv-native-login-page,
+body.ptv-native-login-page .skinBody,
+body.ptv-native-login-page #loginPage {
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+}
+
+body.ptv-native-login-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 70%, rgba(255, 120, 180, 0.18), transparent 25%),
+    radial-gradient(circle at 80% 20%, rgba(90, 190, 255, 0.18), transparent 25%);
+  background-size: 140% 140%;
+  animation: ptvGradientDrift 18s ease-in-out infinite;
+}
+
+body.ptv-native-login-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.78 !important;
+  transform-origin: center;
+  background:
+    linear-gradient(rgba(8, 14, 36, 0.08), rgba(7, 26, 58, 0.10)),
+    url("https://piggietv.com/theme/assets/backgrounds/login-bg.jpg") center center / cover no-repeat fixed;
+  animation: ptvZoom 30s ease-in-out infinite;
+}
+
+/* =========================================================
+   PAGE CLEANUP
+   ========================================================= */
+
+body.ptv-native-login-page .readOnlyContent,
+body.ptv-native-login-page .centeredPage,
+body.ptv-native-login-page .padded-left-page,
+body.ptv-native-login-page .page,
+body.ptv-native-login-page .pageBody {
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+body.ptv-native-login-page .skinHeader,
+body.ptv-native-login-page .headerTabsSection,
+body.ptv-native-login-page .pageTitle,
+body.ptv-native-login-page .pageTitleWithLogo {
+  display: none !important;
+}
+
+body.ptv-native-login-page #loginPage {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 40px 20px 60px !important;
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   LOGIN CARD
+   ========================================================= */
+
+body.ptv-native-login-page .manualLoginForm,
+body.ptv-native-login-page .loginForm {
+  --mx: 50%;
+  --my: 50%;
+
+  position: relative;
+  z-index: 10 !important;
+  overflow: visible !important;
+
+  width: min(100%, 540px) !important;
+  max-width: 540px !important;
+  margin: 0 auto !important;
+  padding: 30px 28px 24px !important;
+
+  background: rgba(20, 28, 56, 0.34) !important;
+  border: 1px solid rgba(255, 255, 255, 0.13) !important;
+  border-radius: 28px !important;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.50),
+    0 0 40px rgba(120, 160, 255, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+body.ptv-native-login-page .manualLoginForm:hover,
+body.ptv-native-login-page .loginForm:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 50px 140px rgba(0, 0, 0, 0.65),
+    0 0 80px rgba(120, 160, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+body.ptv-native-login-page .manualLoginForm::before,
+body.ptv-native-login-page .loginForm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  transition: opacity 0.2s ease;
+
+  background: radial-gradient(
+    220px circle at var(--mx) var(--my),
+    rgba(135, 190, 255, 0.18),
+    rgba(255, 140, 220, 0.10) 28%,
+    transparent 60%
+  );
+}
+
+body.ptv-native-login-page .manualLoginForm.ptv-glow-active::before,
+body.ptv-native-login-page .loginForm.ptv-glow-active::before {
+  opacity: 1;
+}
+
+body.ptv-native-login-page .manualLoginForm > *,
+body.ptv-native-login-page .loginForm > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   HIDE STOCK ELEMENTS
+   ========================================================= */
+
+body.ptv-native-login-page .forgotPasswordLink,
+body.ptv-native-login-page .btnForgotPassword,
+body.ptv-native-login-page a[href*="forgotpassword"]:not(#ptv-native-extra-buttons a),
+body.ptv-native-login-page .raised.cancel.block.btnForgotPassword:not(#ptv-native-extra-buttons *),
+body.ptv-native-login-page .quickConnectContainer,
+body.ptv-native-login-page button[title*="Quick"],
+body.ptv-native-login-page .manualLoginForm ~ button,
+body.ptv-native-login-page .loginForm ~ button {
+  display: none !important;
+}
+
+/* =========================================================
+   LOGIN BRANDING
+   ========================================================= */
+
+body.ptv-native-login-page #ptv-native-login-brand {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-bottom: 12px !important;
+  pointer-events: none;
+  animation: ptvLogoFloat 6s ease-in-out infinite;
+}
+
+body.ptv-native-login-page #ptv-native-login-brand::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  opacity: 0.95;
+  transform: translate(-50%, -50%);
+  filter: blur(65px);
+
+  background: radial-gradient(
+    circle,
+    rgba(120, 160, 255, 0.32) 0%,
+    rgba(255, 120, 200, 0.18) 40%,
+    transparent 72%
+  );
+
+  animation: ptvLogoBreathe 5s ease-in-out infinite;
+}
+
+body.ptv-native-login-page #ptv-native-login-brand img {
+  position: relative;
+  z-index: 1;
+  width: min(260px, 70vw) !important;
+  height: auto;
+  margin-bottom: 12px !important;
+  border-radius: 14px;
+
+  transform: scale(1.02);
+  filter:
+    drop-shadow(0 18px 50px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 30px rgba(120, 160, 255, 0.45))
+    brightness(1.10)
+    saturate(1.20);
+
+  animation: ptvLogoImageFloat 6s ease-in-out infinite;
+}
+
+body.ptv-native-login-page #ptv-native-login-brand .ptv-tagline {
+  position: relative;
+  z-index: 1;
+  margin-top: 10px !important;
+
+  font-size: 12px !important;
+  font-weight: 800;
+  letter-spacing: 0.26em !important;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 1px 10px rgba(28, 80, 210, 0.18);
+}
+
+/* =========================================================
+   INPUTS / LABELS
+   ========================================================= */
+
+body.ptv-native-login-page .inputLabel,
+body.ptv-native-login-page label {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  margin-top: 12px !important;
+  margin-bottom: 7px !important;
+}
+
+body.ptv-native-login-page .emby-input,
+body.ptv-native-login-page input[type="text"],
+body.ptv-native-login-page input[type="password"] {
+  height: 48px !important;
+  font-size: 15px !important;
+  color: #fff !important;
+
+  background: rgba(8, 16, 36, 0.42) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 13px !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 6px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+body.ptv-native-login-page .emby-input:focus,
+body.ptv-native-login-page input:focus {
+  background: rgba(12, 26, 51, 0.42) !important;
+  border-color: rgba(126, 180, 255, 0.72) !important;
+  box-shadow:
+    0 0 0 3px rgba(126, 180, 255, 0.11),
+    0 10px 24px rgba(0, 0, 0, 0.14) !important;
+}
+
+body.ptv-native-login-page .checkboxContainer,
+body.ptv-native-login-page .emby-checkbox-label,
+body.ptv-native-login-page .rememberPassword {
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-size: 13px !important;
+  margin-top: 14px !important;
+  margin-bottom: 12px !important;
+}
+
+/* =========================================================
+   LOGIN BUTTONS
+   ========================================================= */
+
+body.ptv-native-login-page .manualLoginForm .emby-button,
+body.ptv-native-login-page .manualLoginForm button,
+body.ptv-native-login-page .manualLoginForm .ptv-btn,
+body.ptv-native-login-page .loginForm .emby-button,
+body.ptv-native-login-page .loginForm button,
+body.ptv-native-login-page .loginForm .ptv-btn {
+  position: relative !important;
+  overflow: hidden !important;
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    filter 0.16s ease,
+    background 0.16s ease !important;
+}
+
+body.ptv-native-login-page .manualLoginForm .emby-button::after,
+body.ptv-native-login-page .manualLoginForm button::after,
+body.ptv-native-login-page .manualLoginForm .ptv-btn::after,
+body.ptv-native-login-page .loginForm .emby-button::after,
+body.ptv-native-login-page .loginForm button::after,
+body.ptv-native-login-page .loginForm .ptv-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -160%;
+  width: 65%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transform: skewX(-18deg);
+
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.06) 42%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.06) 58%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+body.ptv-native-login-page .manualLoginForm .emby-button:hover,
+body.ptv-native-login-page .manualLoginForm button:hover,
+body.ptv-native-login-page .manualLoginForm .ptv-btn:hover,
+body.ptv-native-login-page .loginForm .emby-button:hover,
+body.ptv-native-login-page .loginForm button:hover,
+body.ptv-native-login-page .loginForm .ptv-btn:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  filter: brightness(1.04) !important;
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.30),
+    0 0 18px rgba(120, 160, 255, 0.28),
+    0 0 34px rgba(255, 120, 200, 0.18) !important;
+}
+
+body.ptv-native-login-page .manualLoginForm .emby-button:hover::after,
+body.ptv-native-login-page .manualLoginForm button:hover::after,
+body.ptv-native-login-page .manualLoginForm .ptv-btn:hover::after,
+body.ptv-native-login-page .loginForm .emby-button:hover::after,
+body.ptv-native-login-page .loginForm button:hover::after,
+body.ptv-native-login-page .loginForm .ptv-btn:hover::after {
+  opacity: 1;
+  animation: ptvButtonSweep 0.55s ease-out 1;
+}
+
+/* primary submit */
+body.ptv-native-login-page .emby-button.submit,
+body.ptv-native-login-page button[type="submit"],
+body.ptv-native-login-page .button-submit {
+  width: 100% !important;
+  min-height: 52px !important;
+  height: 52px !important;
+  margin-top: 14px !important;
+
+  border: none !important;
+  border-radius: 16px !important;
+
+  background: linear-gradient(135deg, #7ef6ff, #8da4ff 45%, #ff9fe7) !important;
+  color: #081224 !important;
+
+  font-size: 18px !important;
+  font-weight: 900 !important;
+
+  box-shadow:
+    0 12px 28px rgba(79, 172, 255, 0.30),
+    0 0 14px rgba(111, 123, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+/* =========================================================
+   EXTRA BUTTONS
+   ========================================================= */
+
+body.ptv-native-login-page #ptv-native-extra-buttons {
+  position: relative;
+  z-index: 10;
+  width: 100% !important;
+  display: block !important;
+  margin-top: 10px !important;
+}
+
+body.ptv-native-login-page #ptv-native-extra-buttons .ptv-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+
+body.ptv-native-login-page #ptv-native-extra-buttons .ptv-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+
+  width: 100% !important;
+  min-height: 46px !important;
+  height: 46px !important;
+  margin-top: 10px !important;
+  padding: 12px 16px !important;
+
+  border-radius: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.11),
+    rgba(255, 255, 255, 0.06)
+  ) !important;
+
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+}
+
+body.ptv-native-login-page #ptv-native-extra-buttons .ptv-row .ptv-btn {
+  margin-top: 0 !important;
+}
+
+body.ptv-native-login-page #ptv-native-extra-buttons .ptv-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.26),
+    0 0 16px rgba(143, 124, 255, 0.12) !important;
+}
+
+body.ptv-native-login-page #ptv-native-extra-buttons .ptv-discord {
+  min-height: 48px !important;
+  height: 48px !important;
+  font-size: 15px !important;
+  border: none !important;
+
+  background: linear-gradient(135deg, #5865F2, #7a84ff) !important;
+  box-shadow: 0 10px 22px rgba(88, 101, 242, 0.22) !important;
+}
+
+/* =========================================================
+   MOBILE SAFETY
+   ========================================================= */
+
+@media (max-width: 600px) {
+  body.ptv-native-login-page #loginPage {
+    padding: 24px 14px 40px !important;
+  }
+
+  body.ptv-native-login-page .manualLoginForm,
+  body.ptv-native-login-page .loginForm {
+    padding: 24px 18px 20px !important;
+    border-radius: 22px !important;
+  }
+
+  body.ptv-native-login-page #ptv-native-extra-buttons .ptv-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.ptv-native-login-page #ptv-native-login-brand img {
+    width: min(220px, 72vw) !important;
+  }
+}
+
+/* ===== details\hero.css ===== */
+/* =========================================================
+   PIGGIETV — DETAILS / HERO
+   Shared hero/backdrop treatment for detail pages only
+   ========================================================= */
+
+/* =========================================================
+   DETAIL HERO WRAPPERS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .detailPageWrapperContainer,
+body:not(.ptv-native-login-page) .detailPagePrimaryContainer,
+body:not(.ptv-native-login-page) .detailPageContent,
+body:not(.ptv-native-login-page) .itemBackdrop,
+body:not(.ptv-native-login-page) .detailRibbon,
+body:not(.ptv-native-login-page) .detailPagePrimaryInfo {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* =========================================================
+   HERO BACKDROP IMAGE
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop {
+  position: relative !important;
+  min-height: 100vh !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .backdropImage {
+  filter: blur(7px) saturate(115%) brightness(42%) !important;
+  transform: scale(1.03) !important;
+  transform-origin: center center !important;
+}
+
+/* =========================================================
+   HERO OVERLAY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 8, 16, 0.92) 0%,
+      rgba(7, 10, 18, 0.76) 20%,
+      rgba(7, 10, 18, 0.38) 46%,
+      rgba(7, 10, 18, 0.12) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(6, 8, 15, 0.08) 0%,
+      rgba(6, 8, 15, 0.00) 32%,
+      rgba(6, 8, 15, 0.76) 100%
+    ) !important;
+}
+
+/* subtle color wash */
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(143, 124, 255, 0.10), transparent 34%),
+    radial-gradient(circle at 80% 18%, rgba(134, 227, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 68% 78%, rgba(243, 163, 220, 0.06), transparent 26%);
+}
+
+/* =========================================================
+   HERO CONTENT SHELL
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent {
+  position: relative !important;
+  z-index: 2 !important;
+  max-width: 1340px !important;
+  margin: 0 auto !important;
+  padding: 34px 28px 0 28px !important;
+}
+
+/* keep actual hero content above overlays */
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   TITLE HANDOFF
+   Generic titles are hidden here.
+   Page-specific files can re-enable where needed.
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer .itemName,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer .nameContainer,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer h1 {
+  display: none !important;
+}
+
+/* =========================================================
+   HERO TRANSITIONS / STABILITY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent,
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop {
+  isolation: isolate;
+}
+
+/* prevent weird stacking from badges/ribbons floating above overlay */
+body:not(.ptv-native-login-page) .layout-desktop .detailRibbon,
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop::before,
+body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop::after {
+  z-index: 1 !important;
+}
+
+/* =========================================================
+   MOBILE / NARROW SAFETY
+   ========================================================= */
+
+@media (max-width: 900px) {
+  body:not(.ptv-native-login-page) .layout-desktop .itemBackdrop {
+    min-height: auto !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .backdropImage {
+    filter: blur(4px) saturate(108%) brightness(46%) !important;
+    transform: scale(1.01) !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::before {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(6, 8, 15, 0.30) 0%,
+        rgba(6, 8, 15, 0.20) 30%,
+        rgba(6, 8, 15, 0.86) 100%
+      ) !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContainer::after {
+    background:
+      radial-gradient(circle at 50% 14%, rgba(143, 124, 255, 0.08), transparent 34%),
+      radial-gradient(circle at 72% 24%, rgba(134, 227, 255, 0.06), transparent 28%);
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent {
+    padding: 18px 16px 0 16px !important;
+  }
+}
+
+/* ===== details\base.css ===== */
+/* =========================================================
+   PIGGIETV — DETAILS / BASE
+   Shared detail-page structure and polish only
+   Page-specific layout belongs in:
+   - hero.css
+   - series.css
+   - movies.css
+   - episodes.css
+   ========================================================= */
+
+/* =========================================================
+   DETAIL PAGE WRAPPERS
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .detailPageWrapperContainer,
+body:not(.ptv-native-login-page) .detailPagePrimaryContainer,
+body:not(.ptv-native-login-page) .detailPageContent,
+body:not(.ptv-native-login-page) .detailPagePrimaryInfo,
+body:not(.ptv-native-login-page) .detailRibbon {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* =========================================================
+   SHARED HERO CONTENT SHELL
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent {
+  position: relative !important;
+  z-index: 2 !important;
+  max-width: 1340px !important;
+  margin: 0 auto !important;
+  padding: 32px 28px 0 28px !important;
+}
+
+/* =========================================================
+   SHARED POSTER / IMAGE POLISH
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailImageContainer img,
+body:not(.ptv-native-login-page) .layout-desktop .itemPosterContainer img,
+body:not(.ptv-native-login-page) .layout-desktop .detailImageContainer .card,
+body:not(.ptv-native-login-page) .layout-desktop .itemPosterContainer .card {
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38) !important;
+}
+
+/* =========================================================
+   SHARED LOGO / TITLE RULES
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailLogo {
+  max-width: 390px !important;
+  max-height: 145px !important;
+  margin: 26px auto 14px auto !important;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.36)) !important;
+}
+
+/* item title only applies where page-specific files re-enable it */
+body:not(.ptv-native-login-page) .layout-desktop .itemName,
+body:not(.ptv-native-login-page) .layout-desktop h1 {
+  color: rgba(255, 255, 255, 0.98) !important;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* =========================================================
+   SHARED META / BUTTON / OVERVIEW SPACING
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .itemMiscInfo,
+body:not(.ptv-native-login-page) .layout-desktop .mainDetailButtons,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryButtons,
+body:not(.ptv-native-login-page) .layout-desktop .detailSectionContent,
+body:not(.ptv-native-login-page) .layout-desktop .itemDetailsGroup,
+body:not(.ptv-native-login-page) .layout-desktop .detailOverview,
+body:not(.ptv-native-login-page) .layout-desktop .overviewText,
+body:not(.ptv-native-login-page) .layout-desktop .itemOverview,
+body:not(.ptv-native-login-page) .layout-desktop .overviewRow,
+body:not(.ptv-native-login-page) .layout-desktop .mediaInfoItems,
+body:not(.ptv-native-login-page) .layout-desktop .itemTags,
+body:not(.ptv-native-login-page) .layout-desktop .genres {
+  min-width: 0 !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .itemMiscInfo {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  justify-content: flex-start !important;
+  margin-bottom: 8px !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .mainDetailButtons,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryButtons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  justify-content: flex-start !important;
+  margin-bottom: 16px !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryInfo {
+  padding: 8px 0 !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .detailOverview,
+body:not(.ptv-native-login-page) .layout-desktop .overviewText,
+body:not(.ptv-native-login-page) .layout-desktop .itemOverview {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  font-size: 0.97rem !important;
+  line-height: 1.52 !important;
+  color: rgba(255, 255, 255, 0.90) !important;
+}
+
+/* =========================================================
+   SHARED TAG / META CHIP STYLING
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .itemTags .tag,
+body:not(.ptv-native-login-page) .layout-desktop .btnTag,
+body:not(.ptv-native-login-page) .layout-desktop .mediaInfoItem {
+  color: rgba(255, 255, 255, 0.94) !important;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.10) 0%,
+      rgba(143, 124, 255, 0.14) 55%,
+      rgba(243, 163, 220, 0.10) 100%
+    ) !important;
+  border: 1px solid rgba(143, 124, 255, 0.18) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 0 14px rgba(143, 124, 255, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02) !important;
+}
+
+/* =========================================================
+   SHARED DETAIL BUTTON STYLING
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .mainDetailButtons .emby-button,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryButtons .emby-button,
+body:not(.ptv-native-login-page) .layout-desktop .detailButton {
+  min-height: 44px !important;
+  padding: 0 16px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: none !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .mainDetailButtons .emby-button:hover,
+body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryButtons .emby-button:hover,
+body:not(.ptv-native-login-page) .layout-desktop .detailButton:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.14) 0%,
+      rgba(143, 124, 255, 0.18) 55%,
+      rgba(243, 163, 220, 0.14) 100%
+    ) !important;
+  border-color: rgba(143, 124, 255, 0.24) !important;
+  box-shadow:
+    0 0 18px rgba(143, 124, 255, 0.12),
+    0 10px 24px rgba(0, 0, 0, 0.18) !important;
+  transform: translateY(-1px) !important;
+}
+
+body:not(.ptv-native-login-page) .layout-desktop .btnPlay {
+  background: linear-gradient(135deg, #ffffff, #edf3ff) !important;
+  color: #0b1020 !important;
+  border: none !important;
+}
+
+/* =========================================================
+   SHARED LOWER SHELF CONTAINER WIDTH
+   Page-specific files can adjust if needed
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .layout-desktop .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page) .layout-desktop .detailSections,
+body:not(.ptv-native-login-page) .layout-desktop .verticalSectionContainer {
+  max-width: 1340px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* section headings align cleanly */
+body:not(.ptv-native-login-page) .layout-desktop .sectionTitle,
+body:not(.ptv-native-login-page) .layout-desktop .sectionTitleText,
+body:not(.ptv-native-login-page) .layout-desktop .sectionTitleContainer {
+  color: rgba(255, 255, 255, 0.96) !important;
+}
+
+/* =========================================================
+   MOBILE / NARROW SAFETY
+   ========================================================= */
+
+@media (max-width: 900px) {
+  body:not(.ptv-native-login-page) .layout-desktop .detailPagePrimaryContent {
+    display: block !important;
+    padding: 18px 16px 0 !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailImageContainer,
+  body:not(.ptv-native-login-page) .layout-desktop .itemPosterContainer {
+    position: static !important;
+    width: 180px !important;
+    max-width: 180px !important;
+    margin: 0 auto 16px auto !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailLogo {
+    margin: 0 auto 12px auto !important;
+    max-width: 260px !important;
+    max-height: 110px !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .nameContainer,
+  body:not(.ptv-native-login-page) .layout-desktop .itemName,
+  body:not(.ptv-native-login-page) .layout-desktop h1 {
+    text-align: center !important;
+  }
+
+  body:not(.ptv-native-login-page) .layout-desktop .detailPageSecondaryContainer,
+  body:not(.ptv-native-login-page) .layout-desktop .detailSections,
+  body:not(.ptv-native-login-page) .layout-desktop .verticalSectionContainer {
+    padding: 0 16px 24px 16px !important;
+  }
+}
+
+/* ===== details\series.css ===== */
+/* =========================================================
+   PIGGIETV — DETAILS / SERIES
+   Series + season detail pages only
+   Assumes hero.css and details/base.css load first
+   ========================================================= */
+
+/* =========================================================
+   SERIES / SEASON PAGE DETECTION
+   - not native login
+   - desktop layout
+   - not itemDetailPage
+   - no episode video info
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo)) {
+  --ptv-series-poster-width: 430px;
+  --ptv-series-gap: 34px;
+  --ptv-series-shell-width: 1360px;
+  --ptv-series-side-pad: 28px;
+  --ptv-series-secondary-left:
+    calc(var(--ptv-series-side-pad) + var(--ptv-series-poster-width) + var(--ptv-series-gap));
+}
+
+/* =========================================================
+   PRIMARY HERO GRID
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailPagePrimaryContent {
+  display: grid !important;
+  grid-template-columns: var(--ptv-series-poster-width) minmax(0, 1fr) !important;
+  column-gap: var(--ptv-series-gap) !important;
+  align-items: start !important;
+  max-width: var(--ptv-series-shell-width) !important;
+  margin: 0 auto !important;
+  padding: 28px var(--ptv-series-side-pad) 0 var(--ptv-series-side-pad) !important;
+}
+
+/* =========================================================
+   POSTER COLUMN
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailImageContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemPosterContainer {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: var(--ptv-series-poster-width) !important;
+  max-width: var(--ptv-series-poster-width) !important;
+  margin: 0 !important;
+  grid-column: 1 !important;
+  grid-row: 1 / span 6 !important;
+  z-index: 3 !important;
+}
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailImageContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemPosterContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailImageContainer .card,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemPosterContainer .card {
+  width: 100% !important;
+  max-width: var(--ptv-series-poster-width) !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+}
+
+/* =========================================================
+   CONTENT COLUMN
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailLogo,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemMiscInfo,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.mainDetailButtons,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailPagePrimaryButtons,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailSectionContent,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemDetailsGroup,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.overviewText,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.overviewRow,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.mediaInfoItems,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemTags,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.genres {
+  grid-column: 2 !important;
+  margin: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailLogo {
+  display: block !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  justify-self: start !important;
+  align-self: end !important;
+  margin: 0 0 14px 0 !important;
+  max-width: 420px !important;
+  max-height: 155px !important;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.42)) !important;
+}
+
+/* =========================================================
+   META / BUTTON ROWS
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.itemMiscInfo {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  justify-content: flex-start !important;
+  margin-bottom: 8px !important;
+}
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.mainDetailButtons,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+.detailPagePrimaryButtons {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  justify-content: flex-start !important;
+  margin-bottom: 18px !important;
+}
+
+/* =========================================================
+   SECONDARY SHELVES
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+~ .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo))
+~ .detailSections,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPageContent:not(:has(.itemVideoInfo))
+.verticalSectionContainer {
+  max-width: var(--ptv-series-shell-width) !important;
+  margin: 14px auto 0 auto !important;
+  padding: 0 var(--ptv-series-side-pad) 28px var(--ptv-series-secondary-left) !important;
+}
+
+/* =========================================================
+   SEASON / SERIES COLOR POLISH
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .itemMiscInfo,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .mediaInfoItem,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .itemTags .tag,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .btnTag,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .genres a,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .itemLinks a {
+  color: rgba(255, 255, 255, 0.94) !important;
+}
+
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .itemTags .tag,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .btnTag,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .mediaInfoItem {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.10) 0%,
+      rgba(143, 124, 255, 0.14) 55%,
+      rgba(243, 163, 220, 0.10) 100%
+    ) !important;
+  border: 1px solid rgba(143, 124, 255, 0.18) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 0 14px rgba(143, 124, 255, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02) !important;
+}
+
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .mainDetailButtons .emby-button:hover,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .detailPagePrimaryButtons .emby-button:hover,
+body:not(.ptv-native-login-page) .detailPage:not(.itemDetailPage) .detailButton:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(134, 227, 255, 0.14) 0%,
+      rgba(143, 124, 255, 0.18) 55%,
+      rgba(243, 163, 220, 0.14) 100%
+    ) !important;
+  border-color: rgba(143, 124, 255, 0.24) !important;
+  box-shadow:
+    0 0 18px rgba(143, 124, 255, 0.12),
+    0 10px 24px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* =========================================================
+   ORDERING
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .nextUpSection {
+  order: 10 !important;
+}
+
+body:not(.ptv-native-login-page) .seasonsSection {
+  order: 20 !important;
+}
+
+/* =========================================================
+   NARROW DESKTOP SAFETY
+   ========================================================= */
+
+@media (max-width: 1500px) {
+  body:not(.ptv-native-login-page)
+  .layout-desktop
+  .detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo)) {
+    --ptv-series-poster-width: 360px;
+    --ptv-series-shell-width: 1280px;
+  }
+}
+
+@media (max-width: 1200px) {
+  body:not(.ptv-native-login-page)
+  .layout-desktop
+  .detailPagePrimaryContainer:not(.itemDetailPage):not(:has(.itemVideoInfo)) {
+    --ptv-series-poster-width: 300px;
+    --ptv-series-gap: 26px;
+    --ptv-series-shell-width: 1120px;
+    --ptv-series-side-pad: 22px;
+  }
+}
+
+/* ===== details\movies.css ===== */
+/* =========================================================
+   PIGGIETV — DETAILS / MOVIES
+   Movie-only layout (no NextUp / no Season sections)
+   ========================================================= */
+
+/* =========================================================
+   MOVIE PAGE DETECTION
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason)) {
+  --ptv-movie-offset: 520px;
+  --ptv-movie-width: min(760px, calc(100vw - var(--ptv-movie-offset) - 60px));
+}
+
+/* =========================================================
+   POSTER (small floating style)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailImageContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemPosterContainer {
+  width: 72px !important;
+  max-width: 72px !important;
+  position: absolute !important;
+  top: 180px !important;
+  left: 12px !important;
+  z-index: 3;
+}
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailImageContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemPosterContainer img {
+  border-radius: 12px !important;
+}
+
+/* =========================================================
+   TEXT / META COLUMN
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailSectionContent,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemDetailsGroup,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.overviewText,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.overviewRow,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.mediaInfoItems,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemTags,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.genres {
+  margin-left: var(--ptv-movie-offset) !important;
+  width: var(--ptv-movie-width) !important;
+  max-width: var(--ptv-movie-width) !important;
+}
+
+/* =========================================================
+   OVERVIEW TUNING
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.itemOverview {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  font-size: 0.97rem !important;
+  line-height: 1.52 !important;
+}
+
+/* =========================================================
+   LOWER SECTIONS (cast / recommendations)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+~ .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+~ .detailSections,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPageContent:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.verticalSectionContainer {
+  margin-left: var(--ptv-movie-offset) !important;
+  max-width: var(--ptv-movie-width) !important;
+  margin-top: 12px !important;
+}
+
+/* =========================================================
+   SAFETY (prevents drift issues)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:not(:has(.nextUpSection)):not(:has(.moreFromSeason))
+.sectionTitleContainer {
+  margin-left: var(--ptv-movie-offset) !important;
+}
+
+/* ===== details\episodes.css ===== */
+/* =========================================================
+   PIGGIETV — DETAILS / EPISODES
+   Episode + "more from season" pages
+   ========================================================= */
+
+/* =========================================================
+   EPISODE PAGE DETECTION
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason),
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo) {
+  --ptv-episode-offset: 520px;
+  --ptv-episode-width: min(820px, calc(100vw - var(--ptv-episode-offset) - 60px));
+}
+
+/* =========================================================
+   SMALL THUMB (NOT A POSTER)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailImageContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemPosterContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailImageContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemPosterContainer {
+  width: 58px !important;
+  max-width: 58px !important;
+  position: absolute !important;
+  top: 190px !important;
+  left: 12px !important;
+  z-index: 3;
+}
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailImageContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemPosterContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailImageContainer img,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemPosterContainer img {
+  border-radius: 10px !important;
+}
+
+/* =========================================================
+   TEXT / META COLUMN
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailSectionContent,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemDetailsGroup,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.overviewText,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.overviewRow,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.mediaInfoItems,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.itemTags,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.genres,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailSectionContent,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemDetailsGroup,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.overviewText,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.overviewRow,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.mediaInfoItems,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.itemTags,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.genres {
+  margin-left: var(--ptv-episode-offset) !important;
+  width: var(--ptv-episode-width) !important;
+  max-width: var(--ptv-episode-width) !important;
+}
+
+/* =========================================================
+   OVERVIEW TUNING
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.detailOverview,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.detailOverview {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  font-size: 0.97rem !important;
+  line-height: 1.52 !important;
+}
+
+/* =========================================================
+   LOWER SECTIONS (cast / more from season)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+~ .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+~ .detailSections,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPageContent:has(.moreFromSeason)
+.verticalSectionContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+~ .detailPageSecondaryContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+~ .detailSections,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPageContent:has(.itemVideoInfo)
+.verticalSectionContainer {
+  margin-left: var(--ptv-episode-offset) !important;
+  max-width: var(--ptv-episode-width) !important;
+  margin-top: 10px !important;
+}
+
+/* =========================================================
+   SAFETY (prevents drift)
+   ========================================================= */
+
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.moreFromSeason)
+.sectionTitleContainer,
+body:not(.ptv-native-login-page)
+.layout-desktop
+.detailPagePrimaryContainer:has(.itemVideoInfo)
+.sectionTitleContainer {
+  margin-left: var(--ptv-episode-offset) !important;
+}
+
+/* ===== responsive.css ===== */
+/* =========================================================
+   PIGGIETV — RESPONSIVE
+   Clean responsive behavior across layout + detail pages
+   ========================================================= */
+
+/* =========================================================
+   TABLET / SMALL DESKTOP (≤ 1200px)
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  /* tighten detail page spacing */
+  body:not(.ptv-native-login-page) .detailPagePrimaryContent {
+    padding: 20px 18px 10px !important;
+  }
+
+  body:not(.ptv-native-login-page) .detailPageSecondaryContainer,
+  body:not(.ptv-native-login-page) .detailSections,
+  body:not(.ptv-native-login-page) .detailPageContent .verticalSectionContainer {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  /* slightly reduce logos */
+  body:not(.ptv-native-login-page) .detailLogo {
+    max-width: 320px !important;
+    max-height: 130px !important;
+  }
+}
+
+/* =========================================================
+   TABLET / COMPACT (≤ 900px)
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  /* =======================================================
+     TABS (scrollable, clean)
+     ======================================================= */
+
+  body:not(.ptv-native-login-page) .headerTabs,
+  body:not(.ptv-native-login-page) .headerTabs .emby-tabs-slider,
+  body:not(.ptv-native-login-page) .sectionTabs,
+  body:not(.ptv-native-login-page) .sectionTabs .emby-tabs-slider {
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    padding: 6px 8px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+
+  body:not(.ptv-native-login-page) .headerTabs .emby-tab-button,
+  body:not(.ptv-native-login-page) .headerTabs .emby-button,
+  body:not(.ptv-native-login-page) .sectionTabs .emby-tab-button,
+  body:not(.ptv-native-login-page) .sectionTabs .emby-button,
+  body:not(.ptv-native-login-page) .headerTabs a,
+  body:not(.ptv-native-login-page) .sectionTabs a {
+    min-height: 42px !important;
+    padding: 0 14px !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* =======================================================
+     DETAIL PAGE STACK (critical fix)
+     ======================================================= */
+
+  body:not(.ptv-native-login-page) .detailPagePrimaryContent {
+    display: block !important;
+    padding: 18px 16px 8px !important;
+  }
+
+  /* poster becomes centered instead of left/grid */
+  body:not(.ptv-native-login-page) .detailImageContainer,
+  body:not(.ptv-native-login-page) .itemPosterContainer {
+    position: static !important;
+    width: 180px !important;
+    max-width: 180px !important;
+    margin: 0 auto 18px auto !important;
+  }
+
+  /* content becomes full width */
+  body:not(.ptv-native-login-page) .detailSectionContent,
+  body:not(.ptv-native-login-page) .itemDetailsGroup,
+  body:not(.ptv-native-login-page) .detailOverview,
+  body:not(.ptv-native-login-page) .overviewText,
+  body:not(.ptv-native-login-page) .itemOverview,
+  body:not(.ptv-native-login-page) .overviewRow,
+  body:not(.ptv-native-login-page) .mediaInfoItems,
+  body:not(.ptv-native-login-page) .itemTags,
+  body:not(.ptv-native-login-page) .genres {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* shelves align properly */
+  body:not(.ptv-native-login-page) .detailPageSecondaryContainer,
+  body:not(.ptv-native-login-page) .detailSections,
+  body:not(.ptv-native-login-page) .detailPageContent .verticalSectionContainer {
+    margin-left: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* logo shrink */
+  body:not(.ptv-native-login-page) .detailLogo {
+    max-width: 260px !important;
+    max-height: 110px !important;
+    margin: 0 auto 12px auto !important;
+    display: block !important;
+  }
+
+  /* ensure rows don’t overflow */
+  body:not(.ptv-native-login-page) .nextUpSection,
+  body:not(.ptv-native-login-page) .seasonsSection,
+  body:not(.ptv-native-login-page) .castContent,
+  body:not(.ptv-native-login-page) .recommendations,
+  body:not(.ptv-native-login-page) .verticalSection,
+  body:not(.ptv-native-login-page) .listItem,
+  body:not(.ptv-native-login-page) .episodeCard {
+    max-width: 100% !important;
+  }
+}
+
+/* =========================================================
+   MOBILE (≤ 600px)
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* tighter spacing */
+  body:not(.ptv-native-login-page) .detailPagePrimaryContent {
+    padding: 14px 12px 6px !important;
+  }
+
+  body:not(.ptv-native-login-page) .detailImageContainer,
+  body:not(.ptv-native-login-page) .itemPosterContainer {
+    width: 140px !important;
+    max-width: 140px !important;
+  }
+
+  body:not(.ptv-native-login-page) .detailLogo {
+    max-width: 200px !important;
+  }
+
+  /* cards tighter on mobile */
+  body:not(.ptv-native-login-page) .cardBox,
+  body:not(.ptv-native-login-page) .cardScalable {
+    border-radius: 12px !important;
+  }
+
+  /* tabs tighter */
+  body:not(.ptv-native-login-page) .headerTabs .emby-tab-button {
+    padding: 0 10px !important;
+    min-height: 38px !important;
+  }
+}
