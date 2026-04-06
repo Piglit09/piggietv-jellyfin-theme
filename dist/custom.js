@@ -1,5 +1,5 @@
 (function () {
-  const LOGO_URL = "https://piggietv.com/web/assets/img/banner-light.png";
+  const LOGO_URL = "https://theme.piggietv.com/assets/logo/banner-light.png";
   const DISCORD_URL = "https://discord.gg/FbtexGYau";
   const SIGNUP_URL = "https://signup.piggietv.com/invite/ysBDoDSMpv5fFMz9GPMxUL";
   const FORGOT_URL = "https://signup.piggietv.com/my/account";

@@ -11,15 +11,11 @@
   background:
     linear-gradient(
       180deg,
-      rgba(18, 22, 40, 0.94),
-      rgba(24, 28, 48, 0.96)
+      rgba(16, 20, 36, 0.985),
+      rgba(22, 26, 44, 0.985)
     ) !important;
-
-  border-right: 1px solid rgba(255,255,255,0.06) !important;
-
-  box-shadow:
-    8px 0 28px rgba(0,0,0,0.35),
-    inset -1px 0 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(18px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(120%) !important;
 }
 
 /* subtle glow edge */
