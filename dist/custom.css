@@ -936,10 +936,9 @@ body:not(.ptv-native-login-page) .adminDrawer .navMenuOption-selected {
     0 6px 18px rgba(0,0,0,0.25);
 }
 
-/* remove logo (keeps admin clean) */
-body:not(.ptv-native-login-page) .adminDrawerLogo,
+/* keep custom logo visible */
 body:not(.ptv-native-login-page) #ptv-sidebar-logo {
-  display: none !important;
+  display: block !important;
 }
 
 /* =========================================================

@@ -82,9 +82,9 @@
     link.rel = "noopener noreferrer";
     link.className = "navMenuOption lnk";
     link.innerHTML = `
-      <span class="navMenuOptionIcon"></span>
-      <span class="navMenuOptionText">Discord</span>
-    `;
+  <span class="material-icons navMenuOptionIcon">forum</span>
+  <span class="navMenuOptionText">Discord</span>
+`;
 
     nav.appendChild(link);
   }
