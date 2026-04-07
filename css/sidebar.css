@@ -267,3 +267,34 @@
   z-index: 0 !important;
   pointer-events: none !important;
 }
+/* =========================================================
+   FORCE DRAWER ONSCREEN
+   ========================================================= */
+
+.mainDrawer {
+  transform: translateX(0) !important;
+  left: 0 !important;
+  opacity: 1 !important;
+}
+
+.mainDrawer-hidden,
+.mainDrawer.hide,
+.mainDrawer[hidden] {
+  display: none !important;
+}
+
+.mainDrawer-transition {
+  transform: translateX(0) !important;
+}
+
+/* keep it anchored */
+.mainDrawer,
+.mainDrawer-transition,
+.touch-menu-la,
+.touch-menu {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+}
