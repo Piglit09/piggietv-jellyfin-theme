@@ -458,12 +458,13 @@ body:not(.ptv-native-login-page) .mainAnimatedPage::after {
   background: linear-gradient(0deg, rgba(8,12,26,0.9), transparent);
 }
 /* Poster safety */
-.cardContent,
-.cardImageContainer,
-.cardImage,
-.cardPadder,
-.cardScalable {
-  background: initial !important;
+.itemsContainer .cardContent,
+.itemsContainer .cardImageContainer,
+.itemsContainer .cardImage,
+.itemsContainer .cardPadder,
+.itemsContainer .cardScalable {
+  background: unset !important;
+  background-color: unset !important;
 }
 /* Panels / dialogs only */
 body:not(.ptv-native-login-page) .dialog,
