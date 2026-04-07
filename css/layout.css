@@ -127,7 +127,6 @@ body:not(.ptv-native-login-page) .page {
 }
 
 /* remove harsh default panel backgrounds */
-body:not(.ptv-native-login-page) .cardContent,
 body:not(.ptv-native-login-page) .dialog,
 body:not(.ptv-native-login-page) .paperList {
   background: transparent !important;
@@ -157,7 +156,28 @@ body:not(.ptv-native-login-page) .mainAnimatedPage::after {
   bottom: 0;
   background: linear-gradient(0deg, rgba(8,12,26,0.9), transparent);
 }
-
+/* Poster safety */
+.cardContent,
+.cardImageContainer,
+.cardImage,
+.cardPadder,
+.cardScalable {
+  background: initial !important;
+}
+/* Panels / dialogs only */
+body:not(.ptv-native-login-page) .dialog,
+body:not(.ptv-native-login-page) .paperList,
+body:not(.ptv-native-login-page) .formDialogHeader,
+body:not(.ptv-native-login-page) .formDialogContent,
+body:not(.ptv-native-login-page) .dashboardSection,
+body:not(.ptv-native-login-page) .dashboardContent,
+body:not(.ptv-native-login-page) .visualCardBox {
+  background: rgba(10, 14, 30, 0.72) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(120, 160, 255, 0.14) !important;
+  border-radius: 18px !important;
+}
 /* =========================================================
    MOBILE / SMALL SCREEN
    ========================================================= */
