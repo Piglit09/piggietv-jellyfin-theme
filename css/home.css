@@ -199,3 +199,54 @@ body.dashboardDocument,
   height: auto !important;
   max-height: none !important;
 }
+/* =========================================================
+   GLOBAL BACKDROP ENABLE (Homepage + Details)
+   ========================================================= */
+
+/* Enable backdrop container */
+.backgroundContainer,
+.skinBody::before {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  filter: blur(20px) brightness(0.4) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Smooth transition when switching items */
+.backgroundContainer {
+  transition: background-image 0.4s ease-in-out !important;
+}
+
+/* Remove dark overlay blocking it */
+.backgroundContainer.withBackdrop {
+  opacity: 1 !important;
+}
+
+/* Make UI float above backdrop nicely */
+.skinBody {
+  background: transparent !important;
+}
+
+/* Add subtle gradient for readability */
+.skinBody::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.6) 0%,
+    rgba(0,0,0,0.85) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content stays above */
+.page,
+.mainAnimatedPage,
+.view,
+.pageContainer {
+  position: relative;
+  z-index: 1;
+}
