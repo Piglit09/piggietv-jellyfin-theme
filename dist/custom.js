@@ -4,43 +4,33 @@
   const SIGNUP_URL = "https://signup.piggietv.com/invite/ysBDoDSMpv5fFMz9GPMxUL";
   const FORGOT_URL = "https://signup.piggietv.com/my/account";
 
-  const APPS = {
-    request: {
+  const APPS = [
+    {
       id: "request",
       title: "Request",
       url: "https://request.piggietv.com",
       icon: "movie"
     },
-    games: {
+    {
       id: "games",
       title: "Games",
       url: "https://emu.piggietv.com",
       icon: "sports_esports"
     },
-    library: {
+    {
       id: "library",
       title: "Library",
       url: "https://books.piggietv.com",
       icon: "menu_book"
     }
-  };
-
-  const SIDEBAR_APPS = [APPS.request, APPS.games, APPS.library];
+  ];
 
   let lastUrl = location.href;
   let scheduled = false;
 
-  function qs(sel, root = document) {
-    return root.querySelector(sel);
-  }
-
-  function qsa(sel, root = document) {
-    return Array.from(root.querySelectorAll(sel));
-  }
-
-  function text(el) {
-    return (el?.textContent || "").trim().toLowerCase();
-  }
+  const qs = (sel, root = document) => root.querySelector(sel);
+  const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const text = (el) => (el?.textContent || "").trim().toLowerCase();
 
   function isLoginPage() {
     return location.hash.includes("#/login");
@@ -82,9 +72,9 @@
     link.rel = "noopener noreferrer";
     link.className = "navMenuOption lnk";
     link.innerHTML = `
-  <span class="material-icons navMenuOptionIcon">forum</span>
-  <span class="navMenuOptionText">Discord</span>
-`;
+      <span class="material-icons navMenuOptionIcon">forum</span>
+      <span class="navMenuOptionText">Discord</span>
+    `;
 
     nav.appendChild(link);
   }
@@ -109,7 +99,7 @@
     section.appendChild(list);
 
     const discord = qs("#ptv-discord-sidebar-link", nav);
-    const signOut = qsa(".navMenuOption, a.navMenuOption", nav).find(el =>
+    const signOut = qsa(".navMenuOption, a.navMenuOption", nav).find((el) =>
       text(el).includes("sign out")
     );
 
@@ -124,26 +114,26 @@
     return section;
   }
 
-  function openAppDirect(app) {
-    window.open(app.url, "_blank", "noopener,noreferrer");
+  function openExternal(url) {
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   function makeSidebarAppLink(app) {
-    const a = document.createElement("a");
-    a.id = `ptv-link-${app.id}`;
-    a.href = app.url;
-    a.className = "navMenuOption lnk";
-    a.innerHTML = `
+    const link = document.createElement("a");
+    link.id = `ptv-link-${app.id}`;
+    link.href = app.url;
+    link.className = "navMenuOption lnk";
+    link.innerHTML = `
       <span class="material-icons navMenuOptionIcon">${app.icon}</span>
       <span class="navMenuOptionText">${app.title}</span>
     `;
 
-    a.addEventListener("click", (e) => {
+    link.addEventListener("click", (e) => {
       e.preventDefault();
-      openAppDirect(app);
+      openExternal(app.url);
     });
 
-    return a;
+    return link;
   }
 
   function injectSidebarApps() {
@@ -157,7 +147,7 @@
     const list = qs(".ptv-apps-links", section);
     if (!list) return;
 
-    SIDEBAR_APPS.forEach(app => {
+    APPS.forEach((app) => {
       if (!qs(`#ptv-link-${app.id}`, list)) {
         list.appendChild(makeSidebarAppLink(app));
       }
@@ -165,21 +155,21 @@
   }
 
   function cleanupSidebarDuplicates() {
-    ["#ptv-sidebar-logo", "#ptv-discord-sidebar-link", "#ptv-apps-section"].forEach(sel => {
+    ["#ptv-sidebar-logo", "#ptv-discord-sidebar-link", "#ptv-apps-section"].forEach((sel) => {
       qsa(sel).forEach((el, idx) => {
         if (idx > 0) el.remove();
       });
     });
 
-    SIDEBAR_APPS.forEach(app => {
+    APPS.forEach((app) => {
       qsa(`#ptv-link-${app.id}`).forEach((el, idx) => {
         if (idx > 0) el.remove();
       });
     });
   }
 
-  function cleanupOldTopRequestTab() {
-    qsa("#ptv-top-tab-request").forEach(el => el.remove());
+  function cleanupOldInjectedBits() {
+    qsa("#ptv-top-tab-request").forEach((el) => el.remove());
   }
 
   function cleanupLogin() {
@@ -201,6 +191,26 @@
 
     form.addEventListener("mouseleave", () => {
       form.classList.remove("ptv-glow-active");
+    });
+  }
+
+  function relabelLoginButtons(root = document) {
+    qsa("button, a, .navMenuOptionText", root).forEach((el) => {
+      const value = (el.textContent || "").trim();
+      if (value === "Password Reset") {
+        el.textContent = "Forgot Password";
+      }
+      if (value === "password reset") {
+        el.textContent = "Forgot Password";
+      }
+    });
+  }
+
+  function hideQuickConnect(root = document) {
+    qsa("button, a", root).forEach((el) => {
+      if (text(el).includes("quick connect")) {
+        el.style.display = "none";
+      }
     });
   }
 
@@ -238,35 +248,17 @@
       form.appendChild(wrap);
     }
 
-    qsa("button, a").forEach((el) => {
-      const txt = text(el);
-
-      if (txt === "password reset") {
-        el.textContent = "Forgot Password";
-      }
-
-      if (txt.includes("quick connect")) {
-        el.style.display = "none";
-      }
-    });
-
+    relabelLoginButtons(form);
+    hideQuickConnect(form);
     bindLoginGlow(form);
   }
 
-  function relabel() {
-    qsa("button, a, .navMenuOptionText").forEach((el) => {
-      if ((el.textContent || "").trim() === "Password Reset") {
-        el.textContent = "Forgot Password";
-      }
-    });
-  }
-
   function run() {
-    cleanupOldTopRequestTab();
+    cleanupOldInjectedBits();
     injectSidebarApps();
     cleanupSidebarDuplicates();
     injectLogin();
-    relabel();
+    relabelLoginButtons(document);
   }
 
   const observer = new MutationObserver(() => {
@@ -284,8 +276,7 @@
       !qs("#ptv-link-games") ||
       !qs("#ptv-link-library");
 
-    const missingLoginBits =
-      isLoginPage() && !qs("#ptv-native-login-brand");
+    const missingLoginBits = isLoginPage() && !qs("#ptv-native-login-brand");
 
     if (missingSidebarBits || missingLoginBits) {
       scheduleRun();
