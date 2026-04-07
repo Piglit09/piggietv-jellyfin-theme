@@ -793,24 +793,26 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
 
 html,
 body {
-  height: auto !important;
   min-height: 100% !important;
+  height: auto !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
 
-body.withSectionTabs,
-body.libraryDocument,
-body.dashboardDocument,
-.mainAnimatedPage,
-.pageContainer,
+/* Keep Jellyfin app filling the screen */
 .skinBody,
+.pageContainer,
+.mainAnimatedPage,
 .view,
 .page {
-  overflow-y: auto !important;
+  min-height: 100vh !important;
+}
+
+/* Do NOT force auto height on core app containers */
+body.withSectionTabs,
+body.libraryDocument,
+body.dashboardDocument {
   overflow-x: hidden !important;
-  height: auto !important;
-  max-height: none !important;
 }
 /* =========================
    SAFE GLOBAL BACKDROP

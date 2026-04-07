@@ -6,8 +6,11 @@
 ```md
 # Changelog
 
+## v0.2.1 - 2026-04-06
+- backdrop bug fix 1
+
 ## v0.1.7 - 2026-04-06
--poster bug fix
+- poster bug fix
 
 ## v0.0.1 - 2026-04-06
 - Initial repo structure
