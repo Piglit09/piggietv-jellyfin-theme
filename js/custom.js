@@ -320,24 +320,34 @@
     return "143, 124, 255";
   }
 
-  function activateHomeCard(card) {
-    if (!isHomePage()) return;
+function activateHomeCard(card) {
+  if (!isHomePage()) return;
 
-    clearTimeout(backdropResetTimer);
+  clearTimeout(backdropResetTimer);
 
-    const url = extractBestImageFromCard(card);
-    const rgb = pickGlowColorFromCard(card);
+  const url = extractBestImageFromCard(card);
+  const rgb = pickGlowColorFromCard(card);
 
-    setGlow(rgb);
-    if (url) setBackdropFromUrl(url);
+  setGlow(rgb);
+
+  if (url && url.includes("/Items/")) {
+    setBackdropFromUrl(url);
   }
+}
 
-  function deactivateHomeCard() {
-    clearTimeout(backdropResetTimer);
-    backdropResetTimer = setTimeout(() => {
-      setGlow("143, 124, 255");
-    }, 180);
-  }
+ function deactivateHomeCard() {
+  clearTimeout(backdropResetTimer);
+
+  backdropResetTimer = setTimeout(() => {
+    setGlow("143, 124, 255");
+
+    const bg = qs(".backgroundContainer");
+    if (bg) {
+      bg.style.backgroundImage =
+        'url("https://piggietv.com/web/assets/img/PiggieTVBG.png")';
+    }
+  }, 200);
+}
 
   function bindHomeBackdropCards() {
     qsa(".homePage .cardBox, .homePage .cardScalable").forEach((card) => {
