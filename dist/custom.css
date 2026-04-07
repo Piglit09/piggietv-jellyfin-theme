@@ -630,12 +630,22 @@ body:not(.ptv-native-login-page) .homePage .itemsContainer {
 
 body:not(.ptv-native-login-page) .homePage {
   --ptv-home-glow-rgb: 143, 124, 255;
-  --ptv-home-glow-strong: rgba(var(--ptv-home-glow-rgb), 0.14);
-  --ptv-home-glow-soft: rgba(var(--ptv-home-glow-rgb), 0.06);
+  --ptv-home-glow-strong: rgba(var(--ptv-home-glow-rgb), 0.08);
+  --ptv-home-glow-soft: rgba(var(--ptv-home-glow-rgb), 0.04);
   --ptv-home-backdrop-dim-top: rgba(4, 8, 18, 0.26);
   --ptv-home-backdrop-dim-bottom: rgba(4, 8, 18, 0.82);
   position: relative;
   z-index: 2;
+}
+.homePage .itemsContainer:hover .cardBox {
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+
+.homePage .itemsContainer:hover .cardBox:hover {
+  opacity: 1;
+  transform: scale(1.04);
+  z-index: 5;
 }
 
 /* =========================================================

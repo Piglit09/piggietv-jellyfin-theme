@@ -268,8 +268,9 @@
   function setBackdropFromUrl(url) {
     const bg = qs(".backgroundContainer");
     if (!bg || !url) return;
-    bg.style.backgroundImage = `url("${url}")`;
-  }
+ setTimeout(() => {
+  bg.style.backgroundImage = `url("${url}")`;
+}, 80);
 
   function extractUrlFromBackgroundImage(bgValue) {
     if (!bgValue || bgValue === "none") return "";
@@ -344,7 +345,7 @@ function activateHomeCard(card) {
     const bg = qs(".backgroundContainer");
     if (bg) {
       bg.style.backgroundImage =
-        'url("https://piggietv.com/web/assets/img/PiggieTVBG.png")';
+        'url("https://theme.piggietv.com/assets/PiggieTVBG.png")';
     }
   }, 200);
 }
