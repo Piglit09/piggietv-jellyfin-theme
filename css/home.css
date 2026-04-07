@@ -106,6 +106,7 @@ body:not(.ptv-native-login-page) .homePage .cardScalable:hover {
   filter: brightness(1.03) !important;
 }
 
+/* Safe radius only — no forced transparency on card content */
 body:not(.ptv-native-login-page) .homePage .cardImageContainer,
 body:not(.ptv-native-login-page) .homePage .cardPadder,
 body:not(.ptv-native-login-page) .homePage .cardImage {
@@ -199,6 +200,7 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button[aria-selected="true"
    POSTER SAFETY RESET
    ========================================================= */
 
+/* Keep image wrappers clean, but do not kill core rendering */
 body:not(.ptv-native-login-page) .homePage .cardImageContainer,
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
   background: transparent !important;
@@ -207,7 +209,6 @@ body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
   border: 0 !important;
   box-shadow: none !important;
-  overflow: visible !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .cardImage,
@@ -216,23 +217,44 @@ body:not(.ptv-native-login-page) .homePage img.cardImage {
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
-  position: relative !important;
-  z-index: 1 !important;
   filter: none !important;
-  transform: none !important;
   mix-blend-mode: normal !important;
 }
 
-body:not(.ptv-native-login-page) .homePage .blurhash-canvas,
+/* Disable overlay pseudo-elements that can black out posters */
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::before,
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::after,
 body:not(.ptv-native-login-page) .homePage .cardImageContainer::before,
 body:not(.ptv-native-login-page) .homePage .cardImageContainer::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Hide blurhash placeholder if it is sitting on top */
+body:not(.ptv-native-login-page) .homePage .blurhash-canvas {
+  opacity: 0 !important;
+  visibility: hidden !important;
   pointer-events: none !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .cardOverlayButton {
   z-index: 2 !important;
+}
+
+/* =========================================================
+   HERO / SLIDESHOW SAFETY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) #slides-container:empty {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body:not(.ptv-native-login-page) #slides-container {
+  min-height: 0 !important;
 }
 
 /* =========================================================

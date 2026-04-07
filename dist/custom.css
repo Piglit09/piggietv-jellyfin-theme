@@ -774,6 +774,7 @@ body:not(.ptv-native-login-page) .homePage .cardScalable:hover {
   filter: brightness(1.03) !important;
 }
 
+/* Safe radius only — no forced transparency on card content */
 body:not(.ptv-native-login-page) .homePage .cardImageContainer,
 body:not(.ptv-native-login-page) .homePage .cardPadder,
 body:not(.ptv-native-login-page) .homePage .cardImage {
@@ -867,6 +868,7 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button[aria-selected="true"
    POSTER SAFETY RESET
    ========================================================= */
 
+/* Keep image wrappers clean, but do not kill core rendering */
 body:not(.ptv-native-login-page) .homePage .cardImageContainer,
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
   background: transparent !important;
@@ -875,7 +877,6 @@ body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer {
   border: 0 !important;
   box-shadow: none !important;
-  overflow: visible !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .cardImage,
@@ -884,23 +885,44 @@ body:not(.ptv-native-login-page) .homePage img.cardImage {
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
-  position: relative !important;
-  z-index: 1 !important;
   filter: none !important;
-  transform: none !important;
   mix-blend-mode: normal !important;
 }
 
-body:not(.ptv-native-login-page) .homePage .blurhash-canvas,
+/* Disable overlay pseudo-elements that can black out posters */
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::before,
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::after,
 body:not(.ptv-native-login-page) .homePage .cardImageContainer::before,
 body:not(.ptv-native-login-page) .homePage .cardImageContainer::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Hide blurhash placeholder if it is sitting on top */
+body:not(.ptv-native-login-page) .homePage .blurhash-canvas {
+  opacity: 0 !important;
+  visibility: hidden !important;
   pointer-events: none !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .cardOverlayButton {
   z-index: 2 !important;
+}
+
+/* =========================================================
+   HERO / SLIDESHOW SAFETY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) #slides-container:empty {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body:not(.ptv-native-login-page) #slides-container {
+  min-height: 0 !important;
 }
 
 /* =========================================================
@@ -915,38 +937,34 @@ body:not(.ptv-native-login-page) .homePage .cardOverlayButton {
 
 /* ===== dashboard.css ===== */
 /* =========================================================
-   PIGGIETV — ADMIN DASHBOARD
-   Clean, minimal, consistent with main theme
+   PIGGIETV — ADMIN DASHBOARD (CLEAN SAFE)
    ========================================================= */
 
 /* =========================================================
-   ROOT / BACKGROUND
+   ROOT
    ========================================================= */
 
 body:not(.ptv-native-login-page) .dashboardDocument,
 body:not(.ptv-native-login-page) #dashboardPage {
   background: #020b14 !important;
-  color: rgba(255,255,255,0.85) !important;
+  color: rgba(255,255,255,0.88) !important;
 }
 
 /* =========================================================
-   ADMIN SIDEBAR (SEPARATE STYLE FROM MAIN SIDEBAR)
+   ADMIN SIDEBAR
    ========================================================= */
 
 body:not(.ptv-native-login-page) .adminDrawer {
   width: 290px !important;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(3,10,18,0.96),
-      rgba(5,12,22,0.98)
-    ) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(3,10,18,0.96),
+    rgba(5,12,22,0.98)
+  ) !important;
 
   border-right: 1px solid rgba(255,255,255,0.06) !important;
-
-  box-shadow:
-    8px 0 30px rgba(0,0,0,0.35);
+  box-shadow: 8px 0 30px rgba(0,0,0,0.35);
 }
 
 /* nav items */
@@ -960,26 +978,20 @@ body:not(.ptv-native-login-page) .adminDrawer .navMenuOption {
   background: transparent !important;
   color: rgba(255,255,255,0.75) !important;
 
-  transition:
-    background 0.16s ease,
-    color 0.16s ease,
-    box-shadow 0.16s ease !important;
+  transition: all 0.16s ease !important;
 }
 
-/* hover */
 body:not(.ptv-native-login-page) .adminDrawer .navMenuOption:hover {
   background: rgba(255,255,255,0.05) !important;
-  color: rgba(255,255,255,0.95) !important;
+  color: #fff !important;
 }
 
-/* active */
 body:not(.ptv-native-login-page) .adminDrawer .navMenuOption-selected {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(134,227,255,0.18),
-      rgba(143,124,255,0.22)
-    ) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(134,227,255,0.18),
+    rgba(143,124,255,0.22)
+  ) !important;
 
   color: #fff !important;
 
@@ -988,13 +1000,13 @@ body:not(.ptv-native-login-page) .adminDrawer .navMenuOption-selected {
     0 6px 18px rgba(0,0,0,0.25);
 }
 
-/* keep custom logo visible */
-body:not(.ptv-native-login-page) #ptv-sidebar-logo {
+/* logo safety */
+#ptv-sidebar-logo {
   display: block !important;
 }
 
 /* =========================================================
-   PANELS / CARDS
+   PANELS
    ========================================================= */
 
 body:not(.ptv-native-login-page) .dashboardSection,
@@ -1004,13 +1016,12 @@ body:not(.ptv-native-login-page) .itemCountCard,
 body:not(.ptv-native-login-page) .visualCardBox,
 body:not(.ptv-native-login-page) .paperList,
 body:not(.ptv-native-login-page) .activeSession {
-  background: #05101a !important;
+  background: rgba(8,16,26,0.85) !important;
 
   border-radius: 18px !important;
-  border: 1px solid rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.05) !important;
 
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
 /* list rows */
@@ -1018,8 +1029,6 @@ body:not(.ptv-native-login-page) .dashboardSection .listItem,
 body:not(.ptv-native-login-page) #dashboardPage .listItem {
   background: transparent !important;
   border-radius: 14px !important;
-
-  transition: background 0.16s ease;
 }
 
 body:not(.ptv-native-login-page) .dashboardSection .listItem:hover,
@@ -1028,7 +1037,7 @@ body:not(.ptv-native-login-page) #dashboardPage .listItem:hover {
 }
 
 /* =========================================================
-   TEXT / HEADERS
+   TEXT
    ========================================================= */
 
 body:not(.ptv-native-login-page) .dashboardDocument h2,
@@ -1050,32 +1059,26 @@ body:not(.ptv-native-login-page) .dashboardDocument .emby-button,
 body:not(.ptv-native-login-page) #dashboardPage .emby-button {
   border-radius: 999px !important;
 
-  background:
-    linear-gradient(
-      90deg,
-      rgba(134,227,255,0.95),
-      rgba(143,124,255,0.92)
-    ) !important;
+  background: linear-gradient(
+    90deg,
+    rgba(134,227,255,0.95),
+    rgba(143,124,255,0.92)
+  ) !important;
 
   color: #fff !important;
   border: none !important;
 
-  box-shadow:
-    0 8px 20px rgba(0,0,0,0.25);
-
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease !important;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: all 0.16s ease !important;
 }
 
 body:not(.ptv-native-login-page) .dashboardDocument .emby-button:hover {
   transform: translateY(-1px);
-  box-shadow:
-    0 12px 26px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.35);
 }
 
 /* =========================================================
-   INPUTS / FORMS
+   INPUTS
    ========================================================= */
 
 body:not(.ptv-native-login-page) .dashboardDocument .emby-input,
@@ -1087,22 +1090,17 @@ body:not(.ptv-native-login-page) .dashboardDocument select {
   border-radius: 14px !important;
 
   color: #fff !important;
-
-  transition:
-    border-color 0.16s ease,
-    box-shadow 0.16s ease !important;
 }
 
 body:not(.ptv-native-login-page) .dashboardDocument .emby-input:focus,
 body:not(.ptv-native-login-page) .dashboardDocument textarea:focus,
 body:not(.ptv-native-login-page) .dashboardDocument select:focus {
   border-color: rgba(134,227,255,0.55) !important;
-  box-shadow:
-    0 0 0 3px rgba(134,227,255,0.12) !important;
+  box-shadow: 0 0 0 3px rgba(134,227,255,0.12) !important;
 }
 
 /* =========================================================
-   ACTIVE SESSION CARD (highlight)
+   ACTIVE SESSION
    ========================================================= */
 
 body:not(.ptv-native-login-page) .activeSession .cardBox,
@@ -1119,29 +1117,27 @@ body:not(.ptv-native-login-page) .activeSession .sessionCard {
 }
 
 /* =========================================================
-   SCROLLBAR (GLOBAL MATCH)
+   SCROLLBAR
    ========================================================= */
 
 ::-webkit-scrollbar {
   width: 8px;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 ::-webkit-scrollbar-thumb {
   border-radius: 6px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(143,124,255,0.6),
-      rgba(134,227,255,0.6)
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(143,124,255,0.6),
+    rgba(134,227,255,0.6)
+  );
 }
 
 /* ===== settings.css ===== */
+/* =========================================================
+   PIGGIETV — SETTINGS 
+   ========================================================= */
+
 body:not(.ptv-native-login-page) .settingsContainer,
 body:not(.ptv-native-login-page) .userSettingsContainer,
 body:not(.ptv-native-login-page) .sectionedSettings,
@@ -1150,15 +1146,17 @@ body:not(.ptv-native-login-page) .content-primary {
   margin: 0 auto !important;
 }
 
+/* list rows */
 body:not(.ptv-native-login-page) .settingsContainer .listItem,
 body:not(.ptv-native-login-page) .userSettingsContainer .listItem {
   border-radius: 14px !important;
   background: rgba(255,255,255,0.03) !important;
+  transition: background 0.15s ease !important;
 }
 
 body:not(.ptv-native-login-page) .settingsContainer .listItem:hover,
 body:not(.ptv-native-login-page) .userSettingsContainer .listItem:hover {
-  background: rgba(255,255,255,0.05) !important;
+  background: rgba(255,255,255,0.06) !important;
 }
 
 /* ===== login.css ===== */
