@@ -3,6 +3,7 @@
   const DISCORD_URL = "https://discord.gg/FbtexGYau";
   const SIGNUP_URL = "https://signup.piggietv.com/invite/ysBDoDSMpv5fFMz9GPMxUL";
   const FORGOT_URL = "https://signup.piggietv.com/my/account";
+  const DEFAULT_BACKDROP_URL = "https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png";
 
   const APPS = [
     {
@@ -38,10 +39,7 @@
   }
 
   function isHomePage() {
-    return (
-      location.hash.includes("#/home") ||
-      !!qs(".homePage")
-    );
+    return location.hash.includes("#/home") || !!qs(".homePage");
   }
 
   function scheduleRun() {
@@ -268,9 +266,11 @@
   function setBackdropFromUrl(url) {
     const bg = qs(".backgroundContainer");
     if (!bg || !url) return;
- setTimeout(() => {
-  bg.style.backgroundImage = `url("${url}")`;
-}, 80);
+
+    setTimeout(() => {
+      bg.style.backgroundImage = `url("${url}")`;
+    }, 80);
+  }
 
   function extractUrlFromBackgroundImage(bgValue) {
     if (!bgValue || bgValue === "none") return "";
@@ -300,14 +300,11 @@
   }
 
   function pickGlowColorFromCard(card) {
-    const title =
-      (
-        card.querySelector(".cardText")?.textContent ||
-        card.querySelector(".cardFooter")?.textContent ||
-        ""
-      )
-        .trim()
-        .toLowerCase();
+    const title = (
+      card.querySelector(".cardText")?.textContent ||
+      card.querySelector(".cardFooter")?.textContent ||
+      ""
+    ).trim().toLowerCase();
 
     if (title.includes("dragon")) return "255, 153, 64";
     if (title.includes("pokemon")) return "86, 170, 255";
@@ -321,34 +318,33 @@
     return "143, 124, 255";
   }
 
-function activateHomeCard(card) {
-  if (!isHomePage()) return;
+  function activateHomeCard(card) {
+    if (!isHomePage()) return;
 
-  clearTimeout(backdropResetTimer);
+    clearTimeout(backdropResetTimer);
 
-  const url = extractBestImageFromCard(card);
-  const rgb = pickGlowColorFromCard(card);
+    const url = extractBestImageFromCard(card);
+    const rgb = pickGlowColorFromCard(card);
 
-  setGlow(rgb);
+    setGlow(rgb);
 
-  if (url && url.includes("/Items/")) {
-    setBackdropFromUrl(url);
-  }
-}
-
- function deactivateHomeCard() {
-  clearTimeout(backdropResetTimer);
-
-  backdropResetTimer = setTimeout(() => {
-    setGlow("143, 124, 255");
-
-    const bg = qs(".backgroundContainer");
-    if (bg) {
-      bg.style.backgroundImage =
-        'url("https://theme.piggietv.com/assets/PiggieTVBG.png")';
+    if (url && url.includes("/Items/")) {
+      setBackdropFromUrl(url);
     }
-  }, 200);
-}
+  }
+
+  function deactivateHomeCard() {
+    clearTimeout(backdropResetTimer);
+
+    backdropResetTimer = setTimeout(() => {
+      setGlow("143, 124, 255");
+
+      const bg = qs(".backgroundContainer");
+      if (bg) {
+        bg.style.backgroundImage = `url("${DEFAULT_BACKDROP_URL}")`;
+      }
+    }, 200);
+  }
 
   function bindHomeBackdropCards() {
     qsa(".homePage .cardBox, .homePage .cardScalable").forEach((card) => {
