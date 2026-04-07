@@ -27,6 +27,7 @@
 
   let lastUrl = location.href;
   let scheduled = false;
+  let backdropResetTimer = null;
 
   const qs = (sel, root = document) => root.querySelector(sel);
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -34,6 +35,13 @@
 
   function isLoginPage() {
     return location.hash.includes("#/login");
+  }
+
+  function isHomePage() {
+    return (
+      location.hash.includes("#/home") ||
+      !!qs(".homePage")
+    );
   }
 
   function scheduleRun() {
@@ -197,10 +205,7 @@
   function relabelLoginButtons(root = document) {
     qsa("button, a, .navMenuOptionText", root).forEach((el) => {
       const value = (el.textContent || "").trim();
-      if (value === "Password Reset") {
-        el.textContent = "Forgot Password";
-      }
-      if (value === "password reset") {
+      if (value === "Password Reset" || value === "password reset") {
         el.textContent = "Forgot Password";
       }
     });
@@ -253,12 +258,106 @@
     bindLoginGlow(form);
   }
 
+  function setGlow(rgb) {
+    document.documentElement.style.setProperty(
+      "--ptv-home-glow-rgb",
+      rgb || "143, 124, 255"
+    );
+  }
+
+  function setBackdropFromUrl(url) {
+    const bg = qs(".backgroundContainer");
+    if (!bg || !url) return;
+    bg.style.backgroundImage = `url("${url}")`;
+  }
+
+  function extractUrlFromBackgroundImage(bgValue) {
+    if (!bgValue || bgValue === "none") return "";
+    const match = bgValue.match(/url\((['"]?)(.*?)\1\)/);
+    return match?.[2] || "";
+  }
+
+  function extractBestImageFromCard(card) {
+    if (!card) return "";
+
+    const img =
+      card.querySelector(".cardImage img") ||
+      card.querySelector(".cardImageContainer img") ||
+      card.querySelector("img");
+
+    if (img?.currentSrc) return img.currentSrc;
+    if (img?.src) return img.src;
+
+    const cardImage = card.querySelector(".cardImage");
+    if (cardImage) {
+      const bg = getComputedStyle(cardImage).backgroundImage;
+      const url = extractUrlFromBackgroundImage(bg);
+      if (url) return url;
+    }
+
+    return "";
+  }
+
+  function pickGlowColorFromCard(card) {
+    const title =
+      (
+        card.querySelector(".cardText")?.textContent ||
+        card.querySelector(".cardFooter")?.textContent ||
+        ""
+      )
+        .trim()
+        .toLowerCase();
+
+    if (title.includes("dragon")) return "255, 153, 64";
+    if (title.includes("pokemon")) return "86, 170, 255";
+    if (title.includes("stone")) return "120, 220, 160";
+    if (title.includes("ghost")) return "160, 120, 255";
+    if (title.includes("fire")) return "255, 110, 90";
+    if (title.includes("slime")) return "110, 220, 255";
+    if (title.includes("dorohedoro")) return "255, 90, 110";
+    if (title.includes("classroom")) return "255, 160, 210";
+
+    return "143, 124, 255";
+  }
+
+  function activateHomeCard(card) {
+    if (!isHomePage()) return;
+
+    clearTimeout(backdropResetTimer);
+
+    const url = extractBestImageFromCard(card);
+    const rgb = pickGlowColorFromCard(card);
+
+    setGlow(rgb);
+    if (url) setBackdropFromUrl(url);
+  }
+
+  function deactivateHomeCard() {
+    clearTimeout(backdropResetTimer);
+    backdropResetTimer = setTimeout(() => {
+      setGlow("143, 124, 255");
+    }, 180);
+  }
+
+  function bindHomeBackdropCards() {
+    qsa(".homePage .cardBox, .homePage .cardScalable").forEach((card) => {
+      if (card.dataset.ptvBackdropBound === "1") return;
+      card.dataset.ptvBackdropBound = "1";
+
+      card.addEventListener("mouseenter", () => activateHomeCard(card));
+      card.addEventListener("focusin", () => activateHomeCard(card));
+      card.addEventListener("mouseleave", deactivateHomeCard);
+      card.addEventListener("focusout", deactivateHomeCard);
+    });
+  }
+
   function run() {
     cleanupOldInjectedBits();
     injectSidebarApps();
     cleanupSidebarDuplicates();
     injectLogin();
     relabelLoginButtons(document);
+    bindHomeBackdropCards();
   }
 
   const observer = new MutationObserver(() => {
@@ -278,7 +377,7 @@
 
     const missingLoginBits = isLoginPage() && !qs("#ptv-native-login-brand");
 
-    if (missingSidebarBits || missingLoginBits) {
+    if (missingSidebarBits || missingLoginBits || isHomePage()) {
       scheduleRun();
     }
   });
