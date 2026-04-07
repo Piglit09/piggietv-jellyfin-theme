@@ -654,6 +654,62 @@ body:not(.ptv-native-login-page) .visualCardBox {
 .actionSheet {
   z-index: 10000 !important;
 }
+/* =========================================================
+   CRITICAL DRAWER FIX
+   ========================================================= */
+
+/* backdrop must never block clicks */
+#ptv-backdrop-root {
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* drawer must sit above themed layers */
+.mainDrawer,
+.mainDrawer-transition,
+.mainDrawer.transition,
+.touch-menu-la,
+.touch-menu,
+.drawer-open,
+.drawerOpen {
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+}
+
+/* everything inside drawer must stay clickable */
+.mainDrawer,
+.mainDrawer * {
+  pointer-events: auto !important;
+}
+
+/* keep header/menu button above themed overlays */
+.skinHeader,
+.headerTabs,
+.skinHeader-withBackground {
+  z-index: 99998 !important;
+  pointer-events: auto !important;
+}
+
+/* dialogs still above everything */
+.dialog,
+.actionSheet,
+.focuscontainer-dialog,
+.itemsContainer.dialogContent {
+  z-index: 100000 !important;
+}
+
+/* prevent theme layers from covering drawer */
+.backgroundContainer,
+.backdropContainer,
+.pageBackground,
+.defaultBackground,
+.themeBackground,
+.pageBackdrop,
+.libraryBackground {
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
 
 /* ===== home.css ===== */
 /* =========================================================
