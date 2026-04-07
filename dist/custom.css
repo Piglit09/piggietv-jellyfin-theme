@@ -613,8 +613,21 @@ body:not(.ptv-native-login-page) .visualCardBox {
 /* ===== home.css ===== */
 /* =========================================================
    PIGGIETV — HOME
-   Stable homepage styling with hover backdrop + dynamic glow
+   Clean stable homepage styling
+   Uses JS-controlled dynamic backdrop only
    ========================================================= */
+
+/* =========================================================
+   GLOBAL SCROLL SAFETY
+   ========================================================= */
+
+html,
+body {
+  min-height: 100% !important;
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
 
 /* =========================================================
    HOME ROOT
@@ -655,8 +668,8 @@ body:not(.ptv-native-login-page) .homePage .itemsContainer {
 
 body:not(.ptv-native-login-page) .homePage .sectionTitle,
 body:not(.ptv-native-login-page) .homePage .sectionTitleText {
-  color: rgba(255,255,255,0.97) !important;
-  text-shadow: 0 2px 14px rgba(0,0,0,0.24);
+  color: rgba(255, 255, 255, 0.97) !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.24) !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .sectionTitleText {
@@ -699,8 +712,10 @@ body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons > * {
    CARDS
    ========================================================= */
 
+body:not(.ptv-native-login-page) .homePage .card,
 body:not(.ptv-native-login-page) .homePage .cardBox,
-body:not(.ptv-native-login-page) .homePage .cardScalable {
+body:not(.ptv-native-login-page) .homePage .cardScalable,
+body:not(.ptv-native-login-page) .homePage .emby-card {
   position: relative !important;
   border-radius: var(--ptv-radius-card) !important;
   border: 1px solid var(--ptv-card-border) !important;
@@ -716,7 +731,9 @@ body:not(.ptv-native-login-page) .homePage .cardScalable {
 }
 
 body:not(.ptv-native-login-page) .homePage .cardBox::before,
-body:not(.ptv-native-login-page) .homePage .cardScalable::before {
+body:not(.ptv-native-login-page) .homePage .cardScalable::before,
+body:not(.ptv-native-login-page) .homePage .card::before,
+body:not(.ptv-native-login-page) .homePage .emby-card::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -725,31 +742,45 @@ body:not(.ptv-native-login-page) .homePage .cardScalable::before {
   opacity: 0;
   transition: opacity 0.2s ease !important;
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
     0 0 20px var(--ptv-home-glow-soft),
     0 0 34px var(--ptv-home-glow-strong);
 }
 
+body:not(.ptv-native-login-page) .homePage .itemsContainer:hover .card,
 body:not(.ptv-native-login-page) .homePage .itemsContainer:hover .cardBox,
-body:not(.ptv-native-login-page) .homePage .itemsContainer:hover .cardScalable {
+body:not(.ptv-native-login-page) .homePage .itemsContainer:hover .cardScalable,
+body:not(.ptv-native-login-page) .homePage .itemsContainer:hover .emby-card {
   opacity: 0.6;
 }
 
+body:not(.ptv-native-login-page) .homePage .card:hover,
 body:not(.ptv-native-login-page) .homePage .cardBox:hover,
-body:not(.ptv-native-login-page) .homePage .cardScalable:hover {
+body:not(.ptv-native-login-page) .homePage .cardScalable:hover,
+body:not(.ptv-native-login-page) .homePage .emby-card:hover,
+body:not(.ptv-native-login-page) .homePage .card:focus-within,
+body:not(.ptv-native-login-page) .homePage .cardBox:focus-within,
+body:not(.ptv-native-login-page) .homePage .cardScalable:focus-within,
+body:not(.ptv-native-login-page) .homePage .emby-card:focus-within {
   opacity: 1 !important;
   border-color: rgba(var(--ptv-home-glow-rgb), 0.28) !important;
   box-shadow:
     0 14px 36px rgba(0, 0, 0, 0.42),
     0 0 16px var(--ptv-home-glow-soft),
-    inset 0 0 0 1px rgba(255,255,255,0.04) !important;
-  transform: translateY(-3px) scale(1.02);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+  transform: translateY(-3px) scale(1.02) !important;
   filter: brightness(1.02) !important;
   z-index: 5;
 }
 
+body:not(.ptv-native-login-page) .homePage .card:hover::before,
 body:not(.ptv-native-login-page) .homePage .cardBox:hover::before,
-body:not(.ptv-native-login-page) .homePage .cardScalable:hover::before {
+body:not(.ptv-native-login-page) .homePage .cardScalable:hover::before,
+body:not(.ptv-native-login-page) .homePage .emby-card:hover::before,
+body:not(.ptv-native-login-page) .homePage .card:focus-within::before,
+body:not(.ptv-native-login-page) .homePage .cardBox:focus-within::before,
+body:not(.ptv-native-login-page) .homePage .cardScalable:focus-within::before,
+body:not(.ptv-native-login-page) .homePage .emby-card:focus-within::before {
   opacity: 1;
 }
 
@@ -780,8 +811,8 @@ body:not(.ptv-native-login-page) .homePage .cardImageContainer::after {
 
 body:not(.ptv-native-login-page) .homePage .cardText,
 body:not(.ptv-native-login-page) .homePage .cardFooter {
-  color: rgba(255,255,255,0.94) !important;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.24) !important;
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.24) !important;
 }
 
 /* =========================================================
@@ -791,7 +822,7 @@ body:not(.ptv-native-login-page) .homePage .cardFooter {
 body:not(.ptv-native-login-page) .homePage .itemProgressBar {
   height: 7px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.10);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 body:not(.ptv-native-login-page) .homePage .itemProgressBarForeground {
@@ -809,16 +840,16 @@ body:not(.ptv-native-login-page) .homePage .itemProgressBarForeground {
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .emby-tab-button {
-  border-radius: 14px;
-  transition: all 0.18s ease;
+  border-radius: 14px !important;
+  transition: all 0.18s ease !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .emby-tab-button:hover {
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06) !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
-  background: rgba(143,124,255,0.15);
+  background: rgba(143, 124, 255, 0.15) !important;
 }
 
 /* =========================================================
@@ -830,55 +861,113 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
 }
 
 /* =========================================================
-   GLOBAL SCROLL SAFETY
+   DYNAMIC BACKDROP ROOT
+   Matches the rewritten JS:
+   #ptv-backdrop-root / #ptv-backdrop-a / #ptv-backdrop-b
    ========================================================= */
 
-html,
-body {
-  min-height: 100% !important;
-  height: auto !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
+#ptv-backdrop-root {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#ptv-backdrop-root .ptv-backdrop-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 420ms ease;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: scale(1.03);
+  will-change: opacity, background-image, transform;
+}
+
+#ptv-backdrop-root .ptv-backdrop-layer.is-active {
+  opacity: 1;
+}
+
+#ptv-backdrop-root .ptv-backdrop-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(7, 10, 18, 0.42), rgba(7, 10, 18, 0.78)),
+    radial-gradient(circle at center, rgba(100, 130, 255, 0.10), transparent 58%);
+  backdrop-filter: blur(2px);
 }
 
 /* =========================================================
-   BACKDROP
+   KILL OLD / CONFLICTING BACKGROUND SYSTEMS
    ========================================================= */
 
 body:not(.ptv-native-login-page) .backgroundContainer {
-  background-image: url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png");
-  background-size: cover !important;
-  background-position: center 20% !important;
-  background-repeat: no-repeat !important;
-  filter: blur(10px) brightness(0.38) !important;
-  transform: scale(1.04);
-  transition:
-    background-image 0.45s ease-in-out,
-    filter 0.3s ease !important;
+  background-image: none !important;
+  background: transparent !important;
+  filter: none !important;
+  transform: none !important;
+  opacity: 1 !important;
 }
 
 body:not(.ptv-native-login-page) .backgroundContainer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(4, 8, 18, 0.15) 0%,
-      rgba(4, 8, 18, 0.55) 40%,
-      rgba(4, 8, 18, 0.95) 100%
-    );
+  content: none !important;
+  display: none !important;
 }
 
-body:not(.ptv-native-login-page) .backgroundContainer.withBackdrop {
-  opacity: 1 !important;
+.backgroundContainer,
+.backdropContainer,
+.defaultBackground,
+.pageBackground,
+.themeBackground,
+.pageBackdrop,
+.libraryBackground,
+.skinHeader-withBackground,
+.mainAnimatedPage,
+.homePage,
+.libraryPage,
+.page {
+  background-image: none !important;
 }
+
+/* Hide stale built-in background layers without hiding real page content */
+.backdropContainer,
+.defaultBackground,
+.pageBackground,
+.themeBackground,
+.pageBackdrop,
+.libraryBackground {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* =========================================================
+   PAGE STACKING
+   ========================================================= */
 
 body:not(.ptv-native-login-page) .page,
 body:not(.ptv-native-login-page) .view,
 body:not(.ptv-native-login-page) .mainAnimatedPage,
-body:not(.ptv-native-login-page) .pageContainer {
+body:not(.ptv-native-login-page) .pageContainer,
+body:not(.ptv-native-login-page) .skinHeader,
+body:not(.ptv-native-login-page) .dialog,
+body:not(.ptv-native-login-page) .drawer-open,
+body:not(.ptv-native-login-page) .layout-tv,
+body:not(.ptv-native-login-page) .scrollFrameY,
+body:not(.ptv-native-login-page) .scrollSlider,
+body:not(.ptv-native-login-page) .emby-scroller {
+  position: relative;
+  z-index: 1;
+}
+
+body:not(.ptv-native-login-page) .homePage .section0,
+body:not(.ptv-native-login-page) .homePage .section1,
+body:not(.ptv-native-login-page) .homePage .section2,
+body:not(.ptv-native-login-page) .homePage .section3,
+body:not(.ptv-native-login-page) .homePage .verticalSection,
+body:not(.ptv-native-login-page) .homePage .emby-scroller,
+body:not(.ptv-native-login-page) .libraryPage .itemsContainer {
   position: relative;
   z-index: 2;
 }
@@ -896,9 +985,12 @@ body:not(.ptv-native-login-page) .skinBody {
     width: 42px;
   }
 
-  body:not(.ptv-native-login-page) .backgroundContainer {
-    filter: blur(8px) brightness(0.42) !important;
+  #ptv-backdrop-root .ptv-backdrop-layer {
     transform: scale(1.02);
+  }
+
+  #ptv-backdrop-root .ptv-backdrop-overlay {
+    backdrop-filter: blur(1.5px);
   }
 }
 

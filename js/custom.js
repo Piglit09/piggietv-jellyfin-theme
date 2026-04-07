@@ -11,14 +11,21 @@
     { id: "library", title: "Library", url: "https://books.piggietv.com", icon: "menu_book" }
   ];
 
+  const qs = (sel, root = document) => root.querySelector(sel);
+  const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const text = (el) => (el?.textContent || "").trim().toLowerCase();
+
   let lastUrl = location.href;
   let scheduled = false;
   let backdropResetTimer = null;
   let backdropSwapTimer = null;
+  let activeBackdropUrl = "";
+  let backdropRootObserver = null;
+  let domObserver = null;
 
-  const qs = (sel, root = document) => root.querySelector(sel);
-  const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-  const text = (el) => (el?.textContent || "").trim().toLowerCase();
+  const BACKDROP_ROOT_ID = "ptv-backdrop-root";
+  const BACKDROP_A_ID = "ptv-backdrop-a";
+  const BACKDROP_B_ID = "ptv-backdrop-b";
 
   function isLoginPage() {
     return location.hash.includes("#/login");
@@ -246,53 +253,164 @@
     document.documentElement.style.setProperty("--ptv-home-glow-rgb", rgb || "143, 124, 255");
   }
 
-  function getBackdropEl() {
-    return qs(".backgroundContainer");
+  function ensureBackdropRoot() {
+    let root = qs(`#${BACKDROP_ROOT_ID}`);
+    if (root) return root;
+
+    root = document.createElement("div");
+    root.id = BACKDROP_ROOT_ID;
+    root.innerHTML = `
+      <div id="${BACKDROP_A_ID}" class="ptv-backdrop-layer is-active"></div>
+      <div id="${BACKDROP_B_ID}" class="ptv-backdrop-layer"></div>
+      <div class="ptv-backdrop-overlay"></div>
+    `;
+
+    document.body.prepend(root);
+    return root;
+  }
+
+  function getBackdropLayers() {
+    return {
+      a: qs(`#${BACKDROP_A_ID}`),
+      b: qs(`#${BACKDROP_B_ID}`)
+    };
+  }
+
+  function preloadImage(url) {
+    return new Promise((resolve, reject) => {
+      if (!url) {
+        reject(new Error("No URL"));
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => reject(new Error(`Failed to load: ${url}`));
+      img.src = url;
+    });
+  }
+
+  function swapBackdrop(url) {
+    ensureBackdropRoot();
+
+    const { a, b } = getBackdropLayers();
+    if (!a || !b) return;
+
+    const aActive = a.classList.contains("is-active");
+    const activeLayer = aActive ? a : b;
+    const nextLayer = aActive ? b : a;
+
+    nextLayer.style.backgroundImage = `url("${url}")`;
+    nextLayer.classList.add("is-active");
+    activeLayer.classList.remove("is-active");
   }
 
   function setBackdropFromUrl(url) {
-    const bg = getBackdropEl();
-    if (!bg || !url) return;
+    if (!url || url === activeBackdropUrl) return;
 
     clearTimeout(backdropSwapTimer);
-    backdropSwapTimer = setTimeout(() => {
-      bg.style.backgroundImage = `url("${url}")`;
-      bg.classList.add("withBackdrop");
-    }, 70);
+    backdropSwapTimer = setTimeout(async () => {
+      try {
+        await preloadImage(url);
+        swapBackdrop(url);
+        activeBackdropUrl = url;
+      } catch (err) {
+        // keep previous backdrop if image is bad
+      }
+    }, 80);
   }
 
   function resetBackdrop() {
-    const bg = getBackdropEl();
-    if (!bg) return;
-    bg.style.backgroundImage = `url("${DEFAULT_BACKDROP_URL}")`;
-    bg.classList.add("withBackdrop");
+    setBackdropFromUrl(DEFAULT_BACKDROP_URL);
   }
 
-  function extractUrlFromBackgroundImage(bgValue) {
-    if (!bgValue || bgValue === "none") return "";
-    const match = bgValue.match(/url\((['"]?)(.*?)\1\)/);
-    return match?.[2] || "";
+  function getApiClient() {
+    return window.ApiClient || window.apiClient || null;
   }
 
-  function extractBestImageFromCard(card) {
-    if (!card) return "";
+  function getServerAddress() {
+    const api = getApiClient();
+    if (!api) return "";
 
-    const img =
-      card.querySelector(".cardImage img") ||
-      card.querySelector(".cardImageContainer img") ||
-      card.querySelector("img");
+    if (typeof api.serverAddress === "function") {
+      return api.serverAddress() || "";
+    }
 
-    if (img?.currentSrc) return img.currentSrc;
-    if (img?.src) return img.src;
-
-    const cardImage = card.querySelector(".cardImage");
-    if (cardImage) {
-      const bg = getComputedStyle(cardImage).backgroundImage;
-      const url = extractUrlFromBackgroundImage(bg);
-      if (url) return url;
+    if (typeof api._serverAddress === "string") {
+      return api._serverAddress || "";
     }
 
     return "";
+  }
+
+  function normalizeUrl(url) {
+    if (!url) return "";
+    if (/^https?:\/\//i.test(url)) return url;
+
+    const base = getServerAddress();
+    if (!base) return url;
+
+    return `${base.replace(/\/$/, "")}/${url.replace(/^\//, "")}`;
+  }
+
+  function extractIdFromString(value) {
+    if (!value) return "";
+
+    const patterns = [
+      /[?&]id=([a-zA-Z0-9]+)/,
+      /\/details\?id=([a-zA-Z0-9]+)/,
+      /\/items\/([a-zA-Z0-9]+)/i,
+      /\/server\/items\/([a-zA-Z0-9]+)/i
+    ];
+
+    for (const pattern of patterns) {
+      const match = value.match(pattern);
+      if (match?.[1]) return match[1];
+    }
+
+    return "";
+  }
+
+  function getItemIdFromCard(card) {
+    if (!card) return "";
+
+    const direct =
+      card.getAttribute("data-id") ||
+      card.getAttribute("data-itemid") ||
+      card.getAttribute("data-item-id");
+
+    if (direct) return direct;
+
+    const nested = card.querySelector("[data-id],[data-itemid],[data-item-id]");
+    if (nested) {
+      const nestedId =
+        nested.getAttribute("data-id") ||
+        nested.getAttribute("data-itemid") ||
+        nested.getAttribute("data-item-id");
+
+      if (nestedId) return nestedId;
+    }
+
+    const link = card.closest("a") || card.querySelector("a");
+    if (link?.href) {
+      const id = extractIdFromString(link.href);
+      if (id) return id;
+    }
+
+    const img = card.querySelector("img");
+    if (img?.src) {
+      const id = extractIdFromString(img.src);
+      if (id) return id;
+    }
+
+    return "";
+  }
+
+  function buildBackdropUrl(itemId) {
+    const base = getServerAddress();
+    if (!base || !itemId) return "";
+
+    return `${base.replace(/\/$/, "")}/Items/${itemId}/Images/Backdrop/0?maxWidth=1920&quality=90`;
   }
 
   function pickGlowColorFromCard(card) {
@@ -318,14 +436,16 @@
 
     clearTimeout(backdropResetTimer);
 
-    const url = extractBestImageFromCard(card);
-    const rgb = pickGlowColorFromCard(card);
+    const itemId = getItemIdFromCard(card);
+    const glow = pickGlowColorFromCard(card);
+    setGlow(glow);
 
-    setGlow(rgb);
+    if (!itemId) return;
 
-    if (url) {
-      setBackdropFromUrl(url);
-    }
+    const backdropUrl = buildBackdropUrl(itemId);
+    if (!backdropUrl) return;
+
+    setBackdropFromUrl(backdropUrl);
   }
 
   function deactivateHomeCard() {
@@ -333,11 +453,11 @@
     backdropResetTimer = setTimeout(() => {
       setGlow("143, 124, 255");
       resetBackdrop();
-    }, 180);
+    }, 220);
   }
 
   function bindHomeBackdropCards() {
-    qsa(".homePage .cardBox, .homePage .cardScalable").forEach((card) => {
+    qsa(".homePage .card, .homePage .cardBox, .homePage .cardScalable, .homePage .emby-card").forEach((card) => {
       if (card.dataset.ptvBackdropBound === "1") return;
       card.dataset.ptvBackdropBound = "1";
 
@@ -348,10 +468,44 @@
     });
   }
 
-  function initHomeBackdrop() {
+  function setInitialHomeBackdrop() {
     if (!isHomePage()) return;
-    resetBackdrop();
+
+    const firstCard = qs(".homePage .card, .homePage .cardBox, .homePage .cardScalable, .homePage .emby-card");
+    if (firstCard) {
+      activateHomeCard(firstCard);
+    } else {
+      resetBackdrop();
+    }
+  }
+
+  function startBackdropRootObserver() {
+    if (backdropRootObserver) return;
+
+    backdropRootObserver = new MutationObserver(() => {
+      if (!qs(`#${BACKDROP_ROOT_ID}`)) {
+        ensureBackdropRoot();
+        if (!activeBackdropUrl) {
+          resetBackdrop();
+        } else {
+          swapBackdrop(activeBackdropUrl);
+        }
+      }
+    });
+
+    backdropRootObserver.observe(document.body, {
+      childList: true
+    });
+  }
+
+  function initHomeBackdrop() {
+    ensureBackdropRoot();
+    startBackdropRootObserver();
+
+    if (!isHomePage()) return;
+
     bindHomeBackdropCards();
+    setInitialHomeBackdrop();
   }
 
   function run() {
@@ -363,7 +517,7 @@
     initHomeBackdrop();
   }
 
-  const observer = new MutationObserver(() => {
+  domObserver = new MutationObserver(() => {
     if (location.href !== lastUrl) {
       lastUrl = location.href;
       scheduleRun();
@@ -386,9 +540,17 @@
   });
 
   window.addEventListener("load", run);
-  window.addEventListener("hashchange", scheduleRun);
+  window.addEventListener("hashchange", () => {
+    setTimeout(scheduleRun, 120);
+    setTimeout(scheduleRun, 500);
+  });
 
-  observer.observe(document.body, {
+  document.addEventListener("viewshow", () => {
+    setTimeout(scheduleRun, 120);
+    setTimeout(scheduleRun, 500);
+  });
+
+  domObserver.observe(document.body, {
     childList: true,
     subtree: true
   });
