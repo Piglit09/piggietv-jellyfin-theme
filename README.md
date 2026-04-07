@@ -152,15 +152,18 @@ Backdrop not switching
 
 Icons not showing
 
-Common mistake:
+ Common mistake:
   - ❌ theme.piggie.com/assests/
   - ✅ theme.piggietv.com/assets/
  
  ---
 ## ⚠️ Notes
+I host all all my own assets (Nginx/CDN recommended)
+```css
+https://theme.piggietv.com/assets/
+```
  - This is not just CSS — it modifies Jellyfin frontend behavior
  - Best used with Chromium browsers
- - Requires external hosting (Nginx/CDN recommended)
 
 ## 🧠 Architecture
 
