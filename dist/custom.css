@@ -580,7 +580,18 @@ body:not(.ptv-native-login-page) .visualCardBox {
   opacity: 1;
   transform: translateX(1px);
 }
+.ptv-custom-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
+.ptv-nav-icon-svg {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex: 0 0 20px;
+}
 /* =========================================================
    SCROLL AREA
    ========================================================= */
@@ -647,6 +658,21 @@ body:not(.ptv-native-login-page) .homePage {
   --ptv-home-glow-soft: rgba(var(--ptv-home-glow-rgb), 0.04);
   position: relative;
   z-index: 2;
+}
+.homePage {
+  transition: box-shadow 0.4s ease;
+}
+
+.homePage::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(var(--ptv-home-glow-rgb), 0.15), transparent 60%);
+  transition: opacity 0.3s ease;
+  opacity: 0.8;
 }
 
 /* =========================================================
@@ -878,7 +904,7 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 420ms ease;
+  transition: opacity 650ms cubic-bezier(.22,.61,.36,1);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -897,6 +923,20 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
     linear-gradient(to bottom, rgba(7, 10, 18, 0.42), rgba(7, 10, 18, 0.78)),
     radial-gradient(circle at center, rgba(100, 130, 255, 0.10), transparent 58%);
   backdrop-filter: blur(2px);
+}
+#ptv-backdrop-root .ptv-backdrop-overlay {
+  background:
+    linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%),
+    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 40%),
+    radial-gradient(circle at 50% 35%, rgba(120,140,255,0.12), transparent 60%);
+}
+#ptv-backdrop-root .ptv-backdrop-layer {
+  animation: ptvBackdropDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes ptvBackdropDrift {
+  0%   { transform: scale(1.04) translateY(0px); }
+  100% { transform: scale(1.08) translateY(-10px); }
 }
 
 /* =========================================================
