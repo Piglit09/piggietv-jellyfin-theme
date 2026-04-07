@@ -71,12 +71,9 @@ Jellyfin Dashboard → **General → Custom CSS**
 
 ```css
 @import url("https://theme.piggietv.com/dist/custom.css");
-
+```
 ---
 
-## ⚡ JavaScript Injector (FIXED BLOCK)
-
-```md
 ### 2. Setup JavaScript Injector (AUTO-UPDATING)
 
 ⚠️ Do NOT paste your full JS  
@@ -124,12 +121,9 @@ Paste this instead:
       load(String(Date.now()));
     });
 })();
-
+```
 ---
 
-## 🚀 Updates Section (fixed)
-
-```md
 ## 🚀 How Updates Work
 
 Theme updates are controlled via:
@@ -140,7 +134,7 @@ Example:
 {
   "version": "1.0.7"
 }
-
+```
 ## 🧪 Troubleshooting
 
 Theme not updating
