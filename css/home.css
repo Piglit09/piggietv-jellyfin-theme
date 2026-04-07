@@ -149,13 +149,14 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
 .homePage .cardImageContainer::after {
   content: none !important;
 }
-
-/* Hide blurhash ONLY */
-.homePage canvas,
-.homePage .blurhash-canvas {
-  opacity: 0 !important;
+/* Homepage poster safety */
+.homePage .cardImage img,
+.homePage img.cardImage,
+.homePage .cardImageContainer img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
 }
-
 /* =========================================================
    HERO FIX
    ========================================================= */
