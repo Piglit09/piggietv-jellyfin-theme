@@ -621,113 +621,22 @@ body:not(.ptv-native-login-page) .visualCardBox {
   }
 }
 /* =========================================================
-   CRITICAL FIX — DRAWER INTERACTION + LAYERING
+   FINAL DRAWER FIX (MATCHES YOUR REAL CLASSES)
    ========================================================= */
 
-/* make sure backdrop NEVER blocks UI */
-#ptv-backdrop-root {
-  pointer-events: none !important;
-  z-index: 0 !important;
-}
-
-/* force drawer ABOVE everything */
-.mainDrawer,
-.mainDrawerDrawer,
-.drawerOpen,
-.drawer-open {
-  z-index: 9999 !important;
-  pointer-events: auto !important;
-}
-
-/* allow clicks inside drawer */
-.mainDrawer * {
-  pointer-events: auto !important;
-}
-
-/* header must stay clickable */
-.skinHeader {
-  z-index: 9999 !important;
-}
-
-/* dialogs above backdrop */
-.dialog,
-.actionSheet {
-  z-index: 10000 !important;
-}
-/* =========================================================
-   CRITICAL DRAWER FIX
-   ========================================================= */
-
-/* backdrop must never block clicks */
-#ptv-backdrop-root {
-  pointer-events: none !important;
-  z-index: 0 !important;
-}
-
-/* drawer must sit above themed layers */
-.mainDrawer,
-.mainDrawer-transition,
-.mainDrawer.transition,
-.touch-menu-la,
-.touch-menu,
-.drawer-open,
-.drawerOpen {
-  z-index: 99999 !important;
-  pointer-events: auto !important;
-  visibility: visible !important;
-}
-
-/* everything inside drawer must stay clickable */
-.mainDrawer,
-.mainDrawer * {
-  pointer-events: auto !important;
-}
-
-/* keep header/menu button above themed overlays */
-.skinHeader,
-.headerTabs,
-.skinHeader-withBackground {
-  z-index: 99998 !important;
-  pointer-events: auto !important;
-}
-
-/* dialogs still above everything */
-.dialog,
-.actionSheet,
-.focuscontainer-dialog,
-.itemsContainer.dialogContent {
-  z-index: 100000 !important;
-}
-
-/* prevent theme layers from covering drawer */
-.backgroundContainer,
-.backdropContainer,
-.pageBackground,
-.defaultBackground,
-.themeBackground,
-.pageBackdrop,
-.libraryBackground {
-  z-index: 0 !important;
-  pointer-events: none !important;
-}
-/* =========================================================
-   DRAWER STATE FIX
-   Only affect the drawer when Jellyfin marks it open
-   ========================================================= */
-
-/* base drawer styling only */
+/* base drawer */
 .mainDrawer {
   z-index: 99999 !important;
   pointer-events: auto !important;
 }
 
-/* backdrop never blocks clicks */
+/* backdrop must NEVER block UI */
 #ptv-backdrop-root {
   pointer-events: none !important;
   z-index: 0 !important;
 }
 
-/* keep page background layers from covering drawer */
+/* prevent background layers from covering UI */
 .backgroundContainer,
 .backdropContainer,
 .pageBackground,
@@ -736,23 +645,19 @@ body:not(.ptv-native-login-page) .visualCardBox {
 .pageBackdrop,
 .libraryBackground {
   pointer-events: none !important;
+  z-index: 0 !important;
 }
 
-/* only force onscreen when Jellyfin says drawer is open */
-.mainDrawer.mainDrawer-transition,
-.mainDrawer.drawer-open,
-.mainDrawer.drawerOpen,
-.mainDrawer.touch-menu-la,
-.mainDrawer.touch-menu,
-.mainDrawer[style*="translateX(0"] {
+/* 🔥 ONLY when drawer is OPEN */
+.mainDrawer.transition.touch-menu-la {
   transform: translateX(0) !important;
   left: 0 !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
 
-/* let closed state stay closed */
-.mainDrawer:not(.mainDrawer-transition):not(.drawer-open):not(.drawerOpen):not(.touch-menu-la):not(.touch-menu):not([style*="translateX(0"]) {
+/* CLOSED state (let Jellyfin handle it normally) */
+.mainDrawer:not(.touch-menu-la) {
   pointer-events: none !important;
 }
 
