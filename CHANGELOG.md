@@ -7,7 +7,7 @@
 # Changelog
 
 ## v0.1.7 - 2026-04-06
--poster bug fic
+-poster bug fix
 
 ## v0.0.1 - 2026-04-06
 - Initial repo structure
