@@ -612,11 +612,12 @@ body:not(.ptv-native-login-page) .visualCardBox {
 
 /* ===== home.css ===== */
 /* =========================================================
-   PIGGIETV — HOME (FINAL CLEAN + SAFE)
+   PIGGIETV — HOME
+   Clean, stable homepage styling with JS glow/backdrop hooks
    ========================================================= */
 
 /* =========================================================
-   ROOT / SECTIONS
+   HOME ROOT
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage,
@@ -627,9 +628,23 @@ body:not(.ptv-native-login-page) .homePage .itemsContainer {
   box-shadow: none !important;
 }
 
+body:not(.ptv-native-login-page) .homePage {
+  --ptv-home-glow-rgb: 143, 124, 255;
+  --ptv-home-glow-strong: rgba(var(--ptv-home-glow-rgb), 0.22);
+  --ptv-home-glow-soft: rgba(var(--ptv-home-glow-rgb), 0.10);
+  --ptv-home-backdrop-dim-top: rgba(4, 8, 18, 0.26);
+  --ptv-home-backdrop-dim-bottom: rgba(4, 8, 18, 0.82);
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   SECTION SPACING
+   ========================================================= */
+
 body:not(.ptv-native-login-page) .homePage .section0,
 body:not(.ptv-native-login-page) .homePage .verticalSection {
-  margin-bottom: 16px !important;
+  margin-bottom: 18px !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .itemsContainer {
@@ -637,17 +652,21 @@ body:not(.ptv-native-login-page) .homePage .itemsContainer {
 }
 
 /* =========================================================
-   TITLES
+   SECTION TITLES
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .sectionTitle,
 body:not(.ptv-native-login-page) .homePage .sectionTitleText {
-  color: rgba(255,255,255,0.97) !important;
-  text-shadow: 0 2px 14px rgba(0,0,0,0.24);
+  color: rgba(255, 255, 255, 0.97) !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.24);
 }
 
 body:not(.ptv-native-login-page) .homePage .sectionTitleText {
   font-weight: 700 !important;
+}
+
+body:not(.ptv-native-login-page) .homePage .sectionTitleContainer {
+  position: relative !important;
 }
 
 body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
@@ -663,47 +682,104 @@ body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
     var(--ptv-purple),
     var(--ptv-pink)
   );
+  box-shadow: 0 0 12px rgba(143, 124, 255, 0.12);
 }
 
 /* =========================================================
-   CARDS (SAFE)
+   ROW / SHELF SAFETY
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer,
+body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons,
+body:not(.ptv-native-login-page) .homePage .itemsContainer > *,
+body:not(.ptv-native-login-page) .homePage .emby-scrollbuttons > * {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   CARDS
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .cardBox,
 body:not(.ptv-native-login-page) .homePage .cardScalable {
+  position: relative !important;
   border-radius: var(--ptv-radius-card) !important;
   border: 1px solid var(--ptv-card-border) !important;
   box-shadow: var(--ptv-card-shadow) !important;
+  background: rgba(20, 26, 46, 0.16) !important;
+  overflow: hidden !important;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease,
+    filter 0.18s ease,
+    background 0.18s ease !important;
+}
 
-  /* IMPORTANT: do NOT override inner layers */
-  background: rgba(20,26,46,0.18) !important;
-
-  transition: all 0.18s ease !important;
+/* hover glow shell */
+body:not(.ptv-native-login-page) .homePage .cardBox::before,
+body:not(.ptv-native-login-page) .homePage .cardScalable::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 26px var(--ptv-home-glow-soft),
+    0 0 42px var(--ptv-home-glow-strong);
 }
 
 body:not(.ptv-native-login-page) .homePage .cardBox:hover,
 body:not(.ptv-native-login-page) .homePage .cardScalable:hover {
-  border-color: var(--ptv-card-border-hover) !important;
-  box-shadow: var(--ptv-card-shadow-hover) !important;
+  border-color: rgba(var(--ptv-home-glow-rgb), 0.34) !important;
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.42),
+    0 0 20px var(--ptv-home-glow-soft),
+    inset 0 0 0 1px rgba(255,255,255,0.04) !important;
   transform: translateY(-3px);
+  filter: brightness(1.02) !important;
 }
 
-/* Only radius — NO background overrides */
+body:not(.ptv-native-login-page) .homePage .cardBox:hover::before,
+body:not(.ptv-native-login-page) .homePage .cardScalable:hover::before {
+  opacity: 1;
+}
+
 body:not(.ptv-native-login-page) .homePage .cardImageContainer,
 body:not(.ptv-native-login-page) .homePage .cardPadder,
 body:not(.ptv-native-login-page) .homePage .cardImage {
   border-radius: var(--ptv-radius-card) !important;
 }
 
-/* DO NOT TOUCH .cardContent background */
+/* poster safety */
+body:not(.ptv-native-login-page) .homePage .cardImage img,
+body:not(.ptv-native-login-page) .homePage img.cardImage,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* remove overlay pseudo elements only */
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::before,
+body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::after,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer::before,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer::after {
+  content: none !important;
+}
 
 /* =========================================================
-   TEXT
+   CARD TEXT
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .cardText,
 body:not(.ptv-native-login-page) .homePage .cardFooter {
   color: rgba(255,255,255,0.94) !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.24) !important;
 }
 
 /* =========================================================
@@ -727,7 +803,7 @@ body:not(.ptv-native-login-page) .homePage .itemProgressBarForeground {
 }
 
 /* =========================================================
-   TABS
+   HOME TABS
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .emby-tab-button {
@@ -744,34 +820,7 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
 }
 
 /* =========================================================
-   🔥 POSTER FIX (REAL FIX — NOT OVERKILL)
-   ========================================================= */
-
-/* Ensure images render */
-.homePage .cardImage img,
-.homePage img.cardImage {
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: block !important;
-}
-
-/* Remove overlays ONLY (not wrappers) */
-.homePage .cardOverlayContainer::before,
-.homePage .cardOverlayContainer::after,
-.homePage .cardImageContainer::before,
-.homePage .cardImageContainer::after {
-  content: none !important;
-}
-/* Homepage poster safety */
-.homePage .cardImage img,
-.homePage img.cardImage,
-.homePage .cardImageContainer img {
-  opacity: 1 !important;
-  visibility: visible !important;
-  display: block !important;
-}
-/* =========================================================
-   HERO FIX
+   HERO / SLIDESHOW SAFETY
    ========================================================= */
 
 #slides-container:empty {
@@ -779,66 +828,44 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
 }
 
 /* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 900px) {
-  .homePage .sectionTitleContainer::after {
-    width: 42px;
-  }
-}
-/* =========================================================
-   FORCE SCROLL FIX
+   GLOBAL SCROLL SAFETY
    ========================================================= */
 
 html,
 body {
-  min-height: 100% !important;
   height: auto !important;
+  min-height: 100% !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
 
-/* Keep Jellyfin app filling the screen */
-.skinBody,
-.pageContainer,
-.mainAnimatedPage,
-.view,
-.page {
-  min-height: 100vh !important;
-}
+/* =========================================================
+   BACKDROP LAYER
+   JS swaps the image on hover
+   ========================================================= */
 
-/* Do NOT force auto height on core app containers */
-body.withSectionTabs,
-body.libraryDocument,
-body.dashboardDocument {
-  overflow-x: hidden !important;
-}
-/* =========================
-   SAFE GLOBAL BACKDROP
-   ========================= */
-
+/* Stable backdrop */
 .backgroundContainer {
   background-size: cover !important;
-  background-position: center !important;
-  filter: blur(16px) brightness(0.5) !important;
-  transform: scale(1.05);
-  transition: background-image 0.4s ease;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  filter: blur(12px) brightness(0.58) !important;
+  transform: scale(1.03);
+  transition: background-image 0.28s ease-in-out !important;
 }
 
 .backgroundContainer::after {
   content: "";
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.85)
+    rgba(4, 8, 18, 0.26),
+    rgba(4, 8, 18, 0.82)
   );
-  pointer-events: none;
 }
 
-/* Keep content visible */
 .page,
 .view,
 .mainAnimatedPage,
@@ -847,41 +874,28 @@ body.dashboardDocument {
   z-index: 2;
 }
 
-/* Smooth transition when switching items */
-.backgroundContainer {
-  transition: background-image 0.4s ease-in-out !important;
-}
-
-/* Remove dark overlay blocking it */
-.backgroundContainer.withBackdrop {
-  opacity: 1 !important;
-}
-
-/* Make UI float above backdrop nicely */
 .skinBody {
   background-color: #000 !important;
 }
 
-/* SAFE backdrop overlay */
-.backgroundContainer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.85)
-  );
-  pointer-events: none;
+/* stable base */
+body:not(.ptv-native-login-page) .skinBody {
+  background-color: #000 !important;
 }
 
-/* Ensure content stays above */
-.page,
-.mainAnimatedPage,
-.view,
-.pageContainer {
-  position: relative;
-  z-index: 1;
+/* =========================================================
+   SMALL SCREEN
+   ========================================================= */
+
+@media (max-width: 900px) {
+  body:not(.ptv-native-login-page) .homePage .sectionTitleContainer::after {
+    width: 42px;
+  }
+
+  body:not(.ptv-native-login-page) .backgroundContainer {
+    filter: blur(8px) brightness(0.56) !important;
+    transform: scale(1.015);
+  }
 }
 
 /* ===== dashboard.css ===== */
