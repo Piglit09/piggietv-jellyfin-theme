@@ -6,6 +6,9 @@
 ```md
 # Changelog
 
+## v0.2.8 - 2026-04-06
+- fixed sidebar bug
+
 ## v0.2.7 - 2026-04-06
 - Custom Icons for side bar
 

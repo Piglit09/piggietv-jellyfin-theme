@@ -1,11 +1,12 @@
 (function () {
+  "use strict";
+
   const LOGO_URL = "https://theme.piggietv.com/assets/logo/banner-light.png";
   const DISCORD_URL = "https://discord.gg/FbtexGYau";
   const SIGNUP_URL = "https://signup.piggietv.com/invite/ysBDoDSMpv5fFMz9GPMxUL";
   const FORGOT_URL = "https://signup.piggietv.com/my/account";
   const DEFAULT_BACKDROP_URL = "https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png";
 
-  /* FIXED URLS */
   const DISCORD_ICON_URL = "https://theme.piggietv.com/assets/icon/discord.svg";
   const REQUEST_ICON_URL = "https://theme.piggietv.com/assets/icon/request.svg";
   const BROWSER_ICON_URL = "https://theme.piggietv.com/assets/icon/browser-icon.ico";
@@ -27,16 +28,20 @@
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const text = (el) => (el?.textContent || "").trim().toLowerCase();
 
-  let lastUrl = location.href;
   let scheduled = false;
+  let lastUrl = location.href;
+
   let backdropResetTimer = null;
   let backdropSwapTimer = null;
   let activeBackdropUrl = "";
+
   let idleTimer = null;
   let idleModeActive = false;
   let slideshowTimer = null;
   let slideshowIndex = 0;
   let slideshowItems = [];
+
+  let domObserver = null;
   let backdropRootObserver = null;
 
   function isLoginPage() {
@@ -77,7 +82,7 @@
       if (!url) return reject(new Error("No URL"));
       const img = new Image();
       img.onload = () => resolve(url);
-      img.onerror = () => reject(new Error(`Failed to load ${url}`));
+      img.onerror = () => reject(new Error("Failed to load " + url));
       img.src = url;
     });
   }
@@ -119,13 +124,24 @@
     return `<span class="material-icons navMenuOptionIcon">${name}</span>`;
   }
 
+  function getDrawerButton() {
+    return (
+      qs(".headerButton.headerButtonLeft") ||
+      qs(".skinHeader .headerButtonLeft") ||
+      qsa("button").find((el) => {
+        const label = `${el.getAttribute("aria-label") || ""} ${el.getAttribute("title") || ""}`;
+        return /menu|navigation|drawer/i.test(label);
+      }) ||
+      null
+    );
+  }
+
   function getSidebarNav() {
     return (
       qs(".mainDrawer .navMenu") ||
-      qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
-      qs(".mainDrawer .scrollContainer .navMenu") ||
       qs(".mainDrawer .drawerContent .navMenu") ||
-      qs(".mainDrawer .drawerContent") ||
+      qs(".mainDrawer .scrollContainer .navMenu") ||
+      qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
       null
     );
   }
@@ -152,6 +168,7 @@
       ${makeSvgIcon(DISCORD_ICON_URL, "Discord")}
       <span class="navMenuOptionText">Discord</span>
     `;
+
     nav.appendChild(link);
   }
 
@@ -193,7 +210,7 @@
       <span class="navMenuOptionText">${app.title}</span>
     `;
 
-    link.addEventListener("click", (e) => {
+    link.addEventListener("click", function (e) {
       e.preventDefault();
       openExternal(app.url);
     });
@@ -202,9 +219,6 @@
   }
 
   function injectSidebarApps() {
-    const drawer = qs(".mainDrawer");
-    if (!drawer) return;
-
     const nav = getSidebarNav();
     if (!nav) return;
 
@@ -215,29 +229,46 @@
     const list = qs(".ptv-apps-links", section);
     if (!list) return;
 
-    APPS.forEach((app) => {
+    APPS.forEach(function (app) {
       if (!qs(`#ptv-link-${app.id}`, list)) {
         list.appendChild(makeSidebarAppLink(app));
       }
     });
   }
 
-  function cleanupSidebarDuplicates() {
-    ["#ptv-sidebar-logo", "#ptv-discord-sidebar-link", "#ptv-apps-section"].forEach((sel) => {
-      qsa(sel).forEach((el, idx) => {
-        if (idx > 0) el.remove();
-      });
-    });
+  function bindDrawerInjection() {
+    if (document.body.dataset.ptvDrawerBound === "1") return;
+    document.body.dataset.ptvDrawerBound = "1";
 
-    APPS.forEach((app) => {
-      qsa(`#ptv-link-${app.id}`).forEach((el, idx) => {
-        if (idx > 0) el.remove();
-      });
-    });
-  }
+    function tryInjectAfterOpen() {
+      setTimeout(injectSidebarApps, 250);
+      setTimeout(injectSidebarApps, 600);
+      setTimeout(injectSidebarApps, 1000);
+    }
 
-  function cleanupOldInjectedBits() {
-    qsa("#ptv-top-tab-request").forEach((el) => el.remove());
+    const btn = getDrawerButton();
+    if (btn) {
+      btn.addEventListener("click", tryInjectAfterOpen, true);
+    }
+
+    document.addEventListener(
+      "click",
+      function (e) {
+        const target = e.target;
+        if (!(target instanceof Element)) return;
+
+        const clickedMenuButton =
+          target.closest(".headerButton.headerButtonLeft") ||
+          target.closest(".mainDrawerButton") ||
+          target.closest("[aria-label*='Menu']") ||
+          target.closest("[title*='Menu']");
+
+        if (clickedMenuButton) {
+          tryInjectAfterOpen();
+        }
+      },
+      true
+    );
   }
 
   function cleanupLogin() {
@@ -294,7 +325,7 @@
       const brand = document.createElement("div");
       brand.id = "ptv-native-login-brand";
       brand.innerHTML = `
-        <img src="${LOGO_URL}" alt="PiggieTV" />
+        <img src="${LOGO_URL}" alt="PiggieTV">
         <div class="ptv-tagline">MOVIES • TV SHOWS • ANIME</div>
       `;
       form.prepend(brand);
@@ -329,6 +360,7 @@
       <div id="${BACKDROP_B_ID}" class="ptv-backdrop-layer"></div>
       <div class="ptv-backdrop-overlay"></div>
     `;
+
     document.body.prepend(root);
     return root;
   }
@@ -342,6 +374,7 @@
 
   function swapBackdrop(url) {
     ensureBackdropRoot();
+
     const { a, b } = getBackdropLayers();
     if (!a || !b) return;
 
@@ -358,7 +391,7 @@
     if (!url || url === activeBackdropUrl) return;
 
     clearTimeout(backdropSwapTimer);
-    backdropSwapTimer = setTimeout(async () => {
+    backdropSwapTimer = setTimeout(async function () {
       try {
         await preloadImage(url);
         swapBackdrop(url);
@@ -373,6 +406,7 @@
 
   function extractIdFromString(value) {
     if (!value) return "";
+
     const patterns = [
       /[?&]id=([a-zA-Z0-9]+)/,
       /\/details\?id=([a-zA-Z0-9]+)/,
@@ -384,6 +418,7 @@
       const match = value.match(pattern);
       if (match?.[1]) return match[1];
     }
+
     return "";
   }
 
@@ -394,6 +429,7 @@
       card.getAttribute("data-id") ||
       card.getAttribute("data-itemid") ||
       card.getAttribute("data-item-id");
+
     if (direct) return direct;
 
     const nested = card.querySelector("[data-id],[data-itemid],[data-item-id]");
@@ -477,11 +513,11 @@
   }
 
   function showIdleSlide() {
-    if (!isHomePage()) return;
-    if (!slideshowItems.length) return;
+    if (!isHomePage() || !slideshowItems.length) return;
 
     const item = slideshowItems[slideshowIndex % slideshowItems.length];
     slideshowIndex++;
+
     setGlow(item.glow || "143, 124, 255");
     setBackdropFromUrl(item.backdropUrl);
   }
@@ -495,6 +531,7 @@
     stopIdleSlideshow();
     idleModeActive = true;
     slideshowIndex = Math.floor(Math.random() * slideshowItems.length);
+
     showIdleSlide();
 
     slideshowTimer = setInterval(() => {
@@ -506,6 +543,7 @@
   function resetIdleTimer() {
     clearTimeout(idleTimer);
     stopIdleSlideshow();
+
     if (!isHomePage()) return;
 
     idleTimer = setTimeout(() => {
@@ -616,47 +654,57 @@
     icon.style.marginRight = "6px";
     icon.style.verticalAlign = "middle";
     icon.style.display = "inline-block";
-    icon.onerror = () => { icon.style.display = "none"; };
+    icon.onerror = function () {
+      icon.style.display = "none";
+    };
 
     requestTab.prepend(icon);
   }
 
   function run() {
     replaceBrowserTabIcon();
-    cleanupOldInjectedBits();
     injectLogin();
     relabelLoginButtons(document);
     injectTopRequestTabIcon();
     initHomeBackdrop();
-
-    setTimeout(() => {
-      injectSidebarApps();
-      cleanupSidebarDuplicates();
-    }, 150);
+    bindDrawerInjection();
   }
 
-  const domObserver = new MutationObserver(() => {
-    if (location.href !== lastUrl) {
-      lastUrl = location.href;
-      scheduleRun();
-    }
-  });
+  function boot() {
+    run();
 
-  window.addEventListener("load", run);
-  window.addEventListener("hashchange", () => {
-    setTimeout(scheduleRun, 120);
-    setTimeout(scheduleRun, 500);
-  });
+    domObserver = new MutationObserver(() => {
+      if (location.href !== lastUrl) {
+        lastUrl = location.href;
+        scheduleRun();
+        return;
+      }
 
-  document.addEventListener("viewshow", () => {
-    setTimeout(scheduleRun, 120);
-    setTimeout(scheduleRun, 500);
-  });
+      if (isHomePage()) {
+        scheduleRun();
+      }
+    });
 
-  domObserver.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
+    domObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
 
-  run();
+    window.addEventListener("load", run);
+    window.addEventListener("hashchange", () => {
+      setTimeout(scheduleRun, 120);
+      setTimeout(scheduleRun, 500);
+    });
+
+    document.addEventListener("viewshow", () => {
+      setTimeout(scheduleRun, 120);
+      setTimeout(scheduleRun, 500);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();

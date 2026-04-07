@@ -177,3 +177,37 @@
     padding: 9px 10px !important;
   }
 }
+/* =========================================================
+   CRITICAL FIX — DRAWER INTERACTION + LAYERING
+   ========================================================= */
+
+/* make sure backdrop NEVER blocks UI */
+#ptv-backdrop-root {
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* force drawer ABOVE everything */
+.mainDrawer,
+.mainDrawerDrawer,
+.drawerOpen,
+.drawer-open {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
+/* allow clicks inside drawer */
+.mainDrawer * {
+  pointer-events: auto !important;
+}
+
+/* header must stay clickable */
+.skinHeader {
+  z-index: 9999 !important;
+}
+
+/* dialogs above backdrop */
+.dialog,
+.actionSheet {
+  z-index: 10000 !important;
+}
