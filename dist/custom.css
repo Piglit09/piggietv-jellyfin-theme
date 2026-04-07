@@ -613,7 +613,7 @@ body:not(.ptv-native-login-page) .visualCardBox {
 /* ===== home.css ===== */
 /* =========================================================
    PIGGIETV — HOME
-   Clean, stable homepage styling with JS glow/backdrop hooks
+   Stable homepage styling with hover backdrop + dynamic glow
    ========================================================= */
 
 /* =========================================================
@@ -632,20 +632,8 @@ body:not(.ptv-native-login-page) .homePage {
   --ptv-home-glow-rgb: 143, 124, 255;
   --ptv-home-glow-strong: rgba(var(--ptv-home-glow-rgb), 0.08);
   --ptv-home-glow-soft: rgba(var(--ptv-home-glow-rgb), 0.04);
-  --ptv-home-backdrop-dim-top: rgba(4, 8, 18, 0.26);
-  --ptv-home-backdrop-dim-bottom: rgba(4, 8, 18, 0.82);
   position: relative;
   z-index: 2;
-}
-.homePage .itemsContainer:hover .cardBox {
-  opacity: 0.55;
-  transition: opacity 0.2s ease;
-}
-
-.homePage .itemsContainer:hover .cardBox:hover {
-  opacity: 1;
-  transform: scale(1.04);
-  z-index: 5;
 }
 
 /* =========================================================
@@ -662,13 +650,13 @@ body:not(.ptv-native-login-page) .homePage .itemsContainer {
 }
 
 /* =========================================================
-   SECTION TITLES
+   TITLES
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .sectionTitle,
 body:not(.ptv-native-login-page) .homePage .sectionTitleText {
-  color: rgba(255, 255, 255, 0.97) !important;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.24);
+  color: rgba(255,255,255,0.97) !important;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.24);
 }
 
 body:not(.ptv-native-login-page) .homePage .sectionTitleText {
@@ -724,10 +712,9 @@ body:not(.ptv-native-login-page) .homePage .cardScalable {
     box-shadow 0.18s ease,
     transform 0.18s ease,
     filter 0.18s ease,
-    background 0.18s ease !important;
+    opacity 0.18s ease !important;
 }
 
-/* hover glow shell */
 body:not(.ptv-native-login-page) .homePage .cardBox::before,
 body:not(.ptv-native-login-page) .homePage .cardScalable::before {
   content: "";
@@ -739,19 +726,26 @@ body:not(.ptv-native-login-page) .homePage .cardScalable::before {
   transition: opacity 0.2s ease !important;
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.04) inset,
-    0 0 26px var(--ptv-home-glow-soft),
-    0 0 42px var(--ptv-home-glow-strong);
+    0 0 20px var(--ptv-home-glow-soft),
+    0 0 34px var(--ptv-home-glow-strong);
+}
+
+body:not(.ptv-native-login-page) .homePage .itemsContainer:hover .cardBox,
+body:not(.ptv-native-login-page) .homePage .itemsContainer:hover .cardScalable {
+  opacity: 0.6;
 }
 
 body:not(.ptv-native-login-page) .homePage .cardBox:hover,
 body:not(.ptv-native-login-page) .homePage .cardScalable:hover {
-  border-color: rgba(var(--ptv-home-glow-rgb), 0.34) !important;
+  opacity: 1 !important;
+  border-color: rgba(var(--ptv-home-glow-rgb), 0.28) !important;
   box-shadow:
     0 14px 36px rgba(0, 0, 0, 0.42),
-    0 0 20px var(--ptv-home-glow-soft),
+    0 0 16px var(--ptv-home-glow-soft),
     inset 0 0 0 1px rgba(255,255,255,0.04) !important;
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.02);
   filter: brightness(1.02) !important;
+  z-index: 5;
 }
 
 body:not(.ptv-native-login-page) .homePage .cardBox:hover::before,
@@ -765,7 +759,6 @@ body:not(.ptv-native-login-page) .homePage .cardImage {
   border-radius: var(--ptv-radius-card) !important;
 }
 
-/* poster safety */
 body:not(.ptv-native-login-page) .homePage .cardImage img,
 body:not(.ptv-native-login-page) .homePage img.cardImage,
 body:not(.ptv-native-login-page) .homePage .cardImageContainer img {
@@ -774,7 +767,6 @@ body:not(.ptv-native-login-page) .homePage .cardImageContainer img {
   display: block !important;
 }
 
-/* remove overlay pseudo elements only */
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::before,
 body:not(.ptv-native-login-page) .homePage .cardOverlayContainer::after,
 body:not(.ptv-native-login-page) .homePage .cardImageContainer::before,
@@ -783,7 +775,7 @@ body:not(.ptv-native-login-page) .homePage .cardImageContainer::after {
 }
 
 /* =========================================================
-   CARD TEXT
+   TEXT
    ========================================================= */
 
 body:not(.ptv-native-login-page) .homePage .cardText,
@@ -830,7 +822,7 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
 }
 
 /* =========================================================
-   HERO / SLIDESHOW SAFETY
+   HERO SAFETY
    ========================================================= */
 
 #slides-container:empty {
@@ -843,38 +835,33 @@ body:not(.ptv-native-login-page) .homePage .emby-tab-button-active {
 
 html,
 body {
-  height: auto !important;
   min-height: 100% !important;
+  height: auto !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
 
 /* =========================================================
-   BACKDROP LAYER
-   JS swaps the image on hover
+   BACKDROP
    ========================================================= */
 
-/* Stable backdrop */
-.backgroundContainer {
-  background-image: url("https://theme.piggietv.com/assets/PiggieTVBG.png") !important;
+body:not(.ptv-native-login-page) .backgroundContainer {
+  background-image: url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png");
   background-size: cover !important;
-  background-position: center 20% !important; /* ← key change */
+  background-position: center 20% !important;
   background-repeat: no-repeat !important;
-
   filter: blur(10px) brightness(0.38) !important;
   transform: scale(1.04);
-
   transition:
     background-image 0.45s ease-in-out,
     filter 0.3s ease !important;
 }
 
-.backgroundContainer::after {
+body:not(.ptv-native-login-page) .backgroundContainer::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-
   background:
     linear-gradient(
       to bottom,
@@ -884,19 +871,18 @@ body {
     );
 }
 
-.page,
-.view,
-.mainAnimatedPage,
-.pageContainer {
+body:not(.ptv-native-login-page) .backgroundContainer.withBackdrop {
+  opacity: 1 !important;
+}
+
+body:not(.ptv-native-login-page) .page,
+body:not(.ptv-native-login-page) .view,
+body:not(.ptv-native-login-page) .mainAnimatedPage,
+body:not(.ptv-native-login-page) .pageContainer {
   position: relative;
   z-index: 2;
 }
 
-.skinBody {
-  background-color: #000 !important;
-}
-
-/* stable base */
 body:not(.ptv-native-login-page) .skinBody {
   background-color: #000 !important;
 }
@@ -911,15 +897,9 @@ body:not(.ptv-native-login-page) .skinBody {
   }
 
   body:not(.ptv-native-login-page) .backgroundContainer {
-    filter: blur(8px) brightness(0.56) !important;
-    transform: scale(1.015);
+    filter: blur(8px) brightness(0.42) !important;
+    transform: scale(1.02);
   }
-}
-.backgroundContainer {
-  background-image: url("https://piggietv.com/web/assets/img/PiggieTVBG.png") !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
 }
 
 /* ===== dashboard.css ===== */

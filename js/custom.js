@@ -6,29 +6,15 @@
   const DEFAULT_BACKDROP_URL = "https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png";
 
   const APPS = [
-    {
-      id: "request",
-      title: "Request",
-      url: "https://request.piggietv.com",
-      icon: "movie"
-    },
-    {
-      id: "games",
-      title: "Games",
-      url: "https://emu.piggietv.com",
-      icon: "sports_esports"
-    },
-    {
-      id: "library",
-      title: "Library",
-      url: "https://books.piggietv.com",
-      icon: "menu_book"
-    }
+    { id: "request", title: "Request", url: "https://request.piggietv.com", icon: "movie" },
+    { id: "games", title: "Games", url: "https://emu.piggietv.com", icon: "sports_esports" },
+    { id: "library", title: "Library", url: "https://books.piggietv.com", icon: "menu_book" }
   ];
 
   let lastUrl = location.href;
   let scheduled = false;
   let backdropResetTimer = null;
+  let backdropSwapTimer = null;
 
   const qs = (sel, root = document) => root.querySelector(sel);
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -257,19 +243,29 @@
   }
 
   function setGlow(rgb) {
-    document.documentElement.style.setProperty(
-      "--ptv-home-glow-rgb",
-      rgb || "143, 124, 255"
-    );
+    document.documentElement.style.setProperty("--ptv-home-glow-rgb", rgb || "143, 124, 255");
+  }
+
+  function getBackdropEl() {
+    return qs(".backgroundContainer");
   }
 
   function setBackdropFromUrl(url) {
-    const bg = qs(".backgroundContainer");
+    const bg = getBackdropEl();
     if (!bg || !url) return;
 
-    setTimeout(() => {
+    clearTimeout(backdropSwapTimer);
+    backdropSwapTimer = setTimeout(() => {
       bg.style.backgroundImage = `url("${url}")`;
-    }, 80);
+      bg.classList.add("withBackdrop");
+    }, 70);
+  }
+
+  function resetBackdrop() {
+    const bg = getBackdropEl();
+    if (!bg) return;
+    bg.style.backgroundImage = `url("${DEFAULT_BACKDROP_URL}")`;
+    bg.classList.add("withBackdrop");
   }
 
   function extractUrlFromBackgroundImage(bgValue) {
@@ -314,7 +310,6 @@
     if (title.includes("slime")) return "110, 220, 255";
     if (title.includes("dorohedoro")) return "255, 90, 110";
     if (title.includes("classroom")) return "255, 160, 210";
-
     return "143, 124, 255";
   }
 
@@ -328,22 +323,17 @@
 
     setGlow(rgb);
 
-    if (url && url.includes("/Items/")) {
+    if (url) {
       setBackdropFromUrl(url);
     }
   }
 
   function deactivateHomeCard() {
     clearTimeout(backdropResetTimer);
-
     backdropResetTimer = setTimeout(() => {
       setGlow("143, 124, 255");
-
-      const bg = qs(".backgroundContainer");
-      if (bg) {
-        bg.style.backgroundImage = `url("${DEFAULT_BACKDROP_URL}")`;
-      }
-    }, 200);
+      resetBackdrop();
+    }, 180);
   }
 
   function bindHomeBackdropCards() {
@@ -358,13 +348,19 @@
     });
   }
 
+  function initHomeBackdrop() {
+    if (!isHomePage()) return;
+    resetBackdrop();
+    bindHomeBackdropCards();
+  }
+
   function run() {
     cleanupOldInjectedBits();
     injectSidebarApps();
     cleanupSidebarDuplicates();
     injectLogin();
     relabelLoginButtons(document);
-    bindHomeBackdropCards();
+    initHomeBackdrop();
   }
 
   const observer = new MutationObserver(() => {
