@@ -897,6 +897,12 @@ body:not(.ptv-native-login-page) .skinBody {
     transform: scale(1.015);
   }
 }
+.backgroundContainer {
+  background-image: url("https://piggietv.com/web/assets/img/PiggieTVBG.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
 
 /* ===== dashboard.css ===== */
 /* =========================================================

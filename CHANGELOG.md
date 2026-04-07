@@ -6,6 +6,9 @@
 ```md
 # Changelog
 
+## v0.2.2 - 2026-04-06
+- backdrop bug fix 2
+
 ## v0.2.1 - 2026-04-06
 - backdrop bug fix 1
 
