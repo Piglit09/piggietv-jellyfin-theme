@@ -658,6 +658,34 @@ body:not(.ptv-native-login-page) .visualCardBox {
     padding: 9px 10px !important;
   }
 }
+.mainDrawer {
+  z-index: 99999 !important;
+}
+
+.mainDrawer,
+.mainDrawer * {
+  pointer-events: auto !important;
+}
+
+#ptv-backdrop-root {
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+.backgroundContainer,
+.backdropContainer,
+.pageBackground,
+.defaultBackground,
+.themeBackground,
+.pageBackdrop,
+.libraryBackground {
+  pointer-events: none !important;
+}
+
+/* only visual help, not state control */
+.mainDrawer.transition {
+  opacity: 1 !important;
+}
 
 /* ===== home.css ===== */
 /* =========================================================

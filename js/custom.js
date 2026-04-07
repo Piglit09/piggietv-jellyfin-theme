@@ -116,161 +116,174 @@
     shortcut.href = BROWSER_ICON_URL;
   }
 
-  function makeSvgIcon(url, alt = "") {
-    return `<img class="ptv-nav-icon ptv-nav-icon-svg" src="${url}" alt="${alt}" onerror="this.style.display='none'">`;
-  }
+function makeSvgIcon(url, alt = "") {
+  return `<img class="ptv-nav-icon ptv-nav-icon-svg" src="${url}" alt="${alt}" onerror="this.style.display='none'">`;
+}
 
-  function makeMaterialIcon(name) {
-    return `<span class="material-icons navMenuOptionIcon">${name}</span>`;
-  }
+function makeMaterialIcon(name) {
+  return `<span class="material-icons navMenuOptionIcon">${name}</span>`;
+}
 
-  function getDrawerButton() {
-    return (
-      qs(".headerButton.headerButtonLeft") ||
-      qs(".skinHeader .headerButtonLeft") ||
-      qsa("button").find((el) => {
-        const label = `${el.getAttribute("aria-label") || ""} ${el.getAttribute("title") || ""}`;
-        return /menu|navigation|drawer/i.test(label);
-      }) ||
-      null
-    );
-  }
+function getDrawerButton() {
+  return (
+    qs(".headerButton.headerButtonLeft") ||
+    qs(".skinHeader .headerButtonLeft") ||
+    qsa("button").find((el) => {
+      const label = `${el.getAttribute("aria-label") || ""} ${el.getAttribute("title") || ""}`;
+      return /menu|navigation|drawer/i.test(label);
+    }) ||
+    null
+  );
+}
 
-  function getSidebarNav() {
-    return (
-      qs(".mainDrawer .navMenu") ||
-      qs(".mainDrawer .drawerContent .navMenu") ||
-      qs(".mainDrawer .scrollContainer .navMenu") ||
-      qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
-      null
-    );
-  }
+function getSidebarNav() {
+  return (
+    qs(".mainDrawer .navMenu") ||
+    qs(".mainDrawer .drawerContent .navMenu") ||
+    qs(".mainDrawer .scrollContainer .navMenu") ||
+    qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
+    null
+  );
+}
 
-  function ensureSidebarLogo(nav) {
-    if (!nav || qs("#ptv-sidebar-logo", nav)) return;
+function ensureSidebarLogo(nav) {
+  if (!nav || qs("#ptv-sidebar-logo", nav)) return;
 
-    const logo = document.createElement("div");
-    logo.id = "ptv-sidebar-logo";
-    logo.innerHTML = `<img src="${LOGO_URL}" alt="PiggieTV" onerror="this.style.display='none'">`;
-    nav.prepend(logo);
-  }
+  const logo = document.createElement("div");
+  logo.id = "ptv-sidebar-logo";
+  logo.innerHTML = `<img src="${LOGO_URL}" alt="PiggieTV" onerror="this.style.display='none'">`;
+  nav.prepend(logo);
+}
 
-  function ensureDiscordLink(nav) {
-    if (!nav || qs("#ptv-discord-sidebar-link", nav)) return;
+function ensureDiscordLink(nav) {
+  if (!nav || qs("#ptv-discord-sidebar-link", nav)) return;
 
-    const link = document.createElement("a");
-    link.id = "ptv-discord-sidebar-link";
-    link.href = DISCORD_URL;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.className = "navMenuOption lnk ptv-custom-nav-link";
-    link.innerHTML = `
-      ${makeSvgIcon(DISCORD_ICON_URL, "Discord")}
-      <span class="navMenuOptionText">Discord</span>
-    `;
+  const link = document.createElement("a");
+  link.id = "ptv-discord-sidebar-link";
+  link.href = DISCORD_URL;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.className = "navMenuOption lnk ptv-custom-nav-link";
+  link.innerHTML = `
+    ${makeSvgIcon(DISCORD_ICON_URL, "Discord")}
+    <span class="navMenuOptionText">Discord</span>
+  `;
 
-    nav.appendChild(link);
-  }
+  nav.appendChild(link);
+}
 
-  function ensureAppsSection(nav) {
-    if (!nav) return null;
+function ensureAppsSection(nav) {
+  if (!nav) return null;
 
-    let section = qs("#ptv-apps-section", nav);
-    if (section) return section;
+  let section = qs("#ptv-apps-section", nav);
+  if (section) return section;
 
-    section = document.createElement("div");
-    section.id = "ptv-apps-section";
+  section = document.createElement("div");
+  section.id = "ptv-apps-section";
 
-    const header = document.createElement("div");
-    header.className = "navMenuHeader";
-    header.textContent = "Apps";
+  const header = document.createElement("div");
+  header.className = "navMenuHeader";
+  header.textContent = "Apps";
 
-    const list = document.createElement("div");
-    list.className = "ptv-apps-links";
+  const list = document.createElement("div");
+  list.className = "ptv-apps-links";
 
-    section.appendChild(header);
-    section.appendChild(list);
-    nav.appendChild(section);
+  section.appendChild(header);
+  section.appendChild(list);
+  nav.appendChild(section);
 
-    return section;
-  }
+  return section;
+}
 
-  function makeSidebarAppLink(app) {
-    const link = document.createElement("a");
-    link.id = `ptv-link-${app.id}`;
-    link.href = app.url;
-    link.className = "navMenuOption lnk ptv-custom-nav-link";
+function makeSidebarAppLink(app) {
+  const link = document.createElement("a");
+  link.id = `ptv-link-${app.id}`;
+  link.href = app.url;
+  link.className = "navMenuOption lnk ptv-custom-nav-link";
 
-    const iconHtml = app.iconUrl
-      ? makeSvgIcon(app.iconUrl, app.title)
-      : makeMaterialIcon(app.materialIcon || "apps");
+  const iconHtml = app.iconUrl
+    ? makeSvgIcon(app.iconUrl, app.title)
+    : makeMaterialIcon(app.materialIcon || "apps");
 
-    link.innerHTML = `
-      ${iconHtml}
-      <span class="navMenuOptionText">${app.title}</span>
-    `;
+  link.innerHTML = `
+    ${iconHtml}
+    <span class="navMenuOptionText">${app.title}</span>
+  `;
 
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      openExternal(app.url);
-    });
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    openExternal(app.url);
+  });
 
-    return link;
-  }
+  return link;
+}
 
-  function injectSidebarApps() {
-    const nav = getSidebarNav();
-    if (!nav) return;
+function injectSidebarApps() {
+  const nav = getSidebarNav();
+  if (!nav) return false;
 
-    ensureSidebarLogo(nav);
-    ensureDiscordLink(nav);
+  ensureSidebarLogo(nav);
+  ensureDiscordLink(nav);
 
-    const section = ensureAppsSection(nav);
-    const list = qs(".ptv-apps-links", section);
-    if (!list) return;
+  const section = ensureAppsSection(nav);
+  const list = qs(".ptv-apps-links", section);
+  if (!list) return false;
 
-    APPS.forEach(function (app) {
-      if (!qs(`#ptv-link-${app.id}`, list)) {
-        list.appendChild(makeSidebarAppLink(app));
+  APPS.forEach(function (app) {
+    if (!qs(`#ptv-link-${app.id}`, list)) {
+      list.appendChild(makeSidebarAppLink(app));
+    }
+  });
+
+  return true;
+}
+
+function bindDrawerInjection() {
+  if (document.body.dataset.ptvDrawerBound === "1") return;
+  document.body.dataset.ptvDrawerBound = "1";
+
+  function injectWhenReady() {
+    let tries = 0;
+    const maxTries = 20;
+
+    const timer = setInterval(function () {
+      tries++;
+
+      const drawer = qs(".mainDrawer");
+      const nav = getSidebarNav();
+
+      if (drawer && nav) {
+        injectSidebarApps();
+        clearInterval(timer);
+        return;
       }
-    });
+
+      if (tries >= maxTries) {
+        clearInterval(timer);
+      }
+    }, 100);
   }
 
-  function bindDrawerInjection() {
-    if (document.body.dataset.ptvDrawerBound === "1") return;
-    document.body.dataset.ptvDrawerBound = "1";
-
-    function tryInjectAfterOpen() {
-      setTimeout(injectSidebarApps, 250);
-      setTimeout(injectSidebarApps, 600);
-      setTimeout(injectSidebarApps, 1000);
-    }
-
-    const btn = getDrawerButton();
-    if (btn) {
-      btn.addEventListener("click", tryInjectAfterOpen, true);
-    }
-
-    document.addEventListener(
-      "click",
-      function (e) {
-        const target = e.target;
-        if (!(target instanceof Element)) return;
-
-        const clickedMenuButton =
-          target.closest(".headerButton.headerButtonLeft") ||
-          target.closest(".mainDrawerButton") ||
-          target.closest("[aria-label*='Menu']") ||
-          target.closest("[title*='Menu']");
-
-        if (clickedMenuButton) {
-          tryInjectAfterOpen();
-        }
-      },
-      true
-    );
+  const btn = getDrawerButton();
+  if (btn) {
+    btn.addEventListener("click", injectWhenReady, true);
   }
 
+  document.addEventListener("click", function (e) {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+
+    const clickedMenuButton =
+      target.closest(".headerButton.headerButtonLeft") ||
+      target.closest(".mainDrawerButton") ||
+      target.closest("[aria-label*='Menu']") ||
+      target.closest("[title*='Menu']");
+
+    if (clickedMenuButton) {
+      injectWhenReady();
+    }
+  }, true);
+}
   function cleanupLogin() {
     document.body.classList.remove("ptv-native-login-page");
     qs("#ptv-native-login-brand")?.remove();
