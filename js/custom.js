@@ -124,15 +124,16 @@
     return `<span class="material-icons navMenuOptionIcon">${name}</span>`;
   }
 
-  function getSidebarNav() {
-    return (
-      qs(".mainDrawer .navMenu") ||
-      qs(".mainDrawer .drawerContent .navMenu") ||
-      qs(".mainDrawer .scrollContainer .navMenu") ||
-      qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
-      null
-    );
-  }
+function getSidebarNav() {
+  return (
+    qs(".mainDrawer .navMenu") ||
+    qs(".mainDrawer .drawerContent .navMenu") ||
+    qs(".mainDrawer .scrollContainer .navMenu") ||
+    qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
+    qs(".mainDrawer nav") ||
+    null
+  );
+}
 
   function injectHeaderLogo() {
     const headerLeft =
@@ -275,44 +276,51 @@
   }
 
   function bindDrawerInjection() {
-    if (document.body.dataset.ptvDrawerBound === "1") return;
-    document.body.dataset.ptvDrawerBound = "1";
+  if (document.body.dataset.ptvDrawerBound === "1") return;
+  document.body.dataset.ptvDrawerBound = "1";
 
-    function injectOnceDrawerReady() {
+  function tryInjectSidebar() {
+    const nav = getSidebarNav();
+    if (!nav) return false;
+    injectSidebarApps();
+    return true;
+  }
+
+  // try immediately
+  tryInjectSidebar();
+
+  // try when menu is clicked
+  document.addEventListener("click", function (e) {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+
+    const clickedMenuButton =
+      target.closest(".headerButton.headerButtonLeft") ||
+      target.closest(".mainDrawerButton") ||
+      target.closest("[aria-label*='Menu']") ||
+      target.closest("[title*='Menu']");
+
+    if (clickedMenuButton) {
       let tries = 0;
       const timer = setInterval(() => {
         tries++;
-
-        const drawer = qs(".mainDrawer");
-        const nav = getSidebarNav();
-
-        if (drawer && nav) {
-          injectSidebarApps();
-          clearInterval(timer);
-          return;
-        }
-
-        if (tries >= 20) {
+        if (tryInjectSidebar() || tries >= 30) {
           clearInterval(timer);
         }
-      }, 80);
+      }, 100);
     }
+  }, true);
 
-    document.addEventListener("click", function (e) {
-      const target = e.target;
-      if (!(target instanceof Element)) return;
+  // also watch for drawer/nav being rendered later
+  const sidebarObserver = new MutationObserver(() => {
+    tryInjectSidebar();
+  });
 
-      const clickedMenuButton =
-        target.closest(".headerButton.headerButtonLeft") ||
-        target.closest(".mainDrawerButton") ||
-        target.closest("[aria-label*='Menu']") ||
-        target.closest("[title*='Menu']");
-
-      if (clickedMenuButton) {
-        injectOnceDrawerReady();
-      }
-    }, true);
-  }
+  sidebarObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+}
 
   function cleanupLogin() {
     document.body.classList.remove("ptv-native-login-page");
@@ -704,15 +712,16 @@
     requestTab.prepend(icon);
   }
 
-  function run() {
-    replaceBrowserTabIcon();
-    injectHeaderLogo();
-    injectLogin();
-    relabelLoginButtons(document);
-    injectTopRequestTabIcon();
-    initHomeBackdrop();
-    bindDrawerInjection();
-  }
+function run() {
+  replaceBrowserTabIcon();
+  injectHeaderLogo();
+  injectLogin();
+  relabelLoginButtons(document);
+  injectTopRequestTabIcon();
+  initHomeBackdrop();
+  injectSidebarApps();
+  bindDrawerInjection();
+}
 
   function boot() {
     run();

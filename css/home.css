@@ -143,3 +143,37 @@ body:not(.ptv-native-login-page) .backgroundContainer {
     transform: scale(1.02);
   }
 }
+/* =========================================================
+   HOME CARD IMAGE CENTERING FIX
+   ========================================================= */
+
+/* Center portrait cards inside their visual shell */
+body:not(.ptv-native-login-page) .homePage .cardBox,
+body:not(.ptv-native-login-page) .homePage .cardScalable,
+body:not(.ptv-native-login-page) .homePage .emby-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Make the image container center instead of hugging left */
+body:not(.ptv-native-login-page) .homePage .cardImageContainer,
+body:not(.ptv-native-login-page) .homePage .cardPadder {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Keep portrait art centered in the shell */
+body:not(.ptv-native-login-page) .homePage .cardImage,
+body:not(.ptv-native-login-page) .homePage .cardImageContainer img,
+body:not(.ptv-native-login-page) .homePage img.cardImage {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Center footer text under poster */
+body:not(.ptv-native-login-page) .homePage .cardFooter,
+body:not(.ptv-native-login-page) .homePage .cardText {
+  width: 100% !important;
+  text-align: center !important;
+}
