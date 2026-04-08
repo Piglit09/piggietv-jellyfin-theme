@@ -443,9 +443,8 @@ body:not(.ptv-native-login-page) .visualCardBox {
 /* ===== sidebar.css ===== */
 /* =========================================================
    PIGGIETV — SIDEBAR
-   Drawer navigation + logo + hover system
-   Clean version: styles the drawer without controlling
-   Jellyfin open/close state
+   Visual styling only
+   Do NOT control drawer state, width, position, transform, or height
    ========================================================= */
 
 /* =========================================================
@@ -587,14 +586,13 @@ body:not(.ptv-native-login-page) .visualCardBox {
    SCROLL AREA
    ========================================================= */
 
-.mainDrawer .navMenu {
+.mainDrawer .navMenu,
+.mainDrawer .mainDrawer-scrollContainer {
   padding-bottom: 20px !important;
 }
 
 /* =========================================================
    INTERACTION + LAYER SAFETY
-   These rules help layering only.
-   They do NOT control drawer open/close state.
    ========================================================= */
 
 #ptv-backdrop-root {
@@ -631,11 +629,6 @@ body:not(.ptv-native-login-page) .visualCardBox {
   pointer-events: auto !important;
 }
 
-/* optional visual help only */
-.mainDrawer.transition {
-  opacity: 1 !important;
-}
-
 /* =========================================================
    MOBILE SAFETY
    ========================================================= */
@@ -655,56 +648,6 @@ body:not(.ptv-native-login-page) .visualCardBox {
     margin: 4px 6px !important;
     padding: 9px 10px !important;
   }
-}
-/* =========================================================
-   DRAWER HEIGHT FIX
-   Your build uses .mainDrawer-scrollContainer
-   but .mainDrawer itself is collapsing to 0px
-   ========================================================= */
-
-.mainDrawer {
-  min-height: 100vh !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
-  overflow: hidden !important;
-  display: block !important;
-  box-sizing: border-box !important;
-}
-
-.mainDrawer .mainDrawer-scrollContainer {
-  height: 100% !important;
-  max-height: 100% !important;
-  overflow-y: auto !important;
-  box-sizing: border-box !important;
-}
-/* =========================================================
-   FINAL SIDEBAR WIDTH + POSITION FIX
-   ========================================================= */
-
-/* force proper drawer width */
-.mainDrawer {
-  width: 300px !important;
-  max-width: 300px !important;
-  min-width: 300px !important;
-}
-
-/* ensure it sits above layout correctly */
-.mainDrawer {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  height: 100vh !important;
-}
-
-/* make inner container fill width */
-.mainDrawer .mainDrawer-scrollContainer {
-  width: 100% !important;
-}
-
-/* prevent inner content from collapsing */
-.mainDrawer .navMenu,
-.mainDrawer .mainDrawer-scrollContainer {
-  display: block !important;
 }
 
 /* ===== home.css ===== */
