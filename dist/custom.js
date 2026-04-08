@@ -148,21 +148,27 @@
 
     const logo = document.createElement("div");
     logo.id = "ptv-header-logo";
-    logo.innerHTML = `
-  <a href="#/home" class="ptv-header-logo-link">
-    <img src="${LOGO_URL}" alt="PiggieTV">
-  </a>
-logo.querySelector("a").addEventListener("click", function (e) {
-  e.preventDefault();
-  window.location.hash = "#/home";
-});
-`;
 
-    const img = logo.querySelector("img");
+    const link = document.createElement("a");
+    link.href = "#/home";
+    link.className = "ptv-header-logo-link";
+
+    const img = document.createElement("img");
+    img.src = LOGO_URL;
+    img.alt = "PiggieTV";
+
     img.onerror = function () {
       console.warn("PiggieTV header logo failed:", LOGO_URL);
       logo.remove();
     };
+
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.location.hash = "#/home";
+    });
+
+    link.appendChild(img);
+    logo.appendChild(link);
 
     if (headerLeft.classList.contains("headerLeft")) {
       headerLeft.insertBefore(logo, headerLeft.firstChild);
@@ -279,6 +285,7 @@ logo.querySelector("a").addEventListener("click", function (e) {
 
         const drawer = qs(".mainDrawer");
         const nav = getSidebarNav();
+
         if (drawer && nav) {
           injectSidebarApps();
           clearInterval(timer);
@@ -717,11 +724,7 @@ logo.querySelector("a").addEventListener("click", function (e) {
         return;
       }
 
-      if (isHomePage()) {
-        scheduleRun();
-      } else {
-        scheduleRun();
-      }
+      scheduleRun();
     });
 
     domObserver.observe(document.body, {
