@@ -43,6 +43,7 @@
 
   let domObserver = null;
   let backdropRootObserver = null;
+  let sidebarObserver = null;
 
   function isLoginPage() {
     return location.hash.includes("#/login");
@@ -124,16 +125,16 @@
     return `<span class="material-icons navMenuOptionIcon">${name}</span>`;
   }
 
-function getSidebarNav() {
-  return (
-    qs(".mainDrawer .navMenu") ||
-    qs(".mainDrawer .drawerContent .navMenu") ||
-    qs(".mainDrawer .scrollContainer .navMenu") ||
-    qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
-    qs(".mainDrawer nav") ||
-    null
-  );
-}
+  function getSidebarNav() {
+    return (
+      qs(".mainDrawer .navMenu") ||
+      qs(".mainDrawer .drawerContent .navMenu") ||
+      qs(".mainDrawer .scrollContainer .navMenu") ||
+      qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
+      qs(".mainDrawer nav") ||
+      null
+    );
+  }
 
   function injectHeaderLogo() {
     const headerLeft =
@@ -157,9 +158,7 @@ function getSidebarNav() {
     const img = document.createElement("img");
     img.src = LOGO_URL;
     img.alt = "PiggieTV";
-
     img.onerror = function () {
-      console.warn("PiggieTV header logo failed:", LOGO_URL);
       logo.remove();
     };
 
@@ -266,7 +265,7 @@ function getSidebarNav() {
     const list = qs(".ptv-apps-links", section);
     if (!list) return false;
 
-    APPS.forEach(function (app) {
+    APPS.forEach((app) => {
       if (!qs(`#ptv-link-${app.id}`, list)) {
         list.appendChild(makeSidebarAppLink(app));
       }
@@ -275,52 +274,51 @@ function getSidebarNav() {
     return true;
   }
 
-  function bindDrawerInjection() {
-  if (document.body.dataset.ptvDrawerBound === "1") return;
-  document.body.dataset.ptvDrawerBound = "1";
-
   function tryInjectSidebar() {
-    const nav = getSidebarNav();
-    if (!nav) return false;
-    injectSidebarApps();
-    return true;
+    return injectSidebarApps();
   }
 
-  // try immediately
-  tryInjectSidebar();
+  function bindDrawerInjection() {
+    if (window.__ptvDrawerBound) return;
+    window.__ptvDrawerBound = true;
 
-  // try when menu is clicked
-  document.addEventListener("click", function (e) {
-    const target = e.target;
-    if (!(target instanceof Element)) return;
+    document.addEventListener(
+      "click",
+      function (e) {
+        const target = e.target;
+        if (!(target instanceof Element)) return;
 
-    const clickedMenuButton =
-      target.closest(".headerButton.headerButtonLeft") ||
-      target.closest(".mainDrawerButton") ||
-      target.closest("[aria-label*='Menu']") ||
-      target.closest("[title*='Menu']");
+        const menuButton =
+          target.closest(".headerButton.headerButtonLeft") ||
+          target.closest(".mainDrawerButton") ||
+          target.closest("[aria-label*='Menu']") ||
+          target.closest("[title*='Menu']");
 
-    if (clickedMenuButton) {
-      let tries = 0;
-      const timer = setInterval(() => {
-        tries++;
-        if (tryInjectSidebar() || tries >= 30) {
-          clearInterval(timer);
-        }
-      }, 100);
-    }
-  }, true);
+        if (!menuButton) return;
 
-  // also watch for drawer/nav being rendered later
-  const sidebarObserver = new MutationObserver(() => {
-    tryInjectSidebar();
-  });
+        let tries = 0;
+        const timer = setInterval(() => {
+          tries++;
+          if (tryInjectSidebar() || tries >= 20) {
+            clearInterval(timer);
+          }
+        }, 100);
+      },
+      true
+    );
 
-  sidebarObserver.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-}
+    sidebarObserver = new MutationObserver(() => {
+      const nav = getSidebarNav();
+      if (nav) {
+        tryInjectSidebar();
+      }
+    });
+
+    sidebarObserver.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
 
   function cleanupLogin() {
     document.body.classList.remove("ptv-native-login-page");
@@ -712,19 +710,18 @@ function getSidebarNav() {
     requestTab.prepend(icon);
   }
 
-function run() {
-  replaceBrowserTabIcon();
-  injectHeaderLogo();
-  injectLogin();
-  relabelLoginButtons(document);
-  injectTopRequestTabIcon();
-  initHomeBackdrop();
-  injectSidebarApps();
-  bindDrawerInjection();
-}
+  function run() {
+    replaceBrowserTabIcon();
+    injectHeaderLogo();
+    injectLogin();
+    relabelLoginButtons(document);
+    injectTopRequestTabIcon();
+    initHomeBackdrop();
+  }
 
   function boot() {
     run();
+    bindDrawerInjection();
 
     domObserver = new MutationObserver(() => {
       if (location.href !== lastUrl) {
@@ -737,11 +734,11 @@ function run() {
     });
 
     domObserver.observe(document.body, {
-      childList: true,
-      subtree: true
+      childList: true
     });
 
     window.addEventListener("load", run);
+
     window.addEventListener("hashchange", () => {
       setTimeout(scheduleRun, 120);
       setTimeout(scheduleRun, 500);
