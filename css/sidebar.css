@@ -33,26 +33,37 @@
   padding: 14px 10px 20px !important;
 }
 
-/* ---------- logo block injected by JS ---------- */
+/* =========================================================
+   SIDEBAR LOGO CLEAN
+   ========================================================= */
+
 #ptv-sidebar-logo {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin: 0 6px 14px !important;
-  padding: 8px 8px 14px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 18px 12px 14px !important;
+  margin-bottom: 8px !important;
 }
 
 #ptv-sidebar-logo img {
-  display: block !important;
-  width: 185px !important;
-  max-width: 100% !important;
+  width: 120px !important;
   height: auto !important;
   object-fit: contain !important;
-  filter:
-    drop-shadow(0 0 10px rgba(120, 170, 255, 0.14))
-    drop-shadow(0 0 24px rgba(170, 120, 255, 0.10));
-  animation: ptvSidebarLogoFloat 5s ease-in-out infinite;
+  opacity: 0.95;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+#ptv-sidebar-logo img:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+#ptv-sidebar-logo::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 1px;
+  margin-top: 12px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
 }
 
 @keyframes ptvSidebarLogoFloat {

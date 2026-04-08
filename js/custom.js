@@ -148,7 +148,15 @@
 
     const logo = document.createElement("div");
     logo.id = "ptv-header-logo";
-    logo.innerHTML = `<img src="${LOGO_URL}" alt="PiggieTV">`;
+    logo.innerHTML = `
+  <a href="#/home" class="ptv-header-logo-link">
+    <img src="${LOGO_URL}" alt="PiggieTV">
+  </a>
+logo.querySelector("a").addEventListener("click", function (e) {
+  e.preventDefault();
+  window.location.hash = "#/home";
+});
+`;
 
     const img = logo.querySelector("img");
     img.onerror = function () {

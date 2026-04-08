@@ -266,3 +266,100 @@ body:not(.ptv-native-login-page) .headerTabs button {
 .skinHeader .pageTitle {
   display: none !important;
 }
+/* =========================================================
+   TAB HOVER GLOW
+   ========================================================= */
+
+.headerTabs .emby-tab-button {
+  position: relative !important;
+  transition: all 0.2s ease !important;
+}
+
+.headerTabs .emby-tab-button::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 12px;
+  background: radial-gradient(
+    circle at center,
+    rgba(var(--ptv-home-glow-rgb, 143,124,255), 0.25),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.headerTabs .emby-tab-button:hover::before {
+  opacity: 1;
+}
+
+.headerTabs .emby-tab-button:hover {
+  transform: translateY(-1px);
+}
+/* =========================================================
+   ACTIVE TAB ANIMATION
+   ========================================================= */
+
+.headerTabs .emby-tab-button {
+  position: relative !important;
+}
+
+.headerTabs .emby-tab-button::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  bottom: -6px;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(120,160,255,0),
+    rgba(160,120,255,0.9),
+    rgba(120,160,255,0)
+  );
+  opacity: 0;
+  transform: scaleX(0.6);
+  transition: all 0.25s ease;
+}
+
+.headerTabs .emby-tab-button.emby-tab-button-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+/* =========================================================
+   SIDEBAR HOVER GLOW
+   ========================================================= */
+
+.navMenuOption {
+  position: relative !important;
+  transition: all 0.18s ease !important;
+}
+
+.navMenuOption::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: radial-gradient(
+    circle at left,
+    rgba(var(--ptv-home-glow-rgb, 143,124,255), 0.18),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.navMenuOption:hover::before {
+  opacity: 1;
+}
+
+.navMenuOption:hover {
+  transform: translateX(4px);
+}
+.navMenuOption.selected,
+.navMenuOption.active {
+  background: rgba(255,255,255,0.05) !important;
+  border-left: 3px solid rgba(160,120,255,0.8) !important;
+}
