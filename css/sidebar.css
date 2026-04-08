@@ -1,7 +1,7 @@
 /* =========================================================
    PIGGIETV — SIDEBAR
    Drawer navigation + logo + hover system
-   Safe version: styles the drawer without controlling
+   Clean version: styles the drawer without controlling
    Jellyfin open/close state
    ========================================================= */
 
@@ -27,8 +27,8 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 1px;
   bottom: 0;
+  width: 1px;
   background:
     linear-gradient(
       180deg,
@@ -86,7 +86,6 @@
     color 0.16s ease !important;
 }
 
-/* hover */
 .mainDrawer .navMenuOption:hover {
   transform: translateX(4px);
   background: rgba(255, 255, 255, 0.05) !important;
@@ -96,7 +95,6 @@
   color: rgba(255, 255, 255, 0.95) !important;
 }
 
-/* active */
 .mainDrawer .navMenuOption-selected,
 .mainDrawer .navMenuOption[aria-selected="true"] {
   background:
@@ -156,13 +154,11 @@
    They do NOT control drawer open/close state.
    ========================================================= */
 
-/* Backdrop layer must never block UI */
 #ptv-backdrop-root {
   pointer-events: none !important;
   z-index: 0 !important;
 }
 
-/* Background/theme layers must not steal clicks */
 .backgroundContainer,
 .backdropContainer,
 .pageBackground,
@@ -173,7 +169,6 @@
   pointer-events: none !important;
 }
 
-/* Keep header/menu button above themed overlays */
 .skinHeader,
 .headerTabs,
 .skinHeader-withBackground {
@@ -181,7 +176,6 @@
   pointer-events: auto !important;
 }
 
-/* Dialogs above everything */
 .dialog,
 .actionSheet,
 .focuscontainer-dialog,
@@ -189,10 +183,14 @@
   z-index: 100000 !important;
 }
 
-/* Drawer contents stay clickable */
 .mainDrawer,
 .mainDrawer * {
   pointer-events: auto !important;
+}
+
+/* optional visual help only */
+.mainDrawer.transition {
+  opacity: 1 !important;
 }
 
 /* =========================================================
@@ -214,32 +212,4 @@
     margin: 4px 6px !important;
     padding: 9px 10px !important;
   }
-}
-.mainDrawer {
-  z-index: 99999 !important;
-}
-
-.mainDrawer,
-.mainDrawer * {
-  pointer-events: auto !important;
-}
-
-#ptv-backdrop-root {
-  pointer-events: none !important;
-  z-index: 0 !important;
-}
-
-.backgroundContainer,
-.backdropContainer,
-.pageBackground,
-.defaultBackground,
-.themeBackground,
-.pageBackdrop,
-.libraryBackground {
-  pointer-events: none !important;
-}
-
-/* only visual help, not state control */
-.mainDrawer.transition {
-  opacity: 1 !important;
 }
