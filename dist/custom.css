@@ -371,28 +371,19 @@ body:not(.ptv-native-login-page) .formDialogContent {
   }
 }
 /* =========================================================
-   SCROLL FIX
-   Restore Jellyfin page scrolling safely
+   SAFE SCROLL FIX (DO NOT BREAK JELLYFIN)
    ========================================================= */
 
-html,
-body {
-  height: auto !important;
-  min-height: 100% !important;
-}
-
-body:not(.ptv-native-login-page) .skinBody,
-body:not(.ptv-native-login-page) .mainAnimatedPage,
-body:not(.ptv-native-login-page) .pageContainer,
-body:not(.ptv-native-login-page) .page,
-body:not(.ptv-native-login-page) .view,
-body:not(.ptv-native-login-page) .scrollFrameY,
-body:not(.ptv-native-login-page) .scrollY {
-  overflow: visible !important;
-}
-
 body:not(.ptv-native-login-page) .mainAnimatedPage {
-  min-height: 100vh !important;
+  height: auto !important;
+}
+
+body:not(.ptv-native-login-page) .scrollFrameY {
+  overflow-y: auto !important;
+}
+
+body:not(.ptv-native-login-page) .scrollY {
+  overflow-y: auto !important;
 }
 /* =========================================================
    HEADER HEIGHT FIX
