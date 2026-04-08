@@ -213,3 +213,24 @@
     padding: 9px 10px !important;
   }
 }
+/* =========================================================
+   DRAWER HEIGHT FIX
+   Your build uses .mainDrawer-scrollContainer
+   but .mainDrawer itself is collapsing to 0px
+   ========================================================= */
+
+.mainDrawer {
+  min-height: 100vh !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
+.mainDrawer .mainDrawer-scrollContainer {
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
