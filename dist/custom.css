@@ -370,6 +370,71 @@ body:not(.ptv-native-login-page) .formDialogContent {
     padding: 6px 10px !important;
   }
 }
+/* =========================================================
+   SCROLL FIX
+   Restore Jellyfin page scrolling safely
+   ========================================================= */
+
+html,
+body {
+  height: auto !important;
+  min-height: 100% !important;
+}
+
+body:not(.ptv-native-login-page) .skinBody,
+body:not(.ptv-native-login-page) .mainAnimatedPage,
+body:not(.ptv-native-login-page) .pageContainer,
+body:not(.ptv-native-login-page) .page,
+body:not(.ptv-native-login-page) .view,
+body:not(.ptv-native-login-page) .scrollFrameY,
+body:not(.ptv-native-login-page) .scrollY {
+  overflow: visible !important;
+}
+
+body:not(.ptv-native-login-page) .mainAnimatedPage {
+  min-height: 100vh !important;
+}
+/* =========================================================
+   HEADER HEIGHT FIX
+   Prevent icons from being taller than the top bar
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .skinHeader {
+  min-height: 72px !important;
+}
+
+body:not(.ptv-native-login-page) .skinHeader .headerTop {
+  min-height: 72px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding-left: 18px !important;
+  padding-right: 18px !important;
+}
+
+body:not(.ptv-native-login-page) .skinHeader .headerLeft,
+body:not(.ptv-native-login-page) .skinHeader .headerRight,
+body:not(.ptv-native-login-page) .skinHeader .headerCenter {
+  display: flex !important;
+  align-items: center !important;
+}
+
+body:not(.ptv-native-login-page) .skinHeader button,
+body:not(.ptv-native-login-page) .skinHeader .emby-button,
+body:not(.ptv-native-login-page) .skinHeader .headerButton {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+body:not(.ptv-native-login-page) .skinHeader .material-icons,
+body:not(.ptv-native-login-page) .skinHeader i.material-icons {
+  font-size: 22px !important;
+  line-height: 1 !important;
+}
 
 /* ===== sidebar.css ===== */
 /* =========================================================
