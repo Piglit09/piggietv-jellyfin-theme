@@ -426,6 +426,37 @@ body:not(.ptv-native-login-page) .skinHeader i.material-icons {
   font-size: 22px !important;
   line-height: 1 !important;
 }
+/* =========================================================
+   FINAL SCROLL FIX (authoritative override)
+   ========================================================= */
+
+/* Allow full document scrolling */
+html, body {
+  height: auto !important;
+  overflow-y: auto !important;
+}
+
+/* Ensure Jellyfin root expands correctly */
+body:not(.ptv-native-login-page) .skinBody {
+  min-height: 100vh !important;
+  overflow: visible !important;
+}
+
+/* Restore proper scroll containers */
+body:not(.ptv-native-login-page) .mainAnimatedPage {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Actual scroll happens here */
+body:not(.ptv-native-login-page) .scrollFrameY {
+  overflow-y: auto !important;
+  max-height: none !important;
+}
+
+body:not(.ptv-native-login-page) .scrollY {
+  overflow-y: auto !important;
+}
 
 /* ===== sidebar.css ===== */
 /* =========================================================
