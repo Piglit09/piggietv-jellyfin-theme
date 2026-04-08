@@ -1,20 +1,10 @@
 (function () {
   "use strict";
 
-  /* =========================================================
-     PIGGIETV CUSTOM JS
-     CLEAN + STABLE REWRITE
-     ========================================================= */
-
   const LOGO_URL = "https://theme.piggietv.com/assets/logo/banner-light.png";
   const DISCORD_URL = "https://discord.gg/FbtexGYau";
-  const SIGNUP_URL = "https://signup.piggietv.com/invite/ysBDoDSMpv5fFMz9GPMxUL";
-  const FORGOT_URL = "https://signup.piggietv.com/my/account";
-  const DEFAULT_BACKDROP_URL = "https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png";
-
-  const DISCORD_ICON_URL = "https://theme.piggietv.com/assets/icon/discord.svg";
-  const REQUEST_ICON_URL = "https://theme.piggietv.com/assets/icon/request.svg";
-  const BROWSER_ICON_URL = "https://theme.piggietv.com/assets/icon/browser-icon.ico";
+  const REQUEST_ICON_URL = "https://theme.piggietv.com/assets/icons/request.svg";
+  const DISCORD_ICON_URL = "https://theme.piggietv.com/assets/icons/discord.svg";
 
   const APPS = [
     {
@@ -37,145 +27,57 @@
     }
   ];
 
-  const BACKDROP_ROOT_ID = "ptv-backdrop-root";
-  const BACKDROP_A_ID = "ptv-backdrop-a";
-  const BACKDROP_B_ID = "ptv-backdrop-b";
-
-  const IDLE_DELAY = 12000;
-  const SLIDESHOW_DELAY = 8000;
-
   const qs = (sel, root = document) => root.querySelector(sel);
   const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-  const text = (el) => (el?.textContent || "").trim().toLowerCase();
-
-  let scheduled = false;
-  let lastUrl = location.href;
-
-  let appObserver = null;
-  let sidebarObserver = null;
-  let backdropRootObserver = null;
-
-  let backdropResetTimer = null;
-  let backdropSwapTimer = null;
-  let activeBackdropUrl = "";
-
-  let idleTimer = null;
-  let idleModeActive = false;
-  let slideshowTimer = null;
-  let slideshowIndex = 0;
-  let slideshowItems = [];
-
-  /* =========================================================
-     HELPERS
-     ========================================================= */
-
-  function isLoginPage() {
-    return location.hash.includes("#/login");
-  }
-
-  function isHomePage() {
-    return location.hash.includes("#/home") || !!qs(".homePage");
-  }
 
   function openExternal(url) {
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
-  function scheduleRun() {
-    if (scheduled) return;
-    scheduled = true;
+  function createSvgIcon(url, alt, fallbackMaterialIcon) {
+    const wrap = document.createElement("span");
+    wrap.className = "ptv-nav-icon-wrap";
 
-    requestAnimationFrame(() => {
-      scheduled = false;
-      run();
-    });
-  }
+    const img = document.createElement("img");
+    img.className = "ptv-nav-icon ptv-nav-icon-svg";
+    img.src = url;
+    img.alt = alt || "";
+    img.width = 20;
+    img.height = 20;
 
-  function getApiClient() {
-    return window.ApiClient || window.apiClient || null;
-  }
-
-  function getServerAddress() {
-    const api = getApiClient();
-    if (!api) return "";
-    if (typeof api.serverAddress === "function") return api.serverAddress() || "";
-    if (typeof api._serverAddress === "string") return api._serverAddress || "";
-    return "";
-  }
-
-  function preloadImage(url) {
-    return new Promise((resolve, reject) => {
-      if (!url) {
-        reject(new Error("No URL"));
-        return;
+    img.onerror = function () {
+      img.remove();
+      if (fallbackMaterialIcon) {
+        const fallback = document.createElement("span");
+        fallback.className = "material-icons navMenuOptionIcon";
+        fallback.textContent = fallbackMaterialIcon;
+        wrap.appendChild(fallback);
       }
+    };
 
-      const img = new Image();
-      img.onload = () => resolve(url);
-      img.onerror = () => reject(new Error("Failed to load " + url));
-      img.src = url;
-    });
+    wrap.appendChild(img);
+    return wrap;
   }
 
-  function setGlow(rgb) {
-    document.documentElement.style.setProperty(
-      "--ptv-home-glow-rgb",
-      rgb || "143, 124, 255"
-    );
+  function createMaterialIcon(name) {
+    const wrap = document.createElement("span");
+    wrap.className = "ptv-nav-icon-wrap";
+
+    const span = document.createElement("span");
+    span.className = "material-icons navMenuOptionIcon";
+    span.textContent = name || "apps";
+
+    wrap.appendChild(span);
+    return wrap;
   }
-
-  function makeSvgIcon(url, alt = "") {
-    return `<img class="ptv-nav-icon ptv-nav-icon-svg" src="${url}" alt="${alt}" onerror="this.style.display='none'">`;
-  }
-
-  function makeMaterialIcon(name) {
-    return `<span class="material-icons navMenuOptionIcon">${name}</span>`;
-  }
-
-  /* =========================================================
-     BROWSER ICON
-     ========================================================= */
-
-  function replaceBrowserTabIcon() {
-    const head = document.head;
-    if (!head) return;
-
-    let icon = qs("#ptv-browser-icon", head);
-    if (!icon) {
-      icon = document.createElement("link");
-      icon.id = "ptv-browser-icon";
-      icon.rel = "icon";
-      icon.type = "image/x-icon";
-      head.appendChild(icon);
-    }
-    icon.href = BROWSER_ICON_URL;
-
-    let shortcut = qs("#ptv-browser-shortcut-icon", head);
-    if (!shortcut) {
-      shortcut = document.createElement("link");
-      shortcut.id = "ptv-browser-shortcut-icon";
-      shortcut.rel = "shortcut icon";
-      shortcut.type = "image/x-icon";
-      head.appendChild(shortcut);
-    }
-    shortcut.href = BROWSER_ICON_URL;
-  }
-
-  /* =========================================================
-     HEADER LOGO
-     ========================================================= */
 
   function injectHeaderLogo() {
     const headerLeft =
       qs(".skinHeader .headerLeft") ||
-      qs(".skinHeader .headerTop") ||
-      null;
+      qs(".skinHeader .headerTop");
 
     if (!headerLeft) return;
-
-    const existing = qs("#ptv-header-logo");
-    if (existing && existing.closest(".skinHeader")) return;
-    if (existing) existing.remove();
+    if (qs("#ptv-header-logo", headerLeft)) return;
 
     const logo = document.createElement("div");
     logo.id = "ptv-header-logo";
@@ -191,178 +93,97 @@
       logo.remove();
     };
 
-    link.addEventListener("click", function (e) {
+    link.onclick = function (e) {
       e.preventDefault();
       window.location.hash = "#/home";
-    });
+    };
 
     link.appendChild(img);
     logo.appendChild(link);
-
-    if (headerLeft.classList.contains("headerLeft")) {
-      headerLeft.insertBefore(logo, headerLeft.firstChild);
-    } else {
-      const firstButton = headerLeft.querySelector(".headerButtonLeft, .headerButton");
-      if (firstButton && firstButton.parentNode === headerLeft) {
-        firstButton.insertAdjacentElement("afterend", logo);
-      } else {
-        headerLeft.insertBefore(logo, headerLeft.firstChild);
-      }
-    }
+    headerLeft.insertBefore(logo, headerLeft.firstChild);
   }
 
-  /* =========================================================
-     LOGIN
-     ========================================================= */
-
-  function cleanupLogin() {
-    document.body.classList.remove("ptv-native-login-page");
-    qs("#ptv-native-login-brand")?.remove();
-    qs("#ptv-native-extra-buttons")?.remove();
-  }
-
-  function bindLoginGlow(form) {
-    if (!form || form.dataset.ptvGlowBound === "1") return;
-    form.dataset.ptvGlowBound = "1";
-
-    form.addEventListener("mousemove", (e) => {
-      const rect = form.getBoundingClientRect();
-      form.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-      form.style.setProperty("--my", `${e.clientY - rect.top}px`);
-      form.classList.add("ptv-glow-active");
-    });
-
-    form.addEventListener("mouseleave", () => {
-      form.classList.remove("ptv-glow-active");
-    });
-  }
-
-  function relabelLoginButtons(root = document) {
-    qsa("button, a, .navMenuOptionText", root).forEach((el) => {
-      const value = (el.textContent || "").trim();
-      if (value === "Password Reset" || value === "password reset") {
-        el.textContent = "Forgot Password";
-      }
-    });
-  }
-
-  function hideQuickConnect(root = document) {
-    qsa("button, a", root).forEach((el) => {
-      if (text(el).includes("quick connect")) {
-        el.style.display = "none";
-      }
-    });
-  }
-
-  function injectLogin() {
-    if (!isLoginPage()) {
-      cleanupLogin();
-      return;
-    }
-
-    const form = qs(".manualLoginForm") || qs(".loginForm");
-    if (!form) return;
-
-    document.body.classList.add("ptv-native-login-page");
-
-    if (!qs("#ptv-native-login-brand")) {
-      const brand = document.createElement("div");
-      brand.id = "ptv-native-login-brand";
-      brand.innerHTML = `
-        <img src="${LOGO_URL}" alt="PiggieTV">
-        <div class="ptv-tagline">MOVIES • TV SHOWS • ANIME</div>
-      `;
-      form.prepend(brand);
-    }
-
-    if (!qs("#ptv-native-extra-buttons")) {
-      const wrap = document.createElement("div");
-      wrap.id = "ptv-native-extra-buttons";
-      wrap.innerHTML = `
-        <div class="ptv-row">
-          <a class="ptv-btn" href="${SIGNUP_URL}" target="_blank" rel="noopener noreferrer">Sign Up</a>
-          <a class="ptv-btn" href="${FORGOT_URL}" target="_blank" rel="noopener noreferrer">Forgot Password</a>
-        </div>
-        <a class="ptv-btn ptv-discord" href="${DISCORD_URL}" target="_blank" rel="noopener noreferrer">Discord</a>
-      `;
-      form.appendChild(wrap);
-    }
-
-    relabelLoginButtons(form);
-    hideQuickConnect(form);
-    bindLoginGlow(form);
-  }
-
-  /* =========================================================
-     SIDEBAR
-     ========================================================= */
-
-  function getSidebarNav() {
-    return (
-      qs(".mainDrawer .navMenu") ||
-      qs(".mainDrawer .drawerContent .navMenu") ||
-      qs(".mainDrawer .scrollContainer .navMenu") ||
-      qs(".mainDrawer .mainDrawer-scrollContainer .navMenu") ||
-      qs(".mainDrawer nav") ||
-      null
-    );
+  function getSidebarRoot() {
+    return qs(".mainDrawer-scrollContainer");
   }
 
   function buildSidebarAppLink(app) {
     const link = document.createElement("a");
     link.id = `ptv-link-${app.id}`;
     link.href = app.url;
-    link.className = "navMenuOption lnk ptv-custom-nav-link";
+    link.className = "navMenuOption emby-button lnk ptv-custom-nav-link";
 
-    const iconHtml = app.iconUrl
-      ? makeSvgIcon(app.iconUrl, app.title)
-      : makeMaterialIcon(app.materialIcon || "apps");
+    const iconNode = app.iconUrl
+      ? createSvgIcon(app.iconUrl, app.title, app.materialIcon || "apps")
+      : createMaterialIcon(app.materialIcon || "apps");
 
-    link.innerHTML = `
-      ${iconHtml}
-      <span class="navMenuOptionText">${app.title}</span>
-    `;
+    const textNode = document.createElement("span");
+    textNode.className = "navMenuOptionText";
+    textNode.textContent = app.title;
 
-    link.addEventListener("click", function (e) {
+    link.appendChild(iconNode);
+    link.appendChild(textNode);
+
+    link.onclick = function (e) {
       e.preventDefault();
       openExternal(app.url);
-    });
+    };
 
     return link;
   }
 
-  function injectSidebarStable() {
-    const nav = getSidebarNav();
-    if (!nav) return false;
+  function buildDiscordLink() {
+    const link = document.createElement("a");
+    link.id = "ptv-discord-sidebar-link";
+    link.href = DISCORD_URL;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.className = "navMenuOption emby-button lnk ptv-custom-nav-link";
 
-    if (!qs("#ptv-sidebar-logo", nav)) {
+    const iconNode = createSvgIcon(DISCORD_ICON_URL, "Discord", "forum");
+
+    const textNode = document.createElement("span");
+    textNode.className = "navMenuOptionText";
+    textNode.textContent = "Discord";
+
+    link.appendChild(iconNode);
+    link.appendChild(textNode);
+
+    return link;
+  }
+
+  function injectSidebar() {
+    const root = getSidebarRoot();
+    if (!root) return false;
+
+    if (!qs("#ptv-sidebar-logo", root)) {
       const logo = document.createElement("div");
       logo.id = "ptv-sidebar-logo";
-      logo.innerHTML = `<img src="${LOGO_URL}" alt="PiggieTV" onerror="this.style.display='none'">`;
-      nav.prepend(logo);
+
+      const img = document.createElement("img");
+      img.src = LOGO_URL;
+      img.alt = "PiggieTV";
+      img.onerror = function () {
+        logo.remove();
+      };
+
+      logo.appendChild(img);
+
+      const spacer = root.firstElementChild;
+      if (spacer) {
+        spacer.insertAdjacentElement("afterend", logo);
+      } else {
+        root.prepend(logo);
+      }
     }
 
-    if (!qs("#ptv-discord-sidebar-link", nav)) {
-      const link = document.createElement("a");
-      link.id = "ptv-discord-sidebar-link";
-      link.href = DISCORD_URL;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.className = "navMenuOption lnk ptv-custom-nav-link";
-      link.innerHTML = `
-        ${makeSvgIcon(DISCORD_ICON_URL, "Discord")}
-        <span class="navMenuOptionText">Discord</span>
-      `;
-      nav.appendChild(link);
-    }
-
-    let section = qs("#ptv-apps-section", nav);
+    let section = qs("#ptv-apps-section", root);
     if (!section) {
       section = document.createElement("div");
       section.id = "ptv-apps-section";
 
-      const header = document.createElement("div");
-      header.className = "navMenuHeader";
+      const header = document.createElement("h3");
+      header.className = "sidebarHeader";
       header.textContent = "Apps";
 
       const list = document.createElement("div");
@@ -370,364 +191,31 @@
 
       section.appendChild(header);
       section.appendChild(list);
-      nav.appendChild(section);
+      root.appendChild(section);
     }
 
     const list = qs(".ptv-apps-links", section);
-    if (!list) return true;
+    if (list) {
+      APPS.forEach((app) => {
+        if (!qs(`#ptv-link-${app.id}`, list)) {
+          list.appendChild(buildSidebarAppLink(app));
+        }
+      });
+    }
 
-    APPS.forEach((app) => {
-      if (!qs(`#ptv-link-${app.id}`, list)) {
-        list.appendChild(buildSidebarAppLink(app));
-      }
-    });
+    if (!qs("#ptv-discord-sidebar-link", root)) {
+      root.appendChild(buildDiscordLink());
+    }
 
     return true;
   }
 
-  function bindDrawerInjection() {
-    if (window.__ptvSidebarBound) return;
-    window.__ptvSidebarBound = true;
-
-    document.addEventListener(
-      "click",
-      function (e) {
-        const target = e.target;
-        if (!(target instanceof Element)) return;
-
-        const menuButton =
-          target.closest(".headerButton.headerButtonLeft") ||
-          target.closest(".mainDrawerButton") ||
-          target.closest("[aria-label*='Menu']") ||
-          target.closest("[title*='Menu']");
-
-        if (!menuButton) return;
-
-        setTimeout(injectSidebarStable, 120);
-        setTimeout(injectSidebarStable, 350);
-        setTimeout(injectSidebarStable, 700);
-      },
-      true
-    );
-
-    sidebarObserver = new MutationObserver(() => {
-      const nav = getSidebarNav();
-      if (!nav) return;
-      injectSidebarStable();
-    });
-
-    sidebarObserver.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  }
-
-  /* =========================================================
-     HOME BACKDROP
-     ========================================================= */
-
-  function ensureBackdropRoot() {
-    let root = qs(`#${BACKDROP_ROOT_ID}`);
-    if (root) return root;
-
-    root = document.createElement("div");
-    root.id = BACKDROP_ROOT_ID;
-    root.innerHTML = `
-      <div id="${BACKDROP_A_ID}" class="ptv-backdrop-layer is-active"></div>
-      <div id="${BACKDROP_B_ID}" class="ptv-backdrop-layer"></div>
-      <div class="ptv-backdrop-overlay"></div>
-    `;
-
-    document.body.prepend(root);
-    return root;
-  }
-
-  function getBackdropLayers() {
-    return {
-      a: qs(`#${BACKDROP_A_ID}`),
-      b: qs(`#${BACKDROP_B_ID}`)
-    };
-  }
-
-  function swapBackdrop(url) {
-    ensureBackdropRoot();
-
-    const { a, b } = getBackdropLayers();
-    if (!a || !b) return;
-
-    const aActive = a.classList.contains("is-active");
-    const activeLayer = aActive ? a : b;
-    const nextLayer = aActive ? b : a;
-
-    nextLayer.style.backgroundImage = `url("${url}")`;
-    nextLayer.classList.add("is-active");
-    activeLayer.classList.remove("is-active");
-  }
-
-  function setBackdropFromUrl(url) {
-    if (!url || url === activeBackdropUrl) return;
-
-    clearTimeout(backdropSwapTimer);
-    backdropSwapTimer = setTimeout(async function () {
-      try {
-        await preloadImage(url);
-        swapBackdrop(url);
-        activeBackdropUrl = url;
-      } catch (_) {}
-    }, 80);
-  }
-
-  function resetBackdrop() {
-    setBackdropFromUrl(DEFAULT_BACKDROP_URL);
-  }
-
-  function extractIdFromString(value) {
-    if (!value) return "";
-
-    const patterns = [
-      /[?&]id=([a-zA-Z0-9]+)/,
-      /\/details\?id=([a-zA-Z0-9]+)/,
-      /\/items\/([a-zA-Z0-9]+)/i,
-      /\/server\/items\/([a-zA-Z0-9]+)/i
-    ];
-
-    for (const pattern of patterns) {
-      const match = value.match(pattern);
-      if (match?.[1]) return match[1];
-    }
-
-    return "";
-  }
-
-  function getItemIdFromCard(card) {
-    if (!card) return "";
-
-    const direct =
-      card.getAttribute("data-id") ||
-      card.getAttribute("data-itemid") ||
-      card.getAttribute("data-item-id");
-
-    if (direct) return direct;
-
-    const nested = card.querySelector("[data-id],[data-itemid],[data-item-id]");
-    if (nested) {
-      const nestedId =
-        nested.getAttribute("data-id") ||
-        nested.getAttribute("data-itemid") ||
-        nested.getAttribute("data-item-id");
-      if (nestedId) return nestedId;
-    }
-
-    const link = card.closest("a") || card.querySelector("a");
-    if (link?.href) {
-      const id = extractIdFromString(link.href);
-      if (id) return id;
-    }
-
-    const img = card.querySelector("img");
-    if (img?.src) {
-      const id = extractIdFromString(img.src);
-      if (id) return id;
-    }
-
-    return "";
-  }
-
-  function buildBackdropUrl(itemId) {
-    const base = getServerAddress();
-    if (!base || !itemId) return "";
-    return `${base.replace(/\/$/, "")}/Items/${itemId}/Images/Backdrop/0?maxWidth=1920&quality=90`;
-  }
-
-  function pickGlowColorFromCard(card) {
-    const title = (
-      card.querySelector(".cardText")?.textContent ||
-      card.querySelector(".cardFooter")?.textContent ||
-      ""
-    ).trim().toLowerCase();
-
-    if (title.includes("dragon")) return "255, 153, 64";
-    if (title.includes("pokemon")) return "86, 170, 255";
-    if (title.includes("stone")) return "120, 220, 160";
-    if (title.includes("ghost")) return "160, 120, 255";
-    if (title.includes("fire")) return "255, 110, 90";
-    if (title.includes("slime")) return "110, 220, 255";
-    if (title.includes("dorohedoro")) return "255, 90, 110";
-    if (title.includes("classroom")) return "255, 160, 210";
-    return "143, 124, 255";
-  }
-
-  function getHomeCards() {
-    return qsa(".homePage .card, .homePage .cardBox, .homePage .cardScalable, .homePage .emby-card");
-  }
-
-  function getBackdropCandidates() {
-    const seen = new Set();
-    const candidates = [];
-
-    getHomeCards().forEach((card) => {
-      const itemId = getItemIdFromCard(card);
-      if (!itemId || seen.has(itemId)) return;
-
-      const backdropUrl = buildBackdropUrl(itemId);
-      if (!backdropUrl) return;
-
-      seen.add(itemId);
-      candidates.push({
-        itemId,
-        backdropUrl,
-        glow: pickGlowColorFromCard(card)
-      });
-    });
-
-    return candidates;
-  }
-
-  function stopIdleSlideshow() {
-    idleModeActive = false;
-    clearInterval(slideshowTimer);
-    slideshowTimer = null;
-  }
-
-  function showIdleSlide() {
-    if (!isHomePage() || !slideshowItems.length) return;
-
-    const item = slideshowItems[slideshowIndex % slideshowItems.length];
-    slideshowIndex++;
-
-    setGlow(item.glow || "143, 124, 255");
-    setBackdropFromUrl(item.backdropUrl);
-  }
-
-  function startIdleSlideshow() {
-    if (!isHomePage()) return;
-
-    slideshowItems = getBackdropCandidates();
-    if (!slideshowItems.length) return;
-
-    stopIdleSlideshow();
-    idleModeActive = true;
-    slideshowIndex = Math.floor(Math.random() * slideshowItems.length);
-
-    showIdleSlide();
-
-    slideshowTimer = setInterval(() => {
-      if (!idleModeActive || !isHomePage()) return;
-      showIdleSlide();
-    }, SLIDESHOW_DELAY);
-  }
-
-  function resetIdleTimer() {
-    clearTimeout(idleTimer);
-    stopIdleSlideshow();
-
-    if (!isHomePage()) return;
-
-    idleTimer = setTimeout(() => {
-      startIdleSlideshow();
-    }, IDLE_DELAY);
-  }
-
-  function bindIdleListeners() {
-    if (document.body.dataset.ptvIdleBound === "1") return;
-    document.body.dataset.ptvIdleBound = "1";
-
-    ["mousemove", "mousedown", "keydown", "touchstart", "wheel", "scroll"].forEach((eventName) => {
-      window.addEventListener(eventName, resetIdleTimer, { passive: true });
-    });
-  }
-
-  function activateHomeCard(card) {
-    if (!isHomePage()) return;
-
-    clearTimeout(backdropResetTimer);
-    clearTimeout(idleTimer);
-    stopIdleSlideshow();
-
-    const itemId = getItemIdFromCard(card);
-    const glow = pickGlowColorFromCard(card);
-    setGlow(glow);
-
-    if (!itemId) return;
-
-    const backdropUrl = buildBackdropUrl(itemId);
-    if (!backdropUrl) return;
-
-    setBackdropFromUrl(backdropUrl);
-  }
-
-  function deactivateHomeCard() {
-    clearTimeout(backdropResetTimer);
-    backdropResetTimer = setTimeout(() => {
-      setGlow("143, 124, 255");
-      resetIdleTimer();
-    }, 600);
-  }
-
-  function bindHomeBackdropCards() {
-    getHomeCards().forEach((card) => {
-      if (card.dataset.ptvBackdropBound === "1") return;
-      card.dataset.ptvBackdropBound = "1";
-
-      card.addEventListener("mouseenter", () => activateHomeCard(card));
-      card.addEventListener("focusin", () => activateHomeCard(card));
-      card.addEventListener("mouseleave", deactivateHomeCard);
-      card.addEventListener("focusout", deactivateHomeCard);
-    });
-  }
-
-  function setInitialHomeBackdrop() {
-    if (!isHomePage()) return;
-
-    const firstCard = qs(".homePage .card, .homePage .cardBox, .homePage .cardScalable, .homePage .emby-card");
-    if (firstCard) {
-      activateHomeCard(firstCard);
-      resetIdleTimer();
-    } else {
-      resetBackdrop();
-    }
-  }
-
-  function startBackdropRootObserver() {
-    if (backdropRootObserver) return;
-
-    backdropRootObserver = new MutationObserver(() => {
-      if (!qs(`#${BACKDROP_ROOT_ID}`)) {
-        ensureBackdropRoot();
-        if (!activeBackdropUrl) resetBackdrop();
-        else swapBackdrop(activeBackdropUrl);
-      }
-    });
-
-    backdropRootObserver.observe(document.body, { childList: true });
-  }
-
-  function initHomeBackdrop() {
-    ensureBackdropRoot();
-    startBackdropRootObserver();
-    bindIdleListeners();
-
-    if (!isHomePage()) {
-      stopIdleSlideshow();
-      clearTimeout(idleTimer);
-      return;
-    }
-
-    bindHomeBackdropCards();
-    setInitialHomeBackdrop();
-  }
-
-  /* =========================================================
-     TOP REQUEST TAB ICON
-     ========================================================= */
-
   function injectTopRequestTabIcon() {
     const requestTab = qsa(".emby-tab-button, .headerTabButton, button, a").find(
-      (el) => text(el) === "request"
+      (el) => (el.textContent || "").trim().toLowerCase() === "request"
     );
 
-    if (!requestTab) return;
-    if (qs(".ptv-request-tab-icon", requestTab)) return;
+    if (!requestTab || qs(".ptv-request-tab-icon", requestTab)) return;
 
     const icon = document.createElement("img");
     icon.className = "ptv-request-tab-icon";
@@ -737,58 +225,62 @@
     icon.style.height = "14px";
     icon.style.marginRight = "6px";
     icon.style.verticalAlign = "middle";
-    icon.style.display = "inline-block";
     icon.onerror = function () {
-      icon.style.display = "none";
+      icon.remove();
     };
 
     requestTab.prepend(icon);
   }
+function setBrowserIcon() {
+  const head = document.head;
+  if (!head) return;
 
-  /* =========================================================
-     MAIN RUNNER
-     ========================================================= */
+  const ICON_URL = "https://theme.piggietv.com/assets/icons/browser-icon.png";
 
-  function run() {
-    replaceBrowserTabIcon();
+  // Remove Jellyfin icons ONCE
+  if (!head.dataset.ptvIconCleaned) {
+    head.dataset.ptvIconCleaned = "1";
+
+    head.querySelectorAll('link[rel*="icon"]').forEach(el => {
+      el.remove();
+    });
+  }
+
+  // Add ours
+  if (!head.querySelector("#ptv-favicon")) {
+    const link = document.createElement("link");
+    link.id = "ptv-favicon";
+    link.rel = "icon";
+    link.type = "image/png";
+    link.href = ICON_URL + "?v=" + Date.now();
+
+    head.appendChild(link);
+  }
+}
+
+  function runSafe() {
+    setBrowserIcon();
     injectHeaderLogo();
-    injectLogin();
-    relabelLoginButtons(document);
+    injectSidebar();
     injectTopRequestTabIcon();
-    initHomeBackdrop();
-    injectSidebarStable();
   }
 
   function boot() {
-    run();
-    bindDrawerInjection();
+    runSafe();
 
-    if (!appObserver) {
-      appObserver = new MutationObserver(() => {
-        if (location.href !== lastUrl) {
-          lastUrl = location.href;
-        }
-        scheduleRun();
-      });
+    document.addEventListener("click", function () {
+      setTimeout(runSafe, 120);
+      setTimeout(runSafe, 400);
+    }, true);
 
-      appObserver.observe(document.body, {
-        childList: true,
-        subtree: true
-      });
-    }
-
-    window.addEventListener("load", run);
-
-    window.addEventListener("hashchange", () => {
-      setTimeout(scheduleRun, 120);
-      setTimeout(scheduleRun, 400);
-      setTimeout(scheduleRun, 800);
+    window.addEventListener("hashchange", function () {
+      setTimeout(runSafe, 150);
+      setTimeout(runSafe, 500);
     });
 
-    document.addEventListener("viewshow", () => {
-      setTimeout(scheduleRun, 120);
-      setTimeout(scheduleRun, 400);
-      setTimeout(scheduleRun, 800);
+    document.addEventListener("viewshow", function () {
+      setTimeout(runSafe, 150);
+      setTimeout(runSafe, 500);
     });
   }
 
