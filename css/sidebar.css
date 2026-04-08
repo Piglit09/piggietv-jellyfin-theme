@@ -1,55 +1,57 @@
-/* =========================
-   PIGGIETV SAFE SIDEBAR CSS
-   Does NOT control drawer open/close
-   ========================= */
+/* =========================================================
+   PIGGIETV SIDEBAR
+   SAFE VERSION
+   - styles the drawer
+   - does NOT override Jellyfin drawer mechanics
+   - does NOT force open/closed states
+   ========================================================= */
 
-/* --- Drawer surface only --- */
+/* ---------- drawer shell ---------- */
 .mainDrawer {
-  background: rgba(10, 14, 24, 0.94) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 12, 22, 0.96) 0%,
+    rgba(12, 18, 30, 0.94) 100%
+  ) !important;
   backdrop-filter: blur(18px) saturate(140%) !important;
   -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
-  border-right: 1px solid rgba(255,255,255,0.08) !important;
-  box-shadow: 0 0 40px rgba(0,0,0,0.45) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 0 34px rgba(0, 0, 0, 0.38) !important;
 }
 
-/* IMPORTANT:
-   Do NOT force display / visibility / opacity / transform
-   Let Jellyfin handle opening and closing
-*/
-.mainDrawer,
-.mainDrawer.drawers,
-.mainDrawer.scrollY,
-.mainDrawer .drawer-open,
-.mainDrawer .drawer-content,
+/* DO NOT touch transform/left/visibility/opacity/display for drawer state */
+
+/* ---------- inner scrolling area ---------- */
+.mainDrawer .scrollContainer,
+.mainDrawer .scrollY {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* ---------- nav area ---------- */
 .mainDrawer .navMenu {
-  display: block;
+  padding: 14px 10px 20px !important;
 }
 
-/* --- Internal layout --- */
-.mainDrawer .navMenu {
-  padding: 18px 12px 22px !important;
-  gap: 6px !important;
-}
-
-/* --- Sidebar logo block --- */
+/* ---------- logo block injected by JS ---------- */
 #ptv-sidebar-logo {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin: 0 6px 18px !important;
-  padding: 10px 10px 14px !important;
-  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+  margin: 0 6px 14px !important;
+  padding: 8px 8px 14px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 #ptv-sidebar-logo img {
   display: block !important;
+  width: 185px !important;
   max-width: 100% !important;
-  width: 190px !important;
   height: auto !important;
   object-fit: contain !important;
   filter:
-    drop-shadow(0 0 10px rgba(130, 180, 255, 0.16))
-    drop-shadow(0 0 20px rgba(160, 120, 255, 0.10));
+    drop-shadow(0 0 10px rgba(120, 170, 255, 0.14))
+    drop-shadow(0 0 24px rgba(170, 120, 255, 0.10));
   animation: ptvSidebarLogoFloat 5s ease-in-out infinite;
 }
 
@@ -59,17 +61,20 @@
   100% { transform: translateY(0); }
 }
 
-/* --- Nav links --- */
+/* ---------- nav buttons ---------- */
 .mainDrawer .navMenuOption,
-.mainDrawer .navMenuOption.emby-button,
-.mainDrawer a.navMenuOption {
-  border-radius: 16px !important;
+.mainDrawer a.navMenuOption,
+.mainDrawer button.navMenuOption {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 46px !important;
   margin: 4px 0 !important;
   padding: 12px 14px !important;
-  min-height: 46px !important;
-  color: rgba(255,255,255,0.92) !important;
+  border-radius: 16px !important;
   background: transparent !important;
   border: 1px solid transparent !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-decoration: none !important;
   transition:
     background 0.18s ease,
     border-color 0.18s ease,
@@ -77,16 +82,14 @@
     transform 0.18s ease !important;
 }
 
-/* icons */
-.mainDrawer .navMenuOption .navMenuOptionIcon {
-  color: rgba(255,255,255,0.82) !important;
+.mainDrawer .navMenuOptionIcon {
   margin-right: 14px !important;
+  color: rgba(255, 255, 255, 0.82) !important;
   transition:
     color 0.18s ease,
     transform 0.18s ease !important;
 }
 
-/* label text */
 .mainDrawer .navMenuOptionText {
   font-weight: 600 !important;
   letter-spacing: 0.2px !important;
@@ -94,40 +97,42 @@
 
 /* hover */
 .mainDrawer .navMenuOption:hover,
-.mainDrawer a.navMenuOption:hover {
+.mainDrawer a.navMenuOption:hover,
+.mainDrawer button.navMenuOption:hover {
   background: linear-gradient(
     135deg,
-    rgba(120, 170, 255, 0.14),
-    rgba(170, 120, 255, 0.14)
+    rgba(106, 160, 255, 0.14),
+    rgba(173, 120, 255, 0.14)
   ) !important;
-  border-color: rgba(160, 190, 255, 0.16) !important;
+  border-color: rgba(180, 205, 255, 0.14) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.05),
-    0 0 18px rgba(110, 140, 255, 0.10) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 18px rgba(110, 145, 255, 0.10) !important;
   transform: translateX(2px) !important;
 }
 
 .mainDrawer .navMenuOption:hover .navMenuOptionIcon,
-.mainDrawer a.navMenuOption:hover .navMenuOptionIcon {
-  color: #c9d8ff !important;
+.mainDrawer a.navMenuOption:hover .navMenuOptionIcon,
+.mainDrawer button.navMenuOption:hover .navMenuOptionIcon {
+  color: #d7e3ff !important;
   transform: scale(1.05) !important;
 }
 
-/* active/current item */
+/* selected */
 .mainDrawer .navMenuOption-selected,
 .mainDrawer .navMenuOption-selected:hover {
   background: linear-gradient(
     135deg,
-    rgba(120, 170, 255, 0.22),
-    rgba(170, 120, 255, 0.22)
+    rgba(106, 160, 255, 0.22),
+    rgba(173, 120, 255, 0.22)
   ) !important;
-  border-color: rgba(190, 210, 255, 0.18) !important;
+  border-color: rgba(185, 210, 255, 0.18) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 0 22px rgba(120, 160, 255, 0.14) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 20px rgba(120, 160, 255, 0.14) !important;
 }
 
-/* --- Discord custom link --- */
+/* ---------- discord link injected by JS ---------- */
 #ptv-discord-sidebar-link {
   display: flex !important;
   align-items: center !important;
@@ -135,10 +140,10 @@
   margin: 10px 0 0 !important;
   padding: 12px 14px !important;
   border-radius: 16px !important;
+  color: rgba(255, 255, 255, 0.92) !important;
   text-decoration: none !important;
-  color: rgba(255,255,255,0.92) !important;
-  background: rgba(255,255,255,0.03) !important;
-  border: 1px solid rgba(255,255,255,0.05) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
   transition:
     background 0.18s ease,
     border-color 0.18s ease,
@@ -149,22 +154,25 @@
 #ptv-discord-sidebar-link:hover {
   background: linear-gradient(
     135deg,
-    rgba(88, 101, 242, 0.20),
-    rgba(150, 120, 255, 0.16)
+    rgba(88, 101, 242, 0.22),
+    rgba(160, 120, 255, 0.14)
   ) !important;
-  border-color: rgba(150, 170, 255, 0.16) !important;
-  box-shadow: 0 0 18px rgba(88, 101, 242, 0.14) !important;
+  border-color: rgba(165, 185, 255, 0.16) !important;
+  box-shadow: 0 0 18px rgba(88, 101, 242, 0.16) !important;
   transform: translateX(2px) !important;
 }
 
-/* --- Scrolling safety --- */
-.mainDrawer .scrollContainer,
-.mainDrawer .scrollY {
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+#ptv-discord-sidebar-link .material-icons {
+  font-size: 22px !important;
+  line-height: 1 !important;
 }
 
-/* --- Mobile tuning --- */
+#ptv-discord-sidebar-link span:last-child {
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+}
+
+/* ---------- mobile ---------- */
 @media (max-width: 900px) {
   #ptv-sidebar-logo img {
     width: 150px !important;
@@ -172,6 +180,7 @@
 
   .mainDrawer .navMenuOption,
   .mainDrawer a.navMenuOption,
+  .mainDrawer button.navMenuOption,
   #ptv-discord-sidebar-link {
     border-radius: 14px !important;
     padding: 11px 12px !important;

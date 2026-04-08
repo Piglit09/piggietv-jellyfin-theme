@@ -442,211 +442,191 @@ body:not(.ptv-native-login-page) .visualCardBox {
 
 /* ===== sidebar.css ===== */
 /* =========================================================
-   PIGGIETV — SIDEBAR
-   Visual styling only
-   Do NOT control drawer state, width, position, transform, or height
+   PIGGIETV SIDEBAR
+   SAFE VERSION
+   - styles the drawer
+   - does NOT override Jellyfin drawer mechanics
+   - does NOT force open/closed states
    ========================================================= */
 
-/* =========================================================
-   SIDEBAR CONTAINER
-   ========================================================= */
-
+/* ---------- drawer shell ---------- */
 .mainDrawer {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(16, 20, 36, 0.985),
-      rgba(22, 26, 44, 0.985)
-    ) !important;
-  backdrop-filter: blur(18px) saturate(120%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(120%) !important;
-  z-index: 99999 !important;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 12, 22, 0.96) 0%,
+    rgba(12, 18, 30, 0.94) 100%
+  ) !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 0 34px rgba(0, 0, 0, 0.38) !important;
 }
 
-/* subtle glow edge */
-.mainDrawer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 1px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(143, 124, 255, 0.25),
-      transparent 40%,
-      transparent 60%,
-      rgba(134, 227, 255, 0.18)
-    );
-  opacity: 0.4;
-  pointer-events: none;
+/* DO NOT touch transform/left/visibility/opacity/display for drawer state */
+
+/* ---------- inner scrolling area ---------- */
+.mainDrawer .scrollContainer,
+.mainDrawer .scrollY {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 
-/* =========================================================
-   LOGO
-   ========================================================= */
+/* ---------- nav area ---------- */
+.mainDrawer .navMenu {
+  padding: 14px 10px 20px !important;
+}
 
+/* ---------- logo block injected by JS ---------- */
 #ptv-sidebar-logo {
-  padding: 14px 10px 6px !important;
-  text-align: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 6px 14px !important;
+  padding: 8px 8px 14px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 #ptv-sidebar-logo img {
-  width: 165px !important;
-  max-width: 85% !important;
-  height: auto;
+  display: block !important;
+  width: 185px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
   filter:
-    drop-shadow(0 10px 28px rgba(0, 0, 0, 0.45))
-    drop-shadow(0 0 18px rgba(143, 124, 255, 0.25))
-    brightness(1.05);
-  transition: transform 0.25s ease, filter 0.25s ease;
+    drop-shadow(0 0 10px rgba(120, 170, 255, 0.14))
+    drop-shadow(0 0 24px rgba(170, 120, 255, 0.10));
+  animation: ptvSidebarLogoFloat 5s ease-in-out infinite;
 }
 
-#ptv-sidebar-logo img:hover {
-  transform: translateY(-2px) scale(1.03);
-  filter:
-    drop-shadow(0 14px 36px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 0 24px rgba(143, 124, 255, 0.35))
-    brightness(1.08);
+@keyframes ptvSidebarLogoFloat {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
 }
 
-/* =========================================================
-   NAV ITEMS
-   ========================================================= */
-
-.mainDrawer .navMenuOption {
-  position: relative !important;
-  border-radius: 12px !important;
-  margin: 4px 8px !important;
-  padding: 10px 12px !important;
-  color: rgba(255, 255, 255, 0.85) !important;
+/* ---------- nav buttons ---------- */
+.mainDrawer .navMenuOption,
+.mainDrawer a.navMenuOption,
+.mainDrawer button.navMenuOption {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 46px !important;
+  margin: 4px 0 !important;
+  padding: 12px 14px !important;
+  border-radius: 16px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-decoration: none !important;
   transition:
-    transform 0.16s ease,
-    background 0.16s ease,
-    box-shadow 0.16s ease,
-    color 0.16s ease !important;
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
 }
 
-.mainDrawer .navMenuOption:hover {
-  transform: translateX(4px);
-  background: rgba(255, 255, 255, 0.05) !important;
+.mainDrawer .navMenuOptionIcon {
+  margin-right: 14px !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+.mainDrawer .navMenuOptionText {
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
+}
+
+/* hover */
+.mainDrawer .navMenuOption:hover,
+.mainDrawer a.navMenuOption:hover,
+.mainDrawer button.navMenuOption:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(106, 160, 255, 0.14),
+    rgba(173, 120, 255, 0.14)
+  ) !important;
+  border-color: rgba(180, 205, 255, 0.14) !important;
   box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.25),
-    0 0 12px rgba(143, 124, 255, 0.08);
-  color: rgba(255, 255, 255, 0.95) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 18px rgba(110, 145, 255, 0.10) !important;
+  transform: translateX(2px) !important;
 }
 
+.mainDrawer .navMenuOption:hover .navMenuOptionIcon,
+.mainDrawer a.navMenuOption:hover .navMenuOptionIcon,
+.mainDrawer button.navMenuOption:hover .navMenuOptionIcon {
+  color: #d7e3ff !important;
+  transform: scale(1.05) !important;
+}
+
+/* selected */
 .mainDrawer .navMenuOption-selected,
-.mainDrawer .navMenuOption[aria-selected="true"] {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(134, 227, 255, 0.14) 0%,
-      rgba(143, 124, 255, 0.18) 55%,
-      rgba(243, 163, 220, 0.12) 100%
-    ) !important;
+.mainDrawer .navMenuOption-selected:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(106, 160, 255, 0.22),
+    rgba(173, 120, 255, 0.22)
+  ) !important;
+  border-color: rgba(185, 210, 255, 0.18) !important;
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-    0 8px 22px rgba(0, 0, 0, 0.28),
-    0 0 18px rgba(143, 124, 255, 0.12);
-  color: #ffffff !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 20px rgba(120, 160, 255, 0.14) !important;
 }
 
-/* =========================================================
-   ICONS
-   ========================================================= */
-
-.mainDrawer .navMenuOption i,
-.mainDrawer .navMenuOption .md-icon {
-  opacity: 0.8;
-  transition: opacity 0.16s ease, transform 0.16s ease;
+/* ---------- discord link injected by JS ---------- */
+#ptv-discord-sidebar-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin: 10px 0 0 !important;
+  padding: 12px 14px !important;
+  border-radius: 16px !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-decoration: none !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
 }
 
-.mainDrawer .navMenuOption:hover i,
-.mainDrawer .navMenuOption:hover .md-icon {
-  opacity: 1;
-  transform: translateX(1px);
+#ptv-discord-sidebar-link:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(88, 101, 242, 0.22),
+    rgba(160, 120, 255, 0.14)
+  ) !important;
+  border-color: rgba(165, 185, 255, 0.16) !important;
+  box-shadow: 0 0 18px rgba(88, 101, 242, 0.16) !important;
+  transform: translateX(2px) !important;
 }
 
-.ptv-custom-nav-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+#ptv-discord-sidebar-link .material-icons {
+  font-size: 22px !important;
+  line-height: 1 !important;
 }
 
-.ptv-nav-icon-svg {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  flex: 0 0 20px;
+#ptv-discord-sidebar-link span:last-child {
+  font-weight: 600 !important;
+  letter-spacing: 0.2px !important;
 }
 
-/* =========================================================
-   SCROLL AREA
-   ========================================================= */
-
-.mainDrawer .navMenu,
-.mainDrawer .mainDrawer-scrollContainer {
-  padding-bottom: 20px !important;
-}
-
-/* =========================================================
-   INTERACTION + LAYER SAFETY
-   ========================================================= */
-
-#ptv-backdrop-root {
-  pointer-events: none !important;
-  z-index: 0 !important;
-}
-
-.backgroundContainer,
-.backdropContainer,
-.pageBackground,
-.defaultBackground,
-.themeBackground,
-.pageBackdrop,
-.libraryBackground {
-  pointer-events: none !important;
-}
-
-.skinHeader,
-.headerTabs,
-.skinHeader-withBackground {
-  z-index: 99998 !important;
-  pointer-events: auto !important;
-}
-
-.dialog,
-.actionSheet,
-.focuscontainer-dialog,
-.itemsContainer.dialogContent {
-  z-index: 100000 !important;
-}
-
-.mainDrawer,
-.mainDrawer * {
-  pointer-events: auto !important;
-}
-
-/* =========================================================
-   MOBILE SAFETY
-   ========================================================= */
-
+/* ---------- mobile ---------- */
 @media (max-width: 900px) {
-  .mainDrawer {
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.45),
-      inset -1px 0 0 rgba(255, 255, 255, 0.04);
-  }
-
   #ptv-sidebar-logo img {
-    width: 140px !important;
+    width: 150px !important;
   }
 
-  .mainDrawer .navMenuOption {
-    margin: 4px 6px !important;
-    padding: 9px 10px !important;
+  .mainDrawer .navMenuOption,
+  .mainDrawer a.navMenuOption,
+  .mainDrawer button.navMenuOption,
+  #ptv-discord-sidebar-link {
+    border-radius: 14px !important;
+    padding: 11px 12px !important;
   }
 }
 
