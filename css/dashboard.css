@@ -1,76 +1,70 @@
 /* =========================================================
-   PIGGIETV — ADMIN DASHBOARD (CLEAN SAFE)
+   PIGGIETV — ADMIN DASHBOARD
+   Safe dashboard-only styling
+   Does NOT affect main app drawer
    ========================================================= */
 
-/* =========================================================
+/* -----------------------------
    ROOT
-   ========================================================= */
-
+   ----------------------------- */
 body:not(.ptv-native-login-page) .dashboardDocument,
 body:not(.ptv-native-login-page) #dashboardPage {
   background: #020b14 !important;
-  color: rgba(255,255,255,0.88) !important;
+  color: rgba(255, 255, 255, 0.88) !important;
 }
 
-/* =========================================================
-   ADMIN SIDEBAR
-   ========================================================= */
-
+/* -----------------------------
+   ADMIN DRAWER ONLY
+   ----------------------------- */
 body:not(.ptv-native-login-page) .adminDrawer {
-  width: 290px !important;
-
   background: linear-gradient(
     180deg,
-    rgba(3,10,18,0.96),
-    rgba(5,12,22,0.98)
+    rgba(3, 10, 18, 0.96),
+    rgba(5, 12, 22, 0.98)
   ) !important;
-
-  border-right: 1px solid rgba(255,255,255,0.06) !important;
-  box-shadow: 8px 0 30px rgba(0,0,0,0.35);
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* nav items */
 body:not(.ptv-native-login-page) .adminDrawer .navMenuOption {
   min-height: 50px !important;
   margin: 4px 6px !important;
   padding: 10px 12px !important;
-
   border-radius: 12px !important;
-
   background: transparent !important;
-  color: rgba(255,255,255,0.75) !important;
-
-  transition: all 0.16s ease !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.16s ease !important;
 }
 
 body:not(.ptv-native-login-page) .adminDrawer .navMenuOption:hover {
-  background: rgba(255,255,255,0.05) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
   color: #fff !important;
 }
 
 body:not(.ptv-native-login-page) .adminDrawer .navMenuOption-selected {
   background: linear-gradient(
     90deg,
-    rgba(134,227,255,0.18),
-    rgba(143,124,255,0.22)
+    rgba(134, 227, 255, 0.18),
+    rgba(143, 124, 255, 0.22)
   ) !important;
-
   color: #fff !important;
-
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.06),
-    0 6px 18px rgba(0,0,0,0.25);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 6px 18px rgba(0, 0, 0, 0.25) !important;
 }
 
-/* logo safety */
-#ptv-sidebar-logo {
+/* keep this dashboard-only */
+body:not(.ptv-native-login-page) .adminDrawer #ptv-sidebar-logo {
   display: block !important;
 }
 
-/* =========================================================
+/* -----------------------------
    PANELS
-   ========================================================= */
-
+   ----------------------------- */
 body:not(.ptv-native-login-page) .dashboardSection,
 body:not(.ptv-native-login-page) .dashboardCard,
 body:not(.ptv-native-login-page) .statCard,
@@ -78,15 +72,15 @@ body:not(.ptv-native-login-page) .itemCountCard,
 body:not(.ptv-native-login-page) .visualCardBox,
 body:not(.ptv-native-login-page) .paperList,
 body:not(.ptv-native-login-page) .activeSession {
-  background: rgba(8,16,26,0.85) !important;
-
+  background: rgba(8, 16, 26, 0.85) !important;
   border-radius: 18px !important;
-  border: 1px solid rgba(255,255,255,0.05) !important;
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* list rows */
+/* -----------------------------
+   LISTS
+   ----------------------------- */
 body:not(.ptv-native-login-page) .dashboardSection .listItem,
 body:not(.ptv-native-login-page) #dashboardPage .listItem {
   background: transparent !important;
@@ -95,102 +89,98 @@ body:not(.ptv-native-login-page) #dashboardPage .listItem {
 
 body:not(.ptv-native-login-page) .dashboardSection .listItem:hover,
 body:not(.ptv-native-login-page) #dashboardPage .listItem:hover {
-  background: rgba(255,255,255,0.04) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
 }
 
-/* =========================================================
+/* -----------------------------
    TEXT
-   ========================================================= */
-
+   ----------------------------- */
 body:not(.ptv-native-login-page) .dashboardDocument h2,
 body:not(.ptv-native-login-page) .dashboardDocument h3,
 body:not(.ptv-native-login-page) .dashboardDocument .sectionTitle {
-  color: rgba(255,255,255,0.95) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
   font-weight: 600 !important;
 }
 
 body:not(.ptv-native-login-page) .dashboardDocument .secondaryText {
-  color: rgba(255,255,255,0.65) !important;
+  color: rgba(255, 255, 255, 0.65) !important;
 }
 
-/* =========================================================
+/* -----------------------------
    BUTTONS
-   ========================================================= */
-
+   ----------------------------- */
 body:not(.ptv-native-login-page) .dashboardDocument .emby-button,
 body:not(.ptv-native-login-page) #dashboardPage .emby-button {
   border-radius: 999px !important;
-
   background: linear-gradient(
     90deg,
-    rgba(134,227,255,0.95),
-    rgba(143,124,255,0.92)
+    rgba(134, 227, 255, 0.95),
+    rgba(143, 124, 255, 0.92)
   ) !important;
-
   color: #fff !important;
   border: none !important;
-
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  transition: all 0.16s ease !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    filter 0.16s ease !important;
 }
 
-body:not(.ptv-native-login-page) .dashboardDocument .emby-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+body:not(.ptv-native-login-page) .dashboardDocument .emby-button:hover,
+body:not(.ptv-native-login-page) #dashboardPage .emby-button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* =========================================================
+/* -----------------------------
    INPUTS
-   ========================================================= */
-
+   ----------------------------- */
 body:not(.ptv-native-login-page) .dashboardDocument .emby-input,
 body:not(.ptv-native-login-page) .dashboardDocument textarea,
 body:not(.ptv-native-login-page) .dashboardDocument select {
   background: #07131d !important;
-
-  border: 1px solid rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 14px !important;
-
   color: #fff !important;
 }
 
 body:not(.ptv-native-login-page) .dashboardDocument .emby-input:focus,
 body:not(.ptv-native-login-page) .dashboardDocument textarea:focus,
 body:not(.ptv-native-login-page) .dashboardDocument select:focus {
-  border-color: rgba(134,227,255,0.55) !important;
-  box-shadow: 0 0 0 3px rgba(134,227,255,0.12) !important;
+  border-color: rgba(134, 227, 255, 0.55) !important;
+  box-shadow: 0 0 0 3px rgba(134, 227, 255, 0.12) !important;
 }
 
-/* =========================================================
+/* -----------------------------
    ACTIVE SESSION
-   ========================================================= */
-
+   ----------------------------- */
 body:not(.ptv-native-login-page) .activeSession .cardBox,
 body:not(.ptv-native-login-page) .activeSession .sessionCard {
   background:
     linear-gradient(
       135deg,
-      rgba(90,130,255,0.24),
-      rgba(195,110,255,0.18)
+      rgba(90, 130, 255, 0.24),
+      rgba(195, 110, 255, 0.18)
     ),
     #07131d !important;
-
   border-radius: 16px !important;
 }
 
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
+/* -----------------------------
+   DASHBOARD SCROLLBARS ONLY
+   ----------------------------- */
+body:not(.ptv-native-login-page) .dashboardDocument ::-webkit-scrollbar,
+body:not(.ptv-native-login-page) #dashboardPage ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
-::-webkit-scrollbar-thumb {
+body:not(.ptv-native-login-page) .dashboardDocument ::-webkit-scrollbar-thumb,
+body:not(.ptv-native-login-page) #dashboardPage ::-webkit-scrollbar-thumb {
   border-radius: 6px;
   background: linear-gradient(
     180deg,
-    rgba(143,124,255,0.6),
-    rgba(134,227,255,0.6)
+    rgba(143, 124, 255, 0.60),
+    rgba(134, 227, 255, 0.60)
   );
 }

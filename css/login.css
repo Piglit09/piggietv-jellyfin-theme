@@ -1,12 +1,12 @@
 /* =========================================================
    PIGGIETV — LOGIN
    Native Jellyfin login page
+   Safe, login-scoped only
    ========================================================= */
 
-/* =========================================================
+/* -----------------------------
    PAGE BACKDROP
-   ========================================================= */
-
+   ----------------------------- */
 body.ptv-native-login-page,
 body.ptv-native-login-page .skinBody,
 body.ptv-native-login-page #loginPage,
@@ -21,7 +21,6 @@ body.ptv-native-login-page,
 body.ptv-native-login-page .skinBody,
 body.ptv-native-login-page #loginPage {
   min-height: 100vh !important;
-  overflow-y: auto !important;
 }
 
 body.ptv-native-login-page::before {
@@ -51,10 +50,9 @@ body.ptv-native-login-page::after {
   animation: ptvZoom 30s ease-in-out infinite;
 }
 
-/* =========================================================
+/* -----------------------------
    PAGE CLEANUP
-   ========================================================= */
-
+   ----------------------------- */
 body.ptv-native-login-page .readOnlyContent,
 body.ptv-native-login-page .centeredPage,
 body.ptv-native-login-page .padded-left-page,
@@ -79,10 +77,9 @@ body.ptv-native-login-page #loginPage {
   box-sizing: border-box !important;
 }
 
-/* =========================================================
+/* -----------------------------
    LOGIN CARD
-   ========================================================= */
-
+   ----------------------------- */
 body.ptv-native-login-page .manualLoginForm,
 body.ptv-native-login-page .loginForm {
   --mx: 50%;
@@ -133,7 +130,6 @@ body.ptv-native-login-page .loginForm::before {
   pointer-events: none;
   border-radius: inherit;
   transition: opacity 0.2s ease;
-
   background: radial-gradient(
     220px circle at var(--mx) var(--my),
     rgba(135, 190, 255, 0.18),
@@ -153,10 +149,9 @@ body.ptv-native-login-page .loginForm > * {
   z-index: 2;
 }
 
-/* =========================================================
+/* -----------------------------
    HIDE STOCK ELEMENTS
-   ========================================================= */
-
+   ----------------------------- */
 body.ptv-native-login-page .forgotPasswordLink,
 body.ptv-native-login-page .btnForgotPassword,
 body.ptv-native-login-page a[href*="forgotpassword"]:not(#ptv-native-extra-buttons a),
@@ -168,10 +163,9 @@ body.ptv-native-login-page .loginForm ~ button {
   display: none !important;
 }
 
-/* =========================================================
-   LOGIN BRANDING
-   ========================================================= */
-
+/* -----------------------------
+   BRANDING
+   ----------------------------- */
 body.ptv-native-login-page #ptv-native-login-brand {
   position: relative;
   z-index: 10;
@@ -193,14 +187,12 @@ body.ptv-native-login-page #ptv-native-login-brand::before {
   opacity: 0.95;
   transform: translate(-50%, -50%);
   filter: blur(65px);
-
   background: radial-gradient(
     circle,
     rgba(120, 160, 255, 0.32) 0%,
     rgba(255, 120, 200, 0.18) 40%,
     transparent 72%
   );
-
   animation: ptvLogoBreathe 5s ease-in-out infinite;
 }
 
@@ -211,14 +203,12 @@ body.ptv-native-login-page #ptv-native-login-brand img {
   height: auto;
   margin-bottom: 12px !important;
   border-radius: 14px;
-
   transform: scale(1.02);
   filter:
     drop-shadow(0 18px 50px rgba(0, 0, 0, 0.55))
     drop-shadow(0 0 30px rgba(120, 160, 255, 0.45))
     brightness(1.10)
     saturate(1.20);
-
   animation: ptvLogoImageFloat 6s ease-in-out infinite;
 }
 
@@ -226,20 +216,17 @@ body.ptv-native-login-page #ptv-native-login-brand .ptv-tagline {
   position: relative;
   z-index: 1;
   margin-top: 10px !important;
-
   font-size: 12px !important;
   font-weight: 800;
   letter-spacing: 0.26em !important;
   text-transform: uppercase;
-
   color: rgba(255, 255, 255, 0.94);
   text-shadow: 0 1px 10px rgba(28, 80, 210, 0.18);
 }
 
-/* =========================================================
+/* -----------------------------
    INPUTS / LABELS
-   ========================================================= */
-
+   ----------------------------- */
 body.ptv-native-login-page .inputLabel,
 body.ptv-native-login-page label {
   color: rgba(255, 255, 255, 0.95) !important;
@@ -255,11 +242,9 @@ body.ptv-native-login-page input[type="password"] {
   height: 48px !important;
   font-size: 15px !important;
   color: #fff !important;
-
   background: rgba(8, 16, 36, 0.42) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   border-radius: 13px !important;
-
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
     0 6px 16px rgba(0, 0, 0, 0.12) !important;
@@ -283,10 +268,9 @@ body.ptv-native-login-page .rememberPassword {
   margin-bottom: 12px !important;
 }
 
-/* =========================================================
-   LOGIN BUTTONS
-   ========================================================= */
-
+/* -----------------------------
+   BUTTONS
+   ----------------------------- */
 body.ptv-native-login-page .manualLoginForm .emby-button,
 body.ptv-native-login-page .manualLoginForm button,
 body.ptv-native-login-page .manualLoginForm .ptv-btn,
@@ -295,7 +279,6 @@ body.ptv-native-login-page .loginForm button,
 body.ptv-native-login-page .loginForm .ptv-btn {
   position: relative !important;
   overflow: hidden !important;
-
   transition:
     transform 0.16s ease,
     box-shadow 0.16s ease,
@@ -318,7 +301,6 @@ body.ptv-native-login-page .loginForm .ptv-btn::after {
   opacity: 0;
   pointer-events: none;
   transform: skewX(-18deg);
-
   background: linear-gradient(
     100deg,
     rgba(255, 255, 255, 0) 0%,
@@ -361,26 +343,21 @@ body.ptv-native-login-page .button-submit {
   min-height: 52px !important;
   height: 52px !important;
   margin-top: 14px !important;
-
   border: none !important;
   border-radius: 16px !important;
-
   background: linear-gradient(135deg, #7ef6ff, #8da4ff 45%, #ff9fe7) !important;
   color: #081224 !important;
-
   font-size: 18px !important;
   font-weight: 900 !important;
-
   box-shadow:
     0 12px 28px rgba(79, 172, 255, 0.30),
     0 0 14px rgba(111, 123, 255, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
 }
 
-/* =========================================================
+/* -----------------------------
    EXTRA BUTTONS
-   ========================================================= */
-
+   ----------------------------- */
 body.ptv-native-login-page #ptv-native-extra-buttons {
   position: relative;
   z-index: 10;
@@ -401,22 +378,18 @@ body.ptv-native-login-page #ptv-native-extra-buttons .ptv-btn {
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-
   width: 100% !important;
   min-height: 46px !important;
   height: 46px !important;
   margin-top: 10px !important;
   padding: 12px 16px !important;
-
   border-radius: 14px !important;
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
-
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.11),
     rgba(255, 255, 255, 0.06)
   ) !important;
-
   color: #fff !important;
   font-size: 14px !important;
   font-weight: 800 !important;
@@ -439,15 +412,13 @@ body.ptv-native-login-page #ptv-native-extra-buttons .ptv-discord {
   height: 48px !important;
   font-size: 15px !important;
   border: none !important;
-
   background: linear-gradient(135deg, #5865F2, #7a84ff) !important;
   box-shadow: 0 10px 22px rgba(88, 101, 242, 0.22) !important;
 }
 
-/* =========================================================
-   MOBILE SAFETY
-   ========================================================= */
-
+/* -----------------------------
+   MOBILE
+   ----------------------------- */
 @media (max-width: 600px) {
   body.ptv-native-login-page #loginPage {
     padding: 24px 14px 40px !important;

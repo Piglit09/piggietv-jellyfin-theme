@@ -1,8 +1,13 @@
 /* =========================================================
    PIGGIETV — BASE
-   Core tokens, safe global polish, shared effects
+   Safe global tokens + low-risk global polish only
+   NO drawer logic
+   NO layout-forcing rules
    ========================================================= */
 
+/* -----------------------------
+   TOKENS
+   ----------------------------- */
 :root {
   /* text */
   --ptv-text: rgba(255, 255, 255, 0.92);
@@ -14,7 +19,7 @@
   --ptv-purple: #8f7cff;
   --ptv-pink: #f3a3dc;
 
-  /* surfaces / borders */
+  /* borders / surfaces */
   --ptv-border: rgba(255, 255, 255, 0.10);
   --ptv-border-soft: rgba(255, 255, 255, 0.04);
   --ptv-shadow: rgba(0, 0, 0, 0.28);
@@ -65,14 +70,12 @@
   --ptv-ease: ease;
 }
 
-/* =========================================================
-   SAFE GLOBAL FOUNDATION
-   ========================================================= */
-
+/* -----------------------------
+   SAFE FOUNDATION
+   ----------------------------- */
 html,
 body {
   margin: 0;
-  width: 100%;
   min-height: 100%;
   background: #0b0f1a;
 }
@@ -80,7 +83,6 @@ body {
 body {
   color: var(--ptv-text);
   overflow-x: hidden;
-  overflow-y: auto;
 }
 
 *,
@@ -96,12 +98,12 @@ svg {
   max-width: 100%;
 }
 
-/* =========================================================
-   SHARED TYPOGRAPHY / READABILITY
-   ========================================================= */
-
+/* -----------------------------
+   TEXT / READABILITY
+   ----------------------------- */
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 .secondaryText,
@@ -125,10 +127,9 @@ h4 {
   color: rgba(255, 255, 255, 0.96);
 }
 
-/* =========================================================
-   SHARED BUTTON / CHIP POLISH
-   ========================================================= */
-
+/* -----------------------------
+   SHARED BUTTON POLISH
+   ----------------------------- */
 .emby-button,
 .button-flat,
 .raised,
@@ -149,10 +150,9 @@ h4 {
   border-radius: var(--ptv-radius-pill);
 }
 
-/* =========================================================
+/* -----------------------------
    FOCUS STATES
-   ========================================================= */
-
+   ----------------------------- */
 .emby-input:focus,
 textarea:focus,
 select:focus,
@@ -165,10 +165,9 @@ a:focus-visible,
     0 0 0 1px rgba(134, 227, 255, 0.28) !important;
 }
 
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
+/* -----------------------------
+   SCROLLBARS
+   ----------------------------- */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -181,21 +180,20 @@ a:focus-visible,
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
-    rgba(143, 124, 255, 0.6) 0%,
-    rgba(134, 227, 255, 0.6) 100%
+    rgba(143, 124, 255, 0.60) 0%,
+    rgba(134, 227, 255, 0.60) 100%
   );
   border-radius: 6px;
 }
 
-* {
+html {
   scrollbar-color: rgba(143, 124, 255, 0.65) transparent;
   scrollbar-width: thin;
 }
 
-/* =========================================================
-   ANIMATIONS
-   ========================================================= */
-
+/* -----------------------------
+   KEYFRAMES
+   ----------------------------- */
 @keyframes ptvGradientDrift {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
@@ -234,10 +232,9 @@ a:focus-visible,
   100% { left: 160%; }
 }
 
-/* =========================================================
+/* -----------------------------
    REDUCED MOTION
-   ========================================================= */
-
+   ----------------------------- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
