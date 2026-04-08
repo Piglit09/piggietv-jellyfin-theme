@@ -457,6 +457,54 @@ body:not(.ptv-native-login-page) .scrollFrameY {
 body:not(.ptv-native-login-page) .scrollY {
   overflow-y: auto !important;
 }
+/* =========================================================
+   HEADER LOGO
+   ========================================================= */
+
+#ptv-header-logo {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  margin-left: 10px !important;
+  margin-right: 16px !important;
+}
+
+#ptv-header-logo img {
+  display: block !important;
+  width: 108px !important;
+  max-width: none !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* =========================================================
+   HEADER TABS FIX
+   ========================================================= */
+
+body:not(.ptv-native-login-page) .headerTabs,
+body:not(.ptv-native-login-page) .headerTabs .emby-tabs-slider {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: nowrap !important;
+}
+
+body:not(.ptv-native-login-page) .headerTabs {
+  margin-left: 14px !important;
+}
+
+body:not(.ptv-native-login-page) .headerTabs .emby-tab-button,
+body:not(.ptv-native-login-page) .headerTabs a,
+body:not(.ptv-native-login-page) .headerTabs button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  min-width: max-content !important;
+  margin: 0 !important;
+  padding: 8px 14px !important;
+}
 
 /* ===== sidebar.css ===== */
 /* =========================================================
