@@ -466,16 +466,13 @@ body:not(.ptv-native-login-page) .scrollY {
   align-items: center !important;
   justify-content: center !important;
   flex: 0 0 auto !important;
-  margin-left: 10px !important;
-  margin-right: 16px !important;
+  margin-left: 12px !important;
+  margin-right: 18px !important;
 }
 
 #ptv-header-logo img {
-  display: block !important;
-  width: 108px !important;
-  max-width: none !important;
-  height: auto !important;
-  object-fit: contain !important;
+  height: 38px !important;
+  width: auto !important;
 }
 
 /* =========================================================
@@ -504,6 +501,21 @@ body:not(.ptv-native-login-page) .headerTabs button {
   min-width: max-content !important;
   margin: 0 !important;
   padding: 8px 14px !important;
+}
+/* =========================================================
+   REMOVE DEFAULT JELLYFIN LOGO
+   ========================================================= */
+
+.skinHeader .headerLogo,
+.skinHeader .pageTitleWithLogo .headerLogo,
+.skinHeader .headerBranding,
+.skinHeader .headerLogoImage {
+  display: none !important;
+}
+
+/* Also hide text title if it appears */
+.skinHeader .pageTitle {
+  display: none !important;
 }
 
 /* ===== sidebar.css ===== */
