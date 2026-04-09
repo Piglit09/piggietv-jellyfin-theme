@@ -6,6 +6,12 @@
 ```md
 # Changelog
 
+## v1.0.0 - 2026-04-06
+- Version 1 
+- Login page
+- Home page
+- Sidebar 
+
 ## v0.2.9 - 2026-04-06
 - fixed sidebar bug 2
 

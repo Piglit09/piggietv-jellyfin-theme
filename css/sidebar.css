@@ -1,91 +1,50 @@
-/* =========================================================
-   PIGGIETV SIDEBAR
-   SAFE VERSION
-   - styles the drawer
-   - does NOT override Jellyfin drawer mechanics
-   - does NOT force open/closed states
-   ========================================================= */
+/* =========================
+   PIGGIETV SIDEBAR v2
+   ========================= */
 
-/* ---------- drawer shell ---------- */
-.mainDrawer {
-  background: linear-gradient(
-    180deg,
-    rgba(8, 12, 22, 0.96) 0%,
-    rgba(12, 18, 30, 0.94) 100%
-  ) !important;
-  backdrop-filter: blur(18px) saturate(140%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 0 34px rgba(0, 0, 0, 0.38) !important;
+.mainDrawer,
+.drawer-open,
+.navMenu,
+nav[is="emby-scroller"] {
+  background:
+    linear-gradient(180deg, rgba(10, 10, 18, 0.97), rgba(6, 6, 12, 0.99)) !important;
+  backdrop-filter: blur(14px);
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
-/* DO NOT touch transform/left/visibility/opacity/display for drawer state */
-
-/* ---------- inner scrolling area ---------- */
-.mainDrawer .scrollContainer,
-.mainDrawer .scrollY {
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+.navMenu {
+  padding: 0.85rem 0.7rem 1rem !important;
 }
 
-/* ---------- nav area ---------- */
-.mainDrawer .navMenu {
-  padding: 14px 10px 20px !important;
+/* section headers */
+.navMenu .navMenuHeader,
+.mainDrawer .navMenuHeader,
+.navMenu h2,
+.navMenu h3 {
+  color: rgba(255, 255, 255, 0.76) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  font-size: 0.98rem !important;
+  margin: 1.1rem 0 0.45rem !important;
+  padding: 0 0.55rem !important;
 }
 
-/* =========================================================
-   SIDEBAR LOGO CLEAN
-   ========================================================= */
-
-#ptv-sidebar-logo {
+/* menu items */
+.navMenuOption,
+a.navMenuOption,
+.drawer-open .navMenuOption {
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  padding: 18px 12px 14px !important;
-  margin-bottom: 8px !important;
-}
+  gap: 0.9rem;
+  min-height: 44px !important;
+  margin: 0.16rem 0 !important;
+  padding: 0.7rem 0.8rem !important;
+  border-radius: 14px !important;
 
-#ptv-sidebar-logo img {
-  width: 120px !important;
-  height: auto !important;
-  object-fit: contain !important;
-  opacity: 0.95;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-#ptv-sidebar-logo img:hover {
-  transform: scale(1.05);
-  opacity: 1;
-}
-#ptv-sidebar-logo::after {
-  content: "";
-  display: block;
-  width: 80%;
-  height: 1px;
-  margin-top: 12px;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
-}
-
-@keyframes ptvSidebarLogoFloat {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
-}
-
-/* ---------- nav buttons ---------- */
-.mainDrawer .navMenuOption,
-.mainDrawer a.navMenuOption,
-.mainDrawer button.navMenuOption {
-  display: flex !important;
-  align-items: center !important;
-  min-height: 46px !important;
-  margin: 4px 0 !important;
-  padding: 12px 14px !important;
-  border-radius: 16px !important;
   background: transparent !important;
   border: 1px solid transparent !important;
-  color: rgba(255, 255, 255, 0.92) !important;
-  text-decoration: none !important;
+  color: rgba(245, 247, 255, 0.92) !important;
+
   transition:
     background 0.18s ease,
     border-color 0.18s ease,
@@ -93,141 +52,119 @@
     transform 0.18s ease !important;
 }
 
-.mainDrawer .navMenuOptionIcon {
-  margin-right: 14px !important;
-  color: rgba(255, 255, 255, 0.82) !important;
+/* icons */
+.navMenuOption .md-icon,
+.navMenuOption i,
+.navMenuOption .navMenuOptionIcon {
+  color: rgba(210, 218, 255, 0.88) !important;
+  opacity: 1 !important;
+  font-size: 1.08rem !important;
   transition:
     color 0.18s ease,
-    transform 0.18s ease !important;
+    transform 0.18s ease,
+    filter 0.18s ease !important;
 }
 
-.mainDrawer .navMenuOptionText {
-  font-weight: 600 !important;
-  letter-spacing: 0.2px !important;
+/* text */
+.navMenuOptionText {
+  color: inherit !important;
+  font-weight: 500 !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* hover */
-.mainDrawer .navMenuOption:hover,
-.mainDrawer a.navMenuOption:hover,
-.mainDrawer button.navMenuOption:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(106, 160, 255, 0.14),
-    rgba(173, 120, 255, 0.14)
-  ) !important;
-  border-color: rgba(180, 205, 255, 0.14) !important;
+.navMenuOption:hover,
+a.navMenuOption:hover,
+.drawer-open .navMenuOption:hover {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border-color: rgba(155, 107, 255, 0.14) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 18px rgba(110, 145, 255, 0.10) !important;
-  transform: translateX(2px) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    0 0 0 1px rgba(155, 107, 255, 0.03) !important;
+  transform: translateX(2px);
 }
 
-.mainDrawer .navMenuOption:hover .navMenuOptionIcon,
-.mainDrawer a.navMenuOption:hover .navMenuOptionIcon,
-.mainDrawer button.navMenuOption:hover .navMenuOptionIcon {
-  color: #d7e3ff !important;
-  transform: scale(1.05) !important;
+.navMenuOption:hover .md-icon,
+.navMenuOption:hover i,
+.navMenuOption:hover .navMenuOptionIcon {
+  color: #ffffff !important;
+  filter: drop-shadow(0 0 8px rgba(155, 107, 255, 0.22));
 }
 
 /* selected */
-.mainDrawer .navMenuOption-selected,
-.mainDrawer .navMenuOption-selected:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(106, 160, 255, 0.22),
-    rgba(173, 120, 255, 0.22)
-  ) !important;
-  border-color: rgba(185, 210, 255, 0.18) !important;
+.navMenuOption-selected,
+a.navMenuOption-selected,
+.drawer-open .navMenuOption-selected {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(155, 107, 255, 0.10),
+      rgba(255, 79, 163, 0.04)
+    ) !important;
+  border-color: rgba(155, 107, 255, 0.18) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 20px rgba(120, 160, 255, 0.14) !important;
+    inset 3px 0 0 #9b6bff,
+    0 0 14px rgba(155, 107, 255, 0.08) !important;
+  color: #ffffff !important;
 }
 
-/* ---------- discord link injected by JS ---------- */
-#ptv-discord-sidebar-link {
-  display: flex !important;
-  align-items: center !important;
-  gap: 14px !important;
-  margin: 10px 0 0 !important;
-  padding: 12px 14px !important;
-  border-radius: 16px !important;
-  color: rgba(255, 255, 255, 0.92) !important;
-  text-decoration: none !important;
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease !important;
+.navMenuOption-selected .md-icon,
+.navMenuOption-selected i,
+.navMenuOption-selected .navMenuOptionIcon {
+  color: #ffffff !important;
+  filter: drop-shadow(0 0 8px rgba(155, 107, 255, 0.24));
 }
 
-#ptv-discord-sidebar-link:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(88, 101, 242, 0.22),
-    rgba(160, 120, 255, 0.14)
-  ) !important;
-  border-color: rgba(165, 185, 255, 0.16) !important;
-  box-shadow: 0 0 18px rgba(88, 101, 242, 0.16) !important;
-  transform: translateX(2px) !important;
+/* scrollbar */
+.mainDrawer ::-webkit-scrollbar,
+.navMenu ::-webkit-scrollbar {
+  width: 8px;
 }
 
-#ptv-discord-sidebar-link .material-icons {
-  font-size: 22px !important;
-  line-height: 1 !important;
+.mainDrawer ::-webkit-scrollbar-track,
+.navMenu ::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-#ptv-discord-sidebar-link span:last-child {
-  font-weight: 600 !important;
-  letter-spacing: 0.2px !important;
+.mainDrawer ::-webkit-scrollbar-thumb,
+.navMenu ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 999px;
 }
 
-/* ---------- mobile ---------- */
-@media (max-width: 900px) {
-  #ptv-sidebar-logo img {
-    width: 150px !important;
-  }
-
-  .mainDrawer .navMenuOption,
-  .mainDrawer a.navMenuOption,
-  .mainDrawer button.navMenuOption,
-  #ptv-discord-sidebar-link {
-    border-radius: 14px !important;
-    padding: 11px 12px !important;
-  }
+.mainDrawer ::-webkit-scrollbar-thumb:hover,
+.navMenu ::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 107, 255, 0.24);
 }
-/* =========================================================
-   SIDEBAR INJECTED LOGO + LINKS
-   ========================================================= */
+/* =========================
+   MICRO POLISH
+   ========================= */
 
-#ptv-sidebar-logo {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 16px 10px 12px !important;
-  margin-bottom: 8px !important;
+/* Slight depth for the whole drawer */
+.mainDrawer {
+  box-shadow:
+    6px 0 24px rgba(0, 0, 0, 0.45),
+    inset -1px 0 0 rgba(255, 255, 255, 0.03);
 }
 
-#ptv-sidebar-logo img {
-  width: 120px !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
+/* Better separation between sections */
+.navMenuHeader + .navMenuOption {
+  margin-top: 0.25rem !important;
 }
 
-#ptv-apps-section {
-  margin-top: 10px !important;
+/* Reduce visual clutter on long lists */
+.navMenuOption {
+  opacity: 0.92;
 }
 
-#ptv-apps-section .navMenuHeader {
-  padding: 10px 14px 6px !important;
-  opacity: 0.75 !important;
-  font-size: 12px !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.08em !important;
+.navMenuOption:hover,
+.navMenuOption-selected {
+  opacity: 1;
 }
 
-.ptv-apps-links {
-  display: block !important;
+/* Slight icon scale on hover (feels responsive) */
+.navMenuOption:hover .navMenuOptionIcon {
+  transform: scale(1.08);
 }

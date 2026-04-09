@@ -1,247 +1,320 @@
-/* =========================================================
-   PIGGIETV — BASE
-   Safe global tokens + low-risk global polish only
-   NO drawer logic
-   NO layout-forcing rules
-   ========================================================= */
+/* =========================
+   PIGGIETV BASE v4
+   CLEAN HIERARCHY
+   ========================= */
 
-/* -----------------------------
-   TOKENS
-   ----------------------------- */
 :root {
-  /* text */
-  --ptv-text: rgba(255, 255, 255, 0.92);
-  --ptv-text-soft: rgba(255, 255, 255, 0.72);
-  --ptv-text-dim: rgba(255, 255, 255, 0.48);
-
-  /* brand */
-  --ptv-cyan: #86e3ff;
-  --ptv-purple: #8f7cff;
-  --ptv-pink: #f3a3dc;
-
-  /* borders / surfaces */
-  --ptv-border: rgba(255, 255, 255, 0.10);
-  --ptv-border-soft: rgba(255, 255, 255, 0.04);
-  --ptv-shadow: rgba(0, 0, 0, 0.28);
-
-  /* radius */
-  --ptv-radius-sm: 12px;
-  --ptv-radius-md: 16px;
-  --ptv-radius-lg: 20px;
-  --ptv-radius-card: 14px;
-  --ptv-radius-pill: 999px;
-
-  /* cards */
-  --ptv-card-border: rgba(255, 255, 255, 0.09);
-  --ptv-card-border-soft: rgba(255, 255, 255, 0.06);
-  --ptv-card-border-hover: rgba(143, 124, 255, 0.30);
-  --ptv-card-inner: rgba(255, 255, 255, 0.025);
-
-  --ptv-card-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.35),
-    inset 0 0 0 1px var(--ptv-card-inner);
-
-  --ptv-card-shadow-hover:
-    0 16px 40px rgba(0, 0, 0, 0.50),
-    0 0 20px rgba(143, 124, 255, 0.18),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-
-  /* glows */
-  --ptv-glow-cyan: 0 0 18px rgba(134, 227, 255, 0.18);
-  --ptv-glow-purple: 0 0 20px rgba(143, 124, 255, 0.18);
-  --ptv-glow-pink: 0 0 20px rgba(243, 163, 220, 0.14);
-  --ptv-glow-soft: 0 0 30px rgba(143, 124, 255, 0.08);
-
-  /* gradients */
-  --ptv-gradient-brand:
-    linear-gradient(135deg, var(--ptv-cyan) 0%, var(--ptv-purple) 48%, var(--ptv-pink) 100%);
-  --ptv-gradient-soft:
-    linear-gradient(
-      90deg,
-      rgba(134, 227, 255, 0.10) 0%,
-      rgba(143, 124, 255, 0.14) 55%,
-      rgba(243, 163, 220, 0.10) 100%
-    );
-
-  /* motion */
-  --ptv-speed-fast: 0.16s;
-  --ptv-speed-base: 0.22s;
-  --ptv-speed-slow: 0.32s;
-  --ptv-ease: ease;
+  --ptv-accent: #9b6bff;
+  --ptv-accent-2: #ff4fa3;
+  --ptv-bg: #07070d;
+  --ptv-surface: rgba(18, 18, 28, 0.76);
+  --ptv-surface-2: rgba(28, 28, 40, 0.92);
+  --ptv-text: #f5f7ff;
+  --ptv-text-muted: #b8bfd3;
+  --ptv-border: rgba(255, 255, 255, 0.08);
+  --ptv-border-strong: rgba(255, 255, 255, 0.14);
+  --ptv-radius: 18px;
+  --ptv-pill-radius: 999px;
+  --ptv-glow: 0 0 18px rgba(155, 107, 255, 0.20);
+  --ptv-glow-strong: 0 0 24px rgba(255, 79, 163, 0.24);
+  --ptv-accent-gradient: linear-gradient(135deg, var(--ptv-accent), var(--ptv-accent-2));
 }
 
-/* -----------------------------
-   SAFE FOUNDATION
-   ----------------------------- */
+/* =========================
+   GLOBAL / SAFETY
+   ========================= */
+
 html,
-body {
-  margin: 0;
-  min-height: 100%;
-  background: #0b0f1a;
+body,
+.emby-app,
+.mainAnimatedPage,
+.pageContainer,
+.skinBody,
+.skinBody-withHeader,
+.emby-scroll-y {
+  overflow-y: auto !important;
 }
 
-body {
-  color: var(--ptv-text);
-  overflow-x: hidden;
+body,
+.emby-app {
+  background:
+    linear-gradient(rgba(7, 7, 13, 0.84), rgba(7, 7, 13, 0.94)),
+    url("https://piggietv.com/web/assets/img/PiggieTVBG.png") center / cover no-repeat fixed !important;
+  color: var(--ptv-text) !important;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+h1, h2, h3, h4, .sectionTitle, .pageTitle {
+  color: var(--ptv-text) !important;
 }
 
-img,
-video,
-canvas,
-svg {
+p,
+span,
+.secondaryText,
+.fieldDescription,
+.itemMiscInfo,
+.cardText-secondary {
+  color: var(--ptv-text-muted) !important;
+}
+
+a {
+  color: var(--ptv-text) !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  color: #fff !important;
+}
+
+img {
   max-width: 100%;
 }
 
-/* -----------------------------
-   TEXT / READABILITY
-   ----------------------------- */
-a {
-  color: inherit;
-  text-decoration: none;
+.itemsContainer,
+.homeSectionsContainer,
+.verticalSection,
+.section0,
+.section1,
+.section2 {
+  min-width: 0;
 }
 
-.secondaryText,
-.fieldDescription,
-.checkboxLabel,
-.listItemBodyText-secondary,
-.itemMiscText,
-.cardText-secondary,
-.formDialogHeader-clear,
-.guide-programNameSecondary,
-.guideChannelNumber {
-  color: var(--ptv-text-soft) !important;
+/* =========================
+   MAJOR SURFACES
+   ========================= */
+
+.dialog,
+.paperList,
+.selectionCommandsPanel,
+.dashboardSection {
+  background: var(--ptv-surface) !important;
+  border: 1px solid var(--ptv-border) !important;
+  border-radius: var(--ptv-radius) !important;
+  backdrop-filter: blur(12px);
 }
 
-.sectionTitle,
-.sectionTitleText,
-h1,
-h2,
-h3,
-h4 {
-  color: rgba(255, 255, 255, 0.96);
-}
-
-/* -----------------------------
-   SHARED BUTTON POLISH
-   ----------------------------- */
-.emby-button,
-.button-flat,
-.raised,
-.btnTag,
-.tag,
-.mediaInfoItem {
+/* Poster/media cards stay mostly dark */
+.cardBox,
+.visualCardBox {
+  background: rgba(14, 14, 22, 0.32) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: var(--ptv-radius) !important;
   transition:
-    background var(--ptv-speed-fast) var(--ptv-ease),
-    color var(--ptv-speed-fast) var(--ptv-ease),
-    border-color var(--ptv-speed-fast) var(--ptv-ease),
-    box-shadow var(--ptv-speed-fast) var(--ptv-ease),
-    transform var(--ptv-speed-fast) var(--ptv-ease);
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease !important;
 }
 
-.btnTag,
-.tag,
-.mediaInfoItem {
-  border-radius: var(--ptv-radius-pill);
+.cardBox:hover,
+.visualCardBox:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ptv-glow);
+  border-color: rgba(155, 107, 255, 0.28) !important;
 }
 
-/* -----------------------------
-   FOCUS STATES
-   ----------------------------- */
+/* =========================
+   FORM INPUTS
+   ========================= */
+
+.emby-input,
+.emby-textarea,
+select {
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--ptv-border) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
 .emby-input:focus,
-textarea:focus,
-select:focus,
-button:focus-visible,
-a:focus-visible,
-.emby-button:focus-visible {
+.emby-textarea:focus,
+select:focus {
+  border-color: rgba(155, 107, 255, 0.45) !important;
+  box-shadow: 0 0 0 2px rgba(155, 107, 255, 0.12) !important;
   outline: none !important;
-  box-shadow:
-    0 0 0 3px rgba(134, 227, 255, 0.12),
-    0 0 0 1px rgba(134, 227, 255, 0.28) !important;
 }
 
-/* -----------------------------
-   SCROLLBARS
-   ----------------------------- */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* =========================
+   PRIMARY BUTTONS ONLY
+   ========================= */
+
+/* Only true call-to-action buttons */
+.button-submit,
+button[type="submit"],
+.emby-button.submit,
+.emby-button.button-submit {
+  border-radius: var(--ptv-pill-radius) !important;
+  border: none !important;
+  color: #fff !important;
+  background: var(--ptv-accent-gradient) !important;
+  box-shadow: none !important;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease !important;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.button-submit:hover,
+button[type="submit"]:hover,
+.emby-button.submit:hover,
+.emby-button.button-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--ptv-glow-strong) !important;
+  filter: brightness(1.04);
 }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    rgba(143, 124, 255, 0.60) 0%,
-    rgba(134, 227, 255, 0.60) 100%
-  );
-  border-radius: 6px;
+/* =========================
+   GENERIC ICON / UTILITY BUTTONS
+   ========================= */
+
+.paper-icon-button-light,
+.iconButton,
+.headerButton,
+.skinHeader .headerButton,
+.skinHeader button {
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--ptv-text) !important;
+  border: 1px solid var(--ptv-border) !important;
+  box-shadow: none !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
 }
 
-html {
-  scrollbar-color: rgba(143, 124, 255, 0.65) transparent;
-  scrollbar-width: thin;
+.paper-icon-button-light:hover,
+.iconButton:hover,
+.headerButton:hover,
+.skinHeader .headerButton:hover,
+.skinHeader button:hover {
+  background: rgba(255, 255, 255, 0.10) !important;
+  border-color: rgba(155, 107, 255, 0.22) !important;
+  box-shadow: var(--ptv-glow) !important;
+  transform: translateY(-1px);
 }
 
-/* -----------------------------
-   KEYFRAMES
-   ----------------------------- */
-@keyframes ptvGradientDrift {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* =========================
+   TOP NAV TABS
+   ========================= */
+
+.emby-tab-button {
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--ptv-text) !important;
+  border: 1px solid var(--ptv-border) !important;
+  box-shadow: none !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease !important;
 }
 
-@keyframes ptvZoom {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.04); }
-  100% { transform: scale(1); }
+.emby-tab-button:hover {
+  background: rgba(255, 255, 255, 0.10) !important;
+  border-color: rgba(155, 107, 255, 0.22) !important;
+  box-shadow: var(--ptv-glow) !important;
 }
 
-@keyframes ptvLogoFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
+.emby-tab-button-active {
+  background: var(--ptv-accent-gradient) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: var(--ptv-glow) !important;
 }
 
-@keyframes ptvLogoBreathe {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.90;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.05);
-    opacity: 1;
-  }
+/* =========================
+   SETTINGS PAGE ROWS
+   ========================= */
+
+/* Scope this to settings containers only */
+.settingsContainer .listItem,
+.userSettingsContainer .listItem,
+.sectionedSettings .listItem,
+.itemsContainer.settingsItemsContainer .listItem {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid var(--ptv-border) !important;
+  border-radius: var(--ptv-radius) !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease !important;
 }
 
-@keyframes ptvLogoImageFloat {
-  0%, 100% { transform: scale(1.02) translateY(0); }
-  50%      { transform: scale(1.03) translateY(-3px); }
+.settingsContainer .listItem:hover,
+.userSettingsContainer .listItem:hover,
+.sectionedSettings .listItem:hover,
+.itemsContainer.settingsItemsContainer .listItem:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(155, 107, 255, 0.18) !important;
+  box-shadow: var(--ptv-glow) !important;
 }
 
-@keyframes ptvButtonSweep {
-  0%   { left: -160%; }
-  100% { left: 160%; }
+/* =========================
+   SIDEBAR: KEEP DARK
+   ========================= */
+
+.mainDrawer,
+.drawer-open,
+.navMenu,
+nav[is="emby-scroller"] {
+  background: rgba(10, 10, 16, 0.96) !important;
+  backdrop-filter: blur(12px);
 }
 
-/* -----------------------------
-   REDUCED MOTION
-   ----------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+.navMenuOption,
+a.navMenuOption,
+.drawer-open .navMenuOption {
+  background: transparent !important;
+  color: var(--ptv-text) !important;
+  border: 1px solid transparent !important;
+  border-radius: 14px !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease !important;
+}
+
+.navMenuOption:hover,
+a.navMenuOption:hover,
+.drawer-open .navMenuOption:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(155, 107, 255, 0.16) !important;
+  box-shadow: none !important;
+}
+
+.navMenuOption-selected,
+a.navMenuOption-selected,
+.drawer-open .navMenuOption-selected {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(155, 107, 255, 0.22) !important;
+  box-shadow: inset 3px 0 0 var(--ptv-accent) !important;
+  color: #fff !important;
+}
+
+/* =========================
+   LOGIN PAGE
+   ========================= */
+
+.manualLoginForm,
+.visualLoginForm,
+.readonlyLoginForm {
+  background: transparent !important;
+}
+
+.manualLoginForm .emby-button:not(.button-submit),
+.visualLoginForm .emby-button:not(.button-submit),
+.readonlyLoginForm .emby-button:not(.button-submit) {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: var(--ptv-text) !important;
+  border: 1px solid var(--ptv-border) !important;
+  border-radius: 999px !important;
+}
+
+.manualLoginForm .emby-button:not(.button-submit):hover,
+.visualLoginForm .emby-button:not(.button-submit):hover,
+.readonlyLoginForm .emby-button:not(.button-submit):hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(155, 107, 255, 0.20) !important;
+  box-shadow: var(--ptv-glow) !important;
 }
