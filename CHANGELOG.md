@@ -6,7 +6,15 @@
 ```md
 # Changelog
 
-## v1.0.0 - 2026-04-06
+## v1.5.0 - 2026-04-10
+- added glow around mouse on login page
+- added ability to change default JF logo on top header
+- logo on top of sidebar
+- split the JS for easier debuging
+- removed background overlay
+- homepage background shows random backdrops
+
+## v1.0.0 - 2026-04-09
 - Version 1 
 - Login page
 - Home page

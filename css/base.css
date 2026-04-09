@@ -39,7 +39,7 @@ body,
 .emby-app {
   background:
     linear-gradient(rgba(7, 7, 13, 0.84), rgba(7, 7, 13, 0.94)),
-    url("https://piggietv.com/web/assets/img/PiggieTVBG.png") center / cover no-repeat fixed !important;
+    url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png") center / cover no-repeat !important;
   color: var(--ptv-text) !important;
 }
 
@@ -317,4 +317,118 @@ a.navMenuOption-selected,
   background: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(155, 107, 255, 0.20) !important;
   box-shadow: var(--ptv-glow) !important;
+}
+
+/* =========================
+   GLOBAL BRAND LOGO
+   ========================= */
+
+.ptv-brand-replaced {
+  display: flex !important;
+  align-items: center;
+}
+
+.ptv-header-logo {
+  height: 34px;
+  width: auto;
+  max-width: 220px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(140,110,255,0.20));
+}
+
+@media (max-width: 900px) {
+  .ptv-header-logo {
+    height: 30px;
+    max-width: 180px;
+  }
+}
+
+/* =========================
+   SIDEBAR LOGO (FIXED)
+   ========================= */
+
+#ptv-sidebar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 12px 18px;
+  margin-bottom: 8px;
+}
+
+/* NORMAL SIZE (default state) */
+.ptv-sidebar-logo-img {
+  width: 160px !important;
+  max-width: 90%;
+  height: auto !important;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 8px 20px rgba(140,110,255,0.22));
+}
+
+/* HOVER POLISH */
+#ptv-sidebar-logo:hover .ptv-sidebar-logo-img {
+  transform: scale(1.04);
+  filter: drop-shadow(0 10px 28px rgba(155,107,255,0.35));
+}
+
+/* TRUE collapsed state (VERY narrow sidebar only) */
+.mainDrawer[style*="width: 80px"] .ptv-sidebar-logo-img,
+.mainDrawer.collapsed .ptv-sidebar-logo-img {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+/* =========================
+   FINAL HEADER BRANDING FIX (SAFE)
+   ========================= */
+
+/* Remove Jellyfin default logo rendering ONLY */
+.skinHeader .pageTitleWithLogo,
+.skinHeader .pageTitleWithDefaultLogo {
+  background: none !important;
+  background-image: none !important;
+  color: transparent !important;
+}
+
+/* DO NOT nuke entire header contents — only hide text */
+.skinHeader .pageTitleWithLogo span,
+.skinHeader .pageTitleWithDefaultLogo span {
+  display: none !important;
+}
+
+/* Keep layout intact */
+.skinHeader .headerBranding,
+.skinHeader .pageTitle {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Our injected logo container */
+.skinHeader .ptv-brand-replaced {
+  display: flex !important;
+  align-items: center !important;
+  height: 42px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Logo itself */
+.skinHeader .ptv-header-logo {
+  height: 34px !important;
+  width: auto !important;
+  max-width: 220px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Prevent overflow/stretch bug (THIS fixes your screenshot issue) */
+.skinHeader {
+  overflow: hidden !important;
+}
+
+/* Prevent giant ghost background rendering */
+.skinHeader * {
+  background-size: contain !important;
 }

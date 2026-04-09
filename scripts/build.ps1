@@ -55,20 +55,55 @@ foreach ($file in $cssOrder) {
 }
 
 # Build JS
-$jsInput = "$jsPath\custom.js"
+$jsSourcePath = "$projectRoot\js"
 $jsOutput = "$distPath\custom.js"
+
+$jsFiles = @(
+    "core\logger.js",
+    "core\helpers.js",
+    "branding\header-logo.js",
+    "branding\sidebar-logo.js",
+    "login\login-header.js",
+    "login\login-actions.js",
+    "login\login-focus.js",
+    "login\login-effects.js",
+    "ui\background-glow.js",
+    "ui\home-backdrop.js",
+    "core\observer.js",
+    "core\init.js"
+)
 
 Write-Host "Building JS..." -ForegroundColor Yellow
 
-if (Test-Path $jsInput) {
-    Copy-Item $jsInput $jsOutput -Force
-    Write-Host "  + custom.js"
-}
-else {
-    Write-Host "  No custom.js found (skipped)" -ForegroundColor DarkYellow
+if (Test-Path $jsOutput) {
+    Remove-Item $jsOutput
 }
 
-# Done
-Write-Host ""
-Write-Host "Build complete!" -ForegroundColor Green
-Write-Host "Output: dist/custom.css + dist/custom.js"
+"/* AUTO-BUILT FILE - DO NOT EDIT */`n" | Set-Content $jsOutput
+
+$missingJs = @()
+
+foreach ($file in $jsFiles) {
+    $fullPath = Join-Path $jsSourcePath $file
+
+    if (Test-Path $fullPath) {
+        Write-Host ("  + " + $file)
+        Add-Content -Path $jsOutput -Value ""
+        Add-Content -Path $jsOutput -Value ("/* ===== " + $file + " ===== */")
+        Get-Content $fullPath | Add-Content $jsOutput
+    }
+    else {
+        Write-Host ("  Missing: " + $file) -ForegroundColor DarkYellow
+        $missingJs += $file
+    }
+}
+
+if ($missingJs.Count -gt 0) {
+    Write-Host ""
+    Write-Host "JS build finished with missing files." -ForegroundColor Red
+    $missingJs | ForEach-Object { Write-Host ("  - " + $_) -ForegroundColor Red }
+    exit 1
+}
+else {
+    Write-Host "[OK] JS build complete" -ForegroundColor Green
+}

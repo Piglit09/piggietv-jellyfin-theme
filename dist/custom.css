@@ -41,7 +41,7 @@ body,
 .emby-app {
   background:
     linear-gradient(rgba(7, 7, 13, 0.84), rgba(7, 7, 13, 0.94)),
-    url("https://piggietv.com/web/assets/img/PiggieTVBG.png") center / cover no-repeat fixed !important;
+    url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png") center / cover no-repeat !important;
   color: var(--ptv-text) !important;
 }
 
@@ -321,6 +321,120 @@ a.navMenuOption-selected,
   box-shadow: var(--ptv-glow) !important;
 }
 
+/* =========================
+   GLOBAL BRAND LOGO
+   ========================= */
+
+.ptv-brand-replaced {
+  display: flex !important;
+  align-items: center;
+}
+
+.ptv-header-logo {
+  height: 34px;
+  width: auto;
+  max-width: 220px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(140,110,255,0.20));
+}
+
+@media (max-width: 900px) {
+  .ptv-header-logo {
+    height: 30px;
+    max-width: 180px;
+  }
+}
+
+/* =========================
+   SIDEBAR LOGO (FIXED)
+   ========================= */
+
+#ptv-sidebar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 12px 18px;
+  margin-bottom: 8px;
+}
+
+/* NORMAL SIZE (default state) */
+.ptv-sidebar-logo-img {
+  width: 160px !important;
+  max-width: 90%;
+  height: auto !important;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 8px 20px rgba(140,110,255,0.22));
+}
+
+/* HOVER POLISH */
+#ptv-sidebar-logo:hover .ptv-sidebar-logo-img {
+  transform: scale(1.04);
+  filter: drop-shadow(0 10px 28px rgba(155,107,255,0.35));
+}
+
+/* TRUE collapsed state (VERY narrow sidebar only) */
+.mainDrawer[style*="width: 80px"] .ptv-sidebar-logo-img,
+.mainDrawer.collapsed .ptv-sidebar-logo-img {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+/* =========================
+   FINAL HEADER BRANDING FIX (SAFE)
+   ========================= */
+
+/* Remove Jellyfin default logo rendering ONLY */
+.skinHeader .pageTitleWithLogo,
+.skinHeader .pageTitleWithDefaultLogo {
+  background: none !important;
+  background-image: none !important;
+  color: transparent !important;
+}
+
+/* DO NOT nuke entire header contents — only hide text */
+.skinHeader .pageTitleWithLogo span,
+.skinHeader .pageTitleWithDefaultLogo span {
+  display: none !important;
+}
+
+/* Keep layout intact */
+.skinHeader .headerBranding,
+.skinHeader .pageTitle {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Our injected logo container */
+.skinHeader .ptv-brand-replaced {
+  display: flex !important;
+  align-items: center !important;
+  height: 42px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Logo itself */
+.skinHeader .ptv-header-logo {
+  height: 34px !important;
+  width: auto !important;
+  max-width: 220px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Prevent overflow/stretch bug (THIS fixes your screenshot issue) */
+.skinHeader {
+  overflow: hidden !important;
+}
+
+/* Prevent giant ghost background rendering */
+.skinHeader * {
+  background-size: contain !important;
+}
+
 /* ===== layout.css ===== */
 
 /* ===== sidebar.css ===== */
@@ -329,7 +443,6 @@ a.navMenuOption-selected,
    ========================= */
 
 .mainDrawer,
-.drawer-open,
 .navMenu,
 nav[is="emby-scroller"] {
   background:
@@ -493,6 +606,53 @@ a.navMenuOption-selected,
 /* Slight icon scale on hover (feels responsive) */
 .navMenuOption:hover .navMenuOptionIcon {
   transform: scale(1.08);
+}
+/* =========================
+   PIGGIETV SIDEBAR LOGO
+   ========================= */
+
+/* top logo block */
+#ptv-sidebar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0.35rem 0.4rem 0.95rem !important;
+  margin: 0 0 0.8rem !important;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* logo image */
+.ptv-sidebar-logo-img {
+  width: 180px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 10px 22px rgba(140, 110, 255, 0.22))
+    drop-shadow(0 0 14px rgba(200, 140, 255, 0.12));
+}
+
+/* collapsed drawer */
+.mainDrawer:not(.expanded) #ptv-sidebar-logo,
+.mainDrawer.collapsed #ptv-sidebar-logo {
+  padding: 0.4rem 0.2rem 0.7rem !important;
+  margin-bottom: 0.55rem !important;
+}
+
+.mainDrawer:not(.expanded) .ptv-sidebar-logo-img,
+.mainDrawer.collapsed .ptv-sidebar-logo-img {
+  width: 38px;
+  height: 38px;
+}
+
+/* keep first section from crashing into logo */
+#ptv-sidebar-logo + .navMenuOption,
+#ptv-sidebar-logo + .navMenuHeader {
+  margin-top: 0.2rem !important;
 }
 
 /* ===== home.css ===== */
@@ -1061,6 +1221,46 @@ h3.sectionTitle {
     radial-gradient(circle at 50% 75%, rgba(80, 120, 255, 0.03), transparent 28%);
   background-repeat: no-repeat;
 }
+/* =========================
+   SAFE GLOBAL BACKGROUND REVEAL
+   ========================= */
+
+/* use theme background */
+body,
+.emby-app {
+  background:
+    linear-gradient(rgba(7, 7, 13, 0.55), rgba(7, 7, 13, 0.75))
+    url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png") center / cover no-repeat !important;
+}
+
+/* let main app surfaces stay transparent enough to show background */
+.mainAnimatedPage,
+.pageContainer,
+.skinBody,
+.skinBody-withHeader,
+.mainBody,
+.libraryPage,
+.homePage {
+  background: transparent !important;
+}
+/* remove background overlay */
+.homePage .homeSectionsContainer {
+  background: none !important;
+}
+
+/* keep header dark enough to stay readable */
+.skinHeader {
+  background:
+    linear-gradient(180deg, rgba(10, 12, 20, 0.88), rgba(10, 12, 20, 0.58)) !important;
+}
+
+/* keep sidebar dark and readable */
+.mainDrawer,
+.drawer-open,
+.navMenu,
+nav[is="emby-scroller"] {
+  background: rgba(8, 10, 16, 0.92) !important;
+}
 
 /* ===== dashboard.css ===== */
 
@@ -1404,6 +1604,158 @@ h3.sectionTitle {
     rgba(255,255,255,0.12),
     transparent
   );
+}
+/* =========================
+   JS LOGIN HEADER
+   ========================= */
+
+#ptv-login-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.ptv-login-logo {
+  width: 240px;
+  max-width: 90%;
+  display: block;
+  margin: 0 auto 6px auto;
+  filter: drop-shadow(0 12px 26px rgba(140,110,255,0.28));
+}
+
+.ptv-login-tagline {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.78);
+}
+
+/* =========================
+   JS LOGIN ACTIONS
+   ========================= */
+
+#ptv-login-actions {
+  margin-top: 14px;
+  padding-top: 6px;
+  display: grid;
+  gap: 10px;
+}
+
+#ptv-login-actions::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 6px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,0.12),
+    transparent
+  );
+}
+
+#ptv-login-actions .ptv-login-action {
+  min-height: 42px !important;
+  width: 100% !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+#ptv-login-actions .ptv-secondary {
+  background: rgba(20, 24, 40, 0.45) !important;
+  color: rgba(255,255,255,0.78) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(8px);
+  box-shadow: none !important;
+  font-weight: 600 !important;
+  transition: all 0.18s ease !important;
+}
+
+#ptv-login-actions .ptv-secondary:hover {
+  background: rgba(30, 36, 60, 0.65) !important;
+  color: #ffffff !important;
+  border-color: rgba(140,110,255,0.25) !important;
+  transform: translateY(-1px);
+}
+
+#ptv-login-actions .ptv-discord {
+  background: linear-gradient(90deg, #5865f2, #7289da) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow:
+    0 12px 28px rgba(88, 101, 242, 0.25),
+    0 0 18px rgba(114, 137, 218, 0.18) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease !important;
+}
+
+#ptv-login-actions .ptv-discord:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.08);
+}
+
+/* =========================
+   ENTER KEY PULSE
+   ========================= */
+
+#loginPage .button-submit.ptv-enter-pulse,
+#loginPage .emby-button.submit.ptv-enter-pulse,
+#loginPage .emby-button.button-submit.ptv-enter-pulse {
+  animation: ptv-signin-pulse 0.65s ease;
+}
+
+@keyframes ptv-signin-pulse {
+  0% {
+    box-shadow:
+      0 10px 22px rgba(107, 155, 255, 0.16),
+      0 0 18px rgba(200, 140, 255, 0.14);
+    transform: scale(1);
+  }
+  35% {
+    box-shadow:
+      0 12px 28px rgba(107, 155, 255, 0.22),
+      0 0 28px rgba(200, 140, 255, 0.28);
+    transform: scale(1.015);
+  }
+  100% {
+    box-shadow:
+      0 10px 22px rgba(107, 155, 255, 0.16),
+      0 0 18px rgba(200, 140, 255, 0.14);
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   MOUSE-REACTIVE BACKGROUND
+   ========================= */
+
+#loginPage {
+  overflow: hidden;
+}
+
+#ptv-bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  --ptv-x: 50%;
+  --ptv-y: 50%;
+  background:
+    radial-gradient(
+      420px circle at var(--ptv-x) var(--ptv-y),
+      rgba(120, 190, 255, 0.10),
+      rgba(200, 140, 255, 0.07) 28%,
+      rgba(255, 120, 220, 0.04) 45%,
+      transparent 68%
+    );
+  transition: background-position 0.08s linear;
+  mix-blend-mode: screen;
 }
 
 /* ===== details\hero.css ===== */

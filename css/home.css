@@ -563,3 +563,43 @@ h3.sectionTitle {
     radial-gradient(circle at 50% 75%, rgba(80, 120, 255, 0.03), transparent 28%);
   background-repeat: no-repeat;
 }
+/* =========================
+   SAFE GLOBAL BACKGROUND REVEAL
+   ========================= */
+
+/* use theme background */
+body,
+.emby-app {
+  background:
+    linear-gradient(rgba(7, 7, 13, 0.55), rgba(7, 7, 13, 0.75))
+    url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png") center / cover no-repeat !important;
+}
+
+/* let main app surfaces stay transparent enough to show background */
+.mainAnimatedPage,
+.pageContainer,
+.skinBody,
+.skinBody-withHeader,
+.mainBody,
+.libraryPage,
+.homePage {
+  background: transparent !important;
+}
+/* remove background overlay */
+.homePage .homeSectionsContainer {
+  background: none !important;
+}
+
+/* keep header dark enough to stay readable */
+.skinHeader {
+  background:
+    linear-gradient(180deg, rgba(10, 12, 20, 0.88), rgba(10, 12, 20, 0.58)) !important;
+}
+
+/* keep sidebar dark and readable */
+.mainDrawer,
+.drawer-open,
+.navMenu,
+nav[is="emby-scroller"] {
+  background: rgba(8, 10, 16, 0.92) !important;
+}

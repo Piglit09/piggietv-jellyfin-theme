@@ -336,3 +336,155 @@
     transparent
   );
 }
+/* =========================
+   JS LOGIN HEADER
+   ========================= */
+
+#ptv-login-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.ptv-login-logo {
+  width: 240px;
+  max-width: 90%;
+  display: block;
+  margin: 0 auto 6px auto;
+  filter: drop-shadow(0 12px 26px rgba(140,110,255,0.28));
+}
+
+.ptv-login-tagline {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: rgba(255,255,255,0.78);
+}
+
+/* =========================
+   JS LOGIN ACTIONS
+   ========================= */
+
+#ptv-login-actions {
+  margin-top: 14px;
+  padding-top: 6px;
+  display: grid;
+  gap: 10px;
+}
+
+#ptv-login-actions::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 6px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,0.12),
+    transparent
+  );
+}
+
+#ptv-login-actions .ptv-login-action {
+  min-height: 42px !important;
+  width: 100% !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  text-align: center;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+#ptv-login-actions .ptv-secondary {
+  background: rgba(20, 24, 40, 0.45) !important;
+  color: rgba(255,255,255,0.78) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(8px);
+  box-shadow: none !important;
+  font-weight: 600 !important;
+  transition: all 0.18s ease !important;
+}
+
+#ptv-login-actions .ptv-secondary:hover {
+  background: rgba(30, 36, 60, 0.65) !important;
+  color: #ffffff !important;
+  border-color: rgba(140,110,255,0.25) !important;
+  transform: translateY(-1px);
+}
+
+#ptv-login-actions .ptv-discord {
+  background: linear-gradient(90deg, #5865f2, #7289da) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow:
+    0 12px 28px rgba(88, 101, 242, 0.25),
+    0 0 18px rgba(114, 137, 218, 0.18) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+  transition: all 0.2s ease !important;
+}
+
+#ptv-login-actions .ptv-discord:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.08);
+}
+
+/* =========================
+   ENTER KEY PULSE
+   ========================= */
+
+#loginPage .button-submit.ptv-enter-pulse,
+#loginPage .emby-button.submit.ptv-enter-pulse,
+#loginPage .emby-button.button-submit.ptv-enter-pulse {
+  animation: ptv-signin-pulse 0.65s ease;
+}
+
+@keyframes ptv-signin-pulse {
+  0% {
+    box-shadow:
+      0 10px 22px rgba(107, 155, 255, 0.16),
+      0 0 18px rgba(200, 140, 255, 0.14);
+    transform: scale(1);
+  }
+  35% {
+    box-shadow:
+      0 12px 28px rgba(107, 155, 255, 0.22),
+      0 0 28px rgba(200, 140, 255, 0.28);
+    transform: scale(1.015);
+  }
+  100% {
+    box-shadow:
+      0 10px 22px rgba(107, 155, 255, 0.16),
+      0 0 18px rgba(200, 140, 255, 0.14);
+    transform: scale(1);
+  }
+}
+
+/* =========================
+   MOUSE-REACTIVE BACKGROUND
+   ========================= */
+
+#loginPage {
+  overflow: hidden;
+}
+
+#ptv-bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  --ptv-x: 50%;
+  --ptv-y: 50%;
+  background:
+    radial-gradient(
+      420px circle at var(--ptv-x) var(--ptv-y),
+      rgba(120, 190, 255, 0.10),
+      rgba(200, 140, 255, 0.07) 28%,
+      rgba(255, 120, 220, 0.04) 45%,
+      transparent 68%
+    );
+  transition: background-position 0.08s linear;
+  mix-blend-mode: screen;
+}
