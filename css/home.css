@@ -1,55 +1,92 @@
 /* =========================
-   PIGGIETV HOME v1
-   SAFE POLISH
+   PIGGIETV HOME
+   CLEANED FINAL
    ========================= */
 
-/* Main home content spacing */
+/* Layout + spacing */
 .homeSectionsContainer,
 .section0,
 .section1,
 .section2,
 .verticalSection {
   position: relative;
+  min-width: 0;
 }
 
 .homeSectionsContainer {
-  padding-top: 0.6rem !important;
+  padding-top: 0.65rem !important;
+  background: none !important;
 }
 
-/* Row spacing */
+.homePage .sections {
+  padding-top: 0.4rem !important;
+}
+
 .verticalSection {
-  margin-bottom: 2.2rem !important;
+  margin-bottom: 2.5rem !important;
 }
 
 .itemsContainer {
-  gap: 0.95rem !important;
+  gap: 1rem !important;
+  padding-bottom: 0.25rem !important;
+  overflow: visible !important;
+  min-width: 0;
 }
 
 /* Section titles */
-.sectionTitle,
-.sectionTitleText,
-h2.sectionTitle,
-h3.sectionTitle {
+.homePage .sectionTitle,
+.homePage .sectionTitleText,
+.homePage h2.sectionTitle,
+.homePage h3.sectionTitle {
+  position: relative;
   color: #f5f7ff !important;
+  font-size: 1.65rem !important;
   font-weight: 700 !important;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 1rem !important;
+  padding-left: 0.4rem;
 }
 
-.sectionTitle {
-  margin-bottom: 0.9rem !important;
-  padding-left: 0.1rem !important;
+.homePage .sectionTitle::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #9b6bff, rgba(155, 107, 255, 0.2));
 }
 
-/* Home cards */
+.homePage .sectionTitle::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #9b6bff, rgba(155, 107, 255, 0.2));
+  opacity: 0.8;
+}
+
+/* Cards */
 .homePage .cardBox,
 .homePage .visualCardBox,
 .skinBody .homePage .cardBox,
 .skinBody .homePage .visualCardBox {
+  position: relative !important;
+  z-index: 1;
+  min-width: 0;
   border-radius: 18px !important;
   overflow: hidden !important;
   background: rgba(12, 12, 18, 0.34) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  background-clip: padding-box !important;
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease,
@@ -57,51 +94,67 @@ h3.sectionTitle {
     filter 0.18s ease !important;
 }
 
-/* Poster/image fit */
-.homePage .cardImage,
-.homePage .cardPadder,
-.homePage .cardContent,
-.homePage .cardOverlayContainer {
-  border-radius: 18px !important;
+.homePage .cardScalable {
+  min-width: 0;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease !important;
 }
 
-/* Hover */
 .homePage .cardBox:hover,
 .homePage .visualCardBox:hover {
   transform: translateY(-4px) scale(1.01);
   border-color: rgba(155, 107, 255, 0.26) !important;
   box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.34),
-    0 0 18px rgba(155, 107, 255, 0.14) !important;
+    0 14px 30px rgba(0, 0, 0, 0.45),
+    0 0 18px rgba(155, 107, 255, 0.16) !important;
   filter: brightness(1.03);
 }
 
-/* Keep title text cleaner on home cards */
+.homePage .cardScalable:hover {
+  transform: translateY(-3px);
+}
+
+/* Inner card layers */
+.homePage .cardImage,
+.homePage .cardPadder,
+.homePage .cardContent,
+.homePage .cardOverlayContainer,
+.homePage .cardImageContainer {
+  border-radius: 18px !important;
+  overflow: hidden !important;
+}
+
+/* Card text */
 .homePage .cardText,
 .homePage .cardText-first,
 .homePage .cardText-secondary {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Slight polish for text rows under cards */
 .homePage .cardText-first {
+  font-size: 1rem !important;
+  line-height: 1.2 !important;
   font-weight: 600 !important;
 }
 
 .homePage .cardText-secondary {
+  font-size: 0.88rem !important;
+  line-height: 1.2 !important;
+  opacity: 0.9;
   color: rgba(220, 226, 245, 0.78) !important;
 }
 
-/* More button / card overlay controls */
+/* Overlay buttons */
 .homePage .cardOverlayButton,
 .homePage .cardOverlayFab-primary,
 .homePage .listViewUserDataButtons button,
-.homePage .cardOverlayContainer button {
+.homePage .cardOverlayContainer button,
+.homePage .cardOverlayButton-br {
   border-radius: 999px !important;
   backdrop-filter: blur(10px);
 }
 
-/* Do not let overlay controls explode in size */
 .homePage .cardOverlayButton,
 .homePage .cardOverlayFab-primary {
   background: rgba(16, 18, 30, 0.72) !important;
@@ -116,11 +169,18 @@ h3.sectionTitle {
   box-shadow: 0 0 14px rgba(155, 107, 255, 0.16) !important;
 }
 
-/* Carousel arrows */
+/* Scroll buttons */
+.homePage .emby-scrollbuttons {
+  padding-inline: 0.25rem !important;
+}
+
 .homePage .emby-scrollbuttons .btnPrevious,
 .homePage .emby-scrollbuttons .btnNext,
 .homePage .itemsContainer .btnPrevious,
-.homePage .itemsContainer .btnNext {
+.homePage .itemsContainer .btnNext,
+.homePage .btnPrevious,
+.homePage .btnNext {
+  z-index: 5 !important;
   border-radius: 999px !important;
   background: rgba(18, 18, 26, 0.78) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -142,128 +202,65 @@ h3.sectionTitle {
   transform: translateY(-1px);
 }
 
-/* Top tabs spacing on home */
-.homePage .emby-tabs-slider,
-.homePage .emby-tabs {
-  margin-bottom: 1.2rem !important;
-}
-
-.homePage .emby-tab-button {
-  min-width: 110px;
-}
-
-/* Slight breathing room around the first row */
-.homePage .sections {
-  padding-top: 0.4rem !important;
-}
-
-/* Prevent accidental clipping */
-.homePage .itemsContainer,
-.homePage .cardScalable,
-.homePage .cardBox,
-.homePage .visualCardBox {
-  min-width: 0;
-}
-
-/* Make row edges feel less cramped */
-.homePage .itemsContainer {
-  padding-bottom: 0.25rem !important;
-}
-
-/* Mobile / narrow screens */
-@media (max-width: 900px) {
-  .verticalSection {
-    margin-bottom: 1.7rem !important;
-  }
-
-  .homePage .emby-tab-button {
-    min-width: 92px;
-  }
-
-  .sectionTitle {
-    margin-bottom: 0.7rem !important;
-  }
-}
-/* =========================
-   PIGGIETV HOME v2
-   REFINEMENTS
-   ========================= */
-
-/* Give the top nav area breathing room */
+/* Tabs */
 .homePage .emby-tabs-slider,
 .homePage .emby-tabs {
   margin-top: 0.55rem !important;
   margin-bottom: 1.35rem !important;
 }
 
-/* Better spacing below header before first row */
-.homePage .sections,
-.homePage .homeSectionsContainer {
-  padding-top: 0.65rem !important;
+.homePage .emby-tabs {
+  gap: 0.6rem;
 }
 
-/* Section titles feel more intentional */
-.homePage .sectionTitle,
-.homePage .sectionTitleText,
-.homePage h2.sectionTitle,
-.homePage h3.sectionTitle {
-  font-size: 1.65rem !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.02em !important;
-  margin-bottom: 1rem !important;
-}
-
-/* Make row blocks read more clearly */
-.homePage .verticalSection {
-  margin-bottom: 2.5rem !important;
-}
-
-/* Landscape / episode cards */
-.homePage .cardBox:not(.cardBox-bottompadded),
-.homePage .visualCardBox:not(.cardBox-bottompadded) {
-  background: rgba(10, 12, 20, 0.34) !important;
-}
-
-/* Poster cards stand out a touch more */
-.homePage .cardScalable {
-  transition:
-    transform 0.18s ease,
-    filter 0.18s ease !important;
-}
-
-.homePage .cardScalable:hover {
-  transform: translateY(-3px);
-}
-
-/* Cleaner text under cards */
-.homePage .cardText-first {
-  font-size: 1rem !important;
-  line-height: 1.2 !important;
-}
-
-.homePage .cardText-secondary {
-  font-size: 0.88rem !important;
-  line-height: 1.2 !important;
-  opacity: 0.9;
-}
-
-/* Round the context / more button a little nicer */
-.homePage .cardOverlayButton-br {
+.homePage .emby-tab-button {
+  min-width: 110px;
   border-radius: 999px !important;
+  padding: 0.5rem 1.1rem !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
 }
 
-/* Popup menu polish */
+.homePage .emby-tab-button:hover {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: rgba(155, 107, 255, 0.2) !important;
+  box-shadow: 0 0 14px rgba(155, 107, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.homePage .emby-tab-button-active {
+  background: linear-gradient(
+    90deg,
+    rgba(155, 107, 255, 0.18),
+    rgba(155, 107, 255, 0.06)
+  ) !important;
+  border-color: rgba(155, 107, 255, 0.35) !important;
+  box-shadow:
+    0 0 16px rgba(155, 107, 255, 0.18),
+    inset 0 0 12px rgba(155, 107, 255, 0.08);
+}
+
+/* Context menu */
 .actionSheetMenu,
 .focuscontainer-x .actionSheetMenu,
 .dialog-container .actionSheetMenu,
 .actionSheetMenu .actionsheetList {
-  background: rgba(10, 12, 20, 0.94) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 18, 30, 0.96),
+    rgba(10, 12, 20, 0.98)
+  ) !important;
+  border: 1px solid rgba(155, 107, 255, 0.12) !important;
   border-radius: 18px !important;
   backdrop-filter: blur(14px);
   box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.45),
-    0 0 18px rgba(155, 107, 255, 0.08) !important;
+    0 25px 60px rgba(0, 0, 0, 0.55),
+    0 0 22px rgba(155, 107, 255, 0.12) !important;
 }
 
 .actionSheetMenu .listItem,
@@ -271,71 +268,17 @@ h3.sectionTitle {
   background: transparent !important;
   border-radius: 12px !important;
   border: none !important;
-}
-
-.actionSheetMenu .listItem:hover,
-.actionSheetMenu .actionSheetItem:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-}
-
-/* Keep arrows a little farther from content */
-.homePage .emby-scrollbuttons {
-  padding-inline: 0.25rem !important;
-}
-
-/* Narrow screens */
-@media (max-width: 900px) {
-  .homePage .sectionTitle,
-  .homePage .sectionTitleText,
-  .homePage h2.sectionTitle,
-  .homePage h3.sectionTitle {
-    font-size: 1.3rem !important;
-  }
-
-  .homePage .verticalSection {
-    margin-bottom: 2rem !important;
-  }
-}
-/* =========================
-   PIGGIETV HOME v3
-   DEPTH + PREMIUM PASS
-   ========================= */
-
-/* =========================
-   CONTEXT MENU UPGRADE
-   ========================= */
-
-.actionSheetMenu {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(16, 18, 30, 0.96),
-      rgba(10, 12, 20, 0.98)
-    ) !important;
-
-  border: 1px solid rgba(155, 107, 255, 0.12) !important;
-
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.55),
-    0 0 22px rgba(155, 107, 255, 0.12) !important;
-}
-
-/* menu items */
-.actionSheetMenu .listItem,
-.actionSheetMenu .actionSheetItem {
   transition:
     background 0.16s ease,
     transform 0.16s ease !important;
 }
 
-/* hover feels alive now */
 .actionSheetMenu .listItem:hover,
 .actionSheetMenu .actionSheetItem:hover {
   background: rgba(255, 255, 255, 0.08) !important;
   transform: translateX(3px);
 }
 
-/* icons pop slightly */
 .actionSheetMenu .listItem i,
 .actionSheetMenu .actionSheetItem i {
   transition:
@@ -349,257 +292,20 @@ h3.sectionTitle {
   filter: drop-shadow(0 0 6px rgba(155, 107, 255, 0.3));
 }
 
-/* =========================
-   CARD DEPTH TWEAK
-   ========================= */
+/* Mobile */
+@media (max-width: 900px) {
+  .verticalSection {
+    margin-bottom: 2rem !important;
+  }
 
-.homePage .cardBox,
-.homePage .visualCardBox {
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.25) !important;
-}
+  .homePage .emby-tab-button {
+    min-width: 92px;
+  }
 
-.homePage .cardBox:hover,
-.homePage .visualCardBox:hover {
-  box-shadow:
-    0 14px 30px rgba(0, 0, 0, 0.45),
-    0 0 18px rgba(155, 107, 255, 0.16) !important;
-}
-
-/* =========================
-   SECTION TITLE PRESENCE
-   ========================= */
-
-.homePage .sectionTitle::after {
-  content: "";
-  display: block;
-  width: 36px;
-  height: 3px;
-  margin-top: 6px;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    #9b6bff,
-    rgba(155, 107, 255, 0.2)
-  );
-  opacity: 0.8;
-}
-
-/* =========================
-   ROW EDGE FADE (subtle Netflix feel)
-   ========================= */
-
-.homePage .itemsContainer::before,
-.homePage .itemsContainer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 40px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.homePage .itemsContainer::before {
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(6, 6, 12, 1),
-    transparent
-  );
-}
-
-.homePage .itemsContainer::after {
-  right: 0;
-  background: linear-gradient(
-    270deg,
-    rgba(6, 6, 12, 1),
-    transparent
-  );
-}
-/* =========================
-   HEADER REFINED (CRISP)
-   ========================= */
-
-.skinHeader {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(12, 14, 22, 0.92),
-      rgba(10, 12, 20, 0.65)
-    ) !important;
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.35);
-}
-
-/* Tabs container */
-.homePage .emby-tabs {
-  gap: 0.6rem;
-}
-
-/* Tabs */
-.homePage .emby-tab-button {
-  border-radius: 999px !important;
-  padding: 0.5rem 1.1rem !important;
-
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease !important;
-}
-
-/* Hover */
-.homePage .emby-tab-button:hover {
-  background: rgba(255, 255, 255, 0.09) !important;
-  border-color: rgba(155, 107, 255, 0.2) !important;
-  box-shadow: 0 0 14px rgba(155, 107, 255, 0.12);
-  transform: translateY(-1px);
-}
-
-/* Active tab */
-.homePage .emby-tab-button-active {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(155, 107, 255, 0.18),
-      rgba(155, 107, 255, 0.06)
-    ) !important;
-
-  border-color: rgba(155, 107, 255, 0.35) !important;
-
-  box-shadow:
-    0 0 16px rgba(155, 107, 255, 0.18),
-    inset 0 0 12px rgba(155, 107, 255, 0.08);
-}
-/* =========================
-   SECTION TITLE EMPHASIS v2
-   ========================= */
-
-.homePage .sectionTitle {
-  position: relative;
-  padding-left: 0.4rem;
-}
-
-.homePage .sectionTitle::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-
-  width: 3px;
-  height: 18px;
-
-  border-radius: 999px;
-
-  background: linear-gradient(
-    180deg,
-    #9b6bff,
-    rgba(155, 107, 255, 0.2)
-  );
-}
-/* =========================
-   HOME BUGFIX: black line on 5th tile
-   ========================= */
-
-/* Stop row pseudo elements from cutting through cards */
-.homePage .itemsContainer::before,
-.homePage .itemsContainer::after {
-  display: none !important;
-  content: none !important;
-}
-
-/* Make sure card slots don't paint weird seams */
-.homePage .itemsContainer {
-  overflow: visible !important;
-  gap: 1rem !important;
-}
-
-/* Force each home card into its own clean paint layer */
-.homePage .cardBox,
-.homePage .visualCardBox,
-.homePage .cardScalable {
-  position: relative !important;
-  z-index: 1;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-  background-clip: padding-box !important;
-}
-
-/* Prevent inner layers from creating seam artifacts */
-.homePage .cardPadder,
-.homePage .cardContent,
-.homePage .cardOverlayContainer,
-.homePage .cardImageContainer {
-  overflow: hidden !important;
-  border-radius: 18px !important;
-}
-
-/* Keep row arrows above cards without slicing through them */
-.homePage .emby-scrollbuttons,
-.homePage .btnPrevious,
-.homePage .btnNext {
-  z-index: 5 !important;
-}
-/* =========================
-   SAFE HOME ATMOSPHERE
-   ========================= */
-
-.homePage .homeSectionsContainer {
-  background:
-    radial-gradient(circle at 20% 18%, rgba(155, 107, 255, 0.05), transparent 26%),
-    radial-gradient(circle at 78% 22%, rgba(255, 79, 163, 0.035), transparent 22%),
-    radial-gradient(circle at 50% 75%, rgba(80, 120, 255, 0.03), transparent 28%);
-  background-repeat: no-repeat;
-}
-/* =========================
-   SAFE GLOBAL BACKGROUND REVEAL
-   ========================= */
-
-/* use theme background */
-body,
-.emby-app {
-  background:
-    linear-gradient(rgba(7, 7, 13, 0.55), rgba(7, 7, 13, 0.75))
-    url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png") center / cover no-repeat !important;
-}
-
-/* let main app surfaces stay transparent enough to show background */
-.mainAnimatedPage,
-.pageContainer,
-.skinBody,
-.skinBody-withHeader,
-.mainBody,
-.libraryPage,
-.homePage {
-  background: transparent !important;
-}
-/* remove background overlay */
-.homePage .homeSectionsContainer {
-  background: none !important;
-}
-
-/* keep header dark enough to stay readable */
-.skinHeader {
-  background:
-    linear-gradient(180deg, rgba(10, 12, 20, 0.88), rgba(10, 12, 20, 0.58)) !important;
-}
-
-/* keep sidebar dark and readable */
-.mainDrawer,
-.drawer-open,
-.navMenu,
-nav[is="emby-scroller"] {
-  background: rgba(8, 10, 16, 0.92) !important;
+  .homePage .sectionTitle,
+  .homePage .sectionTitleText,
+  .homePage h2.sectionTitle,
+  .homePage h3.sectionTitle {
+    font-size: 1.3rem !important;
+  }
 }

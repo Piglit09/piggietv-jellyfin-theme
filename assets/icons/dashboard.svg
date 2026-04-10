@@ -11,8 +11,10 @@
 </defs>
 <g filter="url(#ptvGlow)">
 
-<path d="M5.2 6.7C5.2 5.22 6.4 4 7.9 4H16.1C17.6 4 18.8 5.22 18.8 6.7V12.8C18.8 14.28 17.6 15.5 16.1 15.5H12.9L10 18.4V15.5H7.9C6.4 15.5 5.2 14.28 5.2 12.8V6.7Z" fill="url(#ptvGrad)"/>
-<path d="M12 7.2V12.2M9.5 9.7H14.5" stroke="white" stroke-opacity="0.92" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="4" y="4" width="7" height="7" rx="2" fill="url(#ptvGrad)"/>
+<rect x="13" y="4" width="7" height="11" rx="2" fill="url(#ptvGrad)" fill-opacity="0.92"/>
+<rect x="4" y="13" width="7" height="7" rx="2" fill="url(#ptvGrad)" fill-opacity="0.84"/>
+<rect x="13" y="17" width="7" height="3" rx="1.5" fill="url(#ptvGrad)" fill-opacity="0.78"/>
 
 </g>
 </svg>

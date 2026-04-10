@@ -2,6 +2,7 @@ window.PTV = window.PTV || {};
 
 window.PTV.runAll = function () {
   window.PTV.runGlobalBranding();
+  window.PTV.runSidebarEnhancements();
   window.PTV.runLoginEnhancements();
   window.PTV.runHomeBackdropEnhancement();
 };
@@ -63,6 +64,7 @@ window.PTV.observeApp = function () {
     if (shouldRunBranding) {
       window.PTV.schedule("branding", () => {
         window.PTV.runGlobalBranding();
+        window.PTV.runSidebarEnhancements();
       });
     }
 

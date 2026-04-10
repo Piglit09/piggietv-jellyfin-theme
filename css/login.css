@@ -14,10 +14,17 @@
   box-shadow: none !important;
 }
 
-/* Backdrop balance */
-#loginPage .backgroundContainer.withBackdrop,
-.backgroundContainer.withBackdrop {
-  background-color: rgba(0, 0, 0, 0.24) !important;
+/* =========================
+   LOGIN BACKGROUND 
+   ========================= */
+
+#loginPage #backdropContainer,
+body:not(.libraryDocument) #backdropContainer {
+  background:
+    linear-gradient(rgba(10, 10, 18, 0.65), rgba(10, 10, 18, 0.85)),
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center / cover no-repeat !important;
+
+  opacity: 1 !important;
 }
 
 #loginPage .backgroundImage,

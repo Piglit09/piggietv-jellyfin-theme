@@ -7,6 +7,12 @@
 # Changelog
 
 ## v1.5.0 - 2026-04-10
+## v1.5.1 - 2026-04-09
+- Background changed to static (for now)
+- added custom side bar links with icons
+- added custom side bar icons
+
+## v1.5.0 - 2026-04-09
 - added glow around mouse on login page
 - added ability to change default JF logo on top header
 - logo on top of sidebar
@@ -14,7 +20,7 @@
 - removed background overlay
 - homepage background shows random backdrops
 
-## v1.0.0 - 2026-04-09
+## v1.0.0 - 2026-04-08
 - Version 1 
 - Login page
 - Home page

@@ -68,6 +68,7 @@ $jsFiles = @(
     "login\login-focus.js",
     "login\login-effects.js",
     "ui\background-glow.js",
+    "ui\sidebar-links.js",
     "ui\home-backdrop.js",
     "core\observer.js",
     "core\init.js"
