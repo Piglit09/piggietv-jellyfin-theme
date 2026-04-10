@@ -1,6 +1,6 @@
 /* =========================
    PIGGIETV LOGIN
-   CLEAN BASE FOR JS
+   CLEAN FINAL
    ========================= */
 
 /* Page shell */
@@ -15,26 +15,32 @@
 }
 
 /* =========================
-   LOGIN BACKGROUND 
+   LOGIN BACKGROUND
    ========================= */
 
+#loginPage {
+  min-height: 100vh !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* actual login backdrop layer */
+#loginPage .backgroundContainer,
 #loginPage #backdropContainer,
-body:not(.libraryDocument) #backdropContainer {
-  background:
-    linear-gradient(rgba(10, 10, 18, 0.65), rgba(10, 10, 18, 0.85)),
-    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center / cover no-repeat !important;
-
-  opacity: 1 !important;
-}
-
+#loginPage .backdropContainer,
 #loginPage .backgroundImage,
-#loginPage .backdropImage,
-#loginPage .backgroundContainer {
-  filter: brightness(0.94) contrast(1.03) !important;
+#loginPage .backdropImage {
+  background:
+    linear-gradient(rgba(10, 10, 18, 0.52), rgba(10, 10, 18, 0.78)),
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
   opacity: 1 !important;
+  filter: brightness(0.94) contrast(1.03) !important;
 }
 
-/* Soft ambient glow */
+/* ambient glow */
 #loginPage::before {
   content: "";
   position: fixed;
@@ -58,6 +64,9 @@ body:not(.libraryDocument) #backdropContainer {
   max-width: none !important;
   margin: 0 auto !important;
   gap: 0 !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 /* Keep both sections same width */
@@ -226,125 +235,8 @@ body:not(.libraryDocument) #backdropContainer {
   border-bottom: 1px solid rgba(255,255,255,0.05) !important;
 }
 
-/* Mobile */
-@media (max-width: 900px) {
-  #loginPage .manualLoginForm,
-  #loginPage .visualLoginForm,
-  #loginPage .readOnlyContent {
-    max-width: 92vw !important;
-  }
-
-  #loginPage .manualLoginForm {
-    padding: 22px 18px 16px !important;
-    border-radius: 24px !important;
-  }
-}
 /* =========================
    JS INJECTED LOGIN HEADER
-   ========================= */
-
-#ptv-login-header {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.ptv-login-logo {
-  width: 240px;
-  max-width: 90%;
-  display: block;
-  margin: 0 auto 6px auto;
-  filter: drop-shadow(0 12px 26px rgba(140,110,255,0.28));
-}
-
-.ptv-login-tagline {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  color: rgba(255,255,255,0.78);
-}
-/* =========================
-   JS LOGIN ACTIONS
-   ========================= */
-
-#ptv-login-actions {
-  margin-top: 10px;
-  display: grid;
-  gap: 10px;
-}
-
-#ptv-login-actions .ptv-login-action {
-  min-height: 42px !important;
-  width: 100% !important;
-  border-radius: 14px !important;
-  font-weight: 700 !important;
-  text-align: center;
-  text-decoration: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-#ptv-login-actions .ptv-secondary {
-  background: rgba(20, 24, 40, 0.45) !important;
-  color: rgba(255,255,255,0.78) !important;
-
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  backdrop-filter: blur(8px);
-
-  font-weight: 600 !important;
-
-  transition: all 0.18s ease !important;
-}
-
-#ptv-login-actions .ptv-secondary:hover {
-  background: rgba(30, 36, 60, 0.65) !important;
-  color: #ffffff !important;
-  border-color: rgba(140,110,255,0.25) !important;
-
-  transform: translateY(-1px);
-}
-
-#ptv-login-actions .ptv-discord {
-  background: linear-gradient(90deg, #5865f2, #7289da) !important;
-  color: #ffffff !important;
-  border: none !important;
-
-  box-shadow:
-    0 12px 28px rgba(88, 101, 242, 0.25),
-    0 0 18px rgba(114, 137, 218, 0.18);
-
-  font-weight: 800 !important;
-  letter-spacing: 0.04em;
-
-  transition: all 0.2s ease !important;
-}
-
-#ptv-login-actions .ptv-discord:hover {
-  transform: translateY(-2px) scale(1.02);
-  filter: brightness(1.08);
-}
-
-#ptv-login-actions {
-  margin-top: 14px;
-  padding-top: 6px;
-  display: grid;
-  gap: 10px;
-}
-#ptv-login-actions::before {
-  content: "";
-  display: block;
-  height: 1px;
-  margin-bottom: 6px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255,255,255,0.12),
-    transparent
-  );
-}
-/* =========================
-   JS LOGIN HEADER
    ========================= */
 
 #ptv-login-header {
@@ -473,10 +365,6 @@ body:not(.libraryDocument) #backdropContainer {
    MOUSE-REACTIVE BACKGROUND
    ========================= */
 
-#loginPage {
-  overflow: hidden;
-}
-
 #ptv-bg-glow {
   position: fixed;
   inset: 0;
@@ -494,4 +382,54 @@ body:not(.libraryDocument) #backdropContainer {
     );
   transition: background-position 0.08s linear;
   mix-blend-mode: screen;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  #loginPage .manualLoginForm,
+  #loginPage .visualLoginForm,
+  #loginPage .readOnlyContent {
+    max-width: 92vw !important;
+  }
+
+  #loginPage .manualLoginForm {
+    padding: 22px 18px 16px !important;
+    border-radius: 24px !important;
+  }
+}
+/* =========================
+   FORCE LOGIN BACKGROUND (REAL TARGET)
+   ========================= */
+
+#loginPage .pageBackground {
+  background:
+    linear-gradient(rgba(10, 10, 18, 0.52), rgba(10, 10, 18, 0.78)),
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
+
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+
+  opacity: 1 !important;
+}
+/* =========================
+   FORCE REAL LOGIN BACKDROP
+   ========================= */
+
+#loginPage .backgroundContainer.withBackdrop,
+#loginPage .backgroundContainer,
+.backgroundContainer.withBackdrop {
+  background:
+    linear-gradient(rgba(10, 10, 18, 0.42), rgba(10, 10, 18, 0.68)),
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
+/* stop Jellyfin's dark filler from flattening the page */
+#loginPage .backgroundContainer.withBackdrop::before,
+#loginPage .backgroundContainer::before,
+.backgroundContainer.withBackdrop::before {
+  content: none !important;
+  display: none !important;
 }

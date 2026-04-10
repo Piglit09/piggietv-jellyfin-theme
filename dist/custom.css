@@ -2,7 +2,7 @@
 /* ===== base.css ===== */
 /* =========================
    PIGGIETV BASE v4
-   CLEAN HIERARCHY
+   CLEANED BASE ONLY
    ========================= */
 
 :root {
@@ -27,12 +27,10 @@
    ========================= */
 
 html,
-body,
-.emby-app,
-.mainAnimatedPage,
-.pageContainer,
-.skinBody,
-.skinBody-withHeader,
+body {
+  overflow-y: auto !important;
+}
+
 .emby-scroll-y {
   overflow-y: auto !important;
 }
@@ -131,7 +129,6 @@ select:focus {
    PRIMARY BUTTONS ONLY
    ========================= */
 
-/* Only true call-to-action buttons */
 .button-submit,
 button[type="submit"],
 .emby-button.submit,
@@ -221,7 +218,6 @@ button[type="submit"]:hover,
    SETTINGS PAGE ROWS
    ========================= */
 
-/* Scope this to settings containers only */
 .settingsContainer .listItem,
 .userSettingsContainer .listItem,
 .sectionedSettings .listItem,
@@ -242,48 +238,6 @@ button[type="submit"]:hover,
   background: rgba(255, 255, 255, 0.05) !important;
   border-color: rgba(155, 107, 255, 0.18) !important;
   box-shadow: var(--ptv-glow) !important;
-}
-
-/* =========================
-   SIDEBAR: KEEP DARK
-   ========================= */
-
-.mainDrawer,
-.drawer-open,
-.navMenu,
-nav[is="emby-scroller"] {
-  background: rgba(10, 10, 16, 0.96) !important;
-  backdrop-filter: blur(12px);
-}
-
-.navMenuOption,
-a.navMenuOption,
-.drawer-open .navMenuOption {
-  background: transparent !important;
-  color: var(--ptv-text) !important;
-  border: 1px solid transparent !important;
-  border-radius: 14px !important;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease !important;
-}
-
-.navMenuOption:hover,
-a.navMenuOption:hover,
-.drawer-open .navMenuOption:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(155, 107, 255, 0.16) !important;
-  box-shadow: none !important;
-}
-
-.navMenuOption-selected,
-a.navMenuOption-selected,
-.drawer-open .navMenuOption-selected {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(155, 107, 255, 0.22) !important;
-  box-shadow: inset 3px 0 0 var(--ptv-accent) !important;
-  color: #fff !important;
 }
 
 /* =========================
@@ -339,46 +293,9 @@ a.navMenuOption-selected,
 }
 
 /* =========================
-   SIDEBAR LOGO (FIXED)
+   FINAL HEADER BRANDING FIX
    ========================= */
 
-#ptv-sidebar-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px 12px 18px;
-  margin-bottom: 8px;
-}
-
-/* NORMAL SIZE (default state) */
-.ptv-sidebar-logo-img {
-  width: 160px !important;
-  max-width: 90%;
-  height: auto !important;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  filter: drop-shadow(0 8px 20px rgba(140,110,255,0.22));
-}
-
-/* HOVER POLISH */
-#ptv-sidebar-logo:hover .ptv-sidebar-logo-img {
-  transform: scale(1.04);
-  filter: drop-shadow(0 10px 28px rgba(155,107,255,0.35));
-}
-
-/* TRUE collapsed state (VERY narrow sidebar only) */
-.mainDrawer[style*="width: 80px"] .ptv-sidebar-logo-img,
-.mainDrawer.collapsed .ptv-sidebar-logo-img {
-  width: 44px !important;
-  height: 44px !important;
-}
-
-/* =========================
-   FINAL HEADER BRANDING FIX (SAFE)
-   ========================= */
-
-/* Remove Jellyfin default logo rendering ONLY */
 .skinHeader .pageTitleWithLogo,
 .skinHeader .pageTitleWithDefaultLogo {
   background: none !important;
@@ -386,20 +303,17 @@ a.navMenuOption-selected,
   color: transparent !important;
 }
 
-/* DO NOT nuke entire header contents — only hide text */
 .skinHeader .pageTitleWithLogo span,
 .skinHeader .pageTitleWithDefaultLogo span {
   display: none !important;
 }
 
-/* Keep layout intact */
 .skinHeader .headerBranding,
 .skinHeader .pageTitle {
   display: flex !important;
   align-items: center !important;
 }
 
-/* Our injected logo container */
 .skinHeader .ptv-brand-replaced {
   display: flex !important;
   align-items: center !important;
@@ -408,7 +322,6 @@ a.navMenuOption-selected,
   padding: 0 !important;
 }
 
-/* Logo itself */
 .skinHeader .ptv-header-logo {
   height: 34px !important;
   width: auto !important;
@@ -417,124 +330,39 @@ a.navMenuOption-selected,
   display: block !important;
 }
 
-/* Prevent overflow/stretch bug (THIS fixes your screenshot issue) */
 .skinHeader {
   overflow: hidden !important;
 }
 
-/* Prevent giant ghost background rendering */
 .skinHeader * {
   background-size: contain !important;
 }
+
 /* =========================
-   APP BACKGROUND (FINAL FIX)
+   APP BACKGROUND
    ========================= */
 
-/* Paint the actual visible background layer */
-body,
-.emby-app,
 body.libraryDocument .backgroundContainer,
 .libraryDocument .backgroundContainer {
   background:
     linear-gradient(rgba(7, 7, 13, 0.68), rgba(7, 7, 13, 0.84)),
     url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png") center center / cover no-repeat !important;
   opacity: 1 !important;
-}
-
-/* Kill Jellyfin dynamic backdrop layer */
-body.libraryDocument .backgroundContainer,
-.libraryDocument .backgroundContainer {
   background-position: center center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
 }
+
+body:not(.libraryDocument) {
+  background: var(--ptv-bg) !important;
+}
+
 /* =========================
-   PIGGIETV SIDEBAR LINKS
+   SIDEBAR RULES REMOVED
+   This file is now base.css only.
+   Sidebar logo, sidebar links, nav items,
+   and icon mapping belong in sidebar.css.
    ========================= */
-
-#ptv-sidebar-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.15rem 0.55rem 0.7rem;
-  margin-bottom: 0.4rem;
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.9rem;
-  min-height: 44px;
-  padding: 0.8rem 0.95rem !important;
-  border-radius: 14px !important;
-  color: var(--ptv-text) !important;
-  background: transparent !important;
-  border: 1px solid transparent !important;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease !important;
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(155, 107, 255, 0.18) !important;
-  box-shadow: 0 0 14px rgba(155, 107, 255, 0.10) !important;
-  transform: translateX(2px);
-}
-
-#ptv-sidebar-links .navMenuOptionIcon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 24px;
-  min-width: 24px;
-}
-
-#ptv-sidebar-links .navMenuOptionIcon .md-icon {
-  font-size: 1.15rem !important;
-  line-height: 1 !important;
-}
-
-#ptv-sidebar-links .navMenuOptionText {
-  font-size: 1rem !important;
-  font-weight: 500 !important;
-  white-space: nowrap;
-}
-
-/* collapsed sidebar */
-.mainDrawer[style*="width: 80px"] #ptv-sidebar-links,
-.mainDrawer.collapsed #ptv-sidebar-links {
-  padding-left: 0.3rem;
-  padding-right: 0.3rem;
-}
-
-.mainDrawer[style*="width: 80px"] #ptv-sidebar-links .ptv-custom-sidebar-link,
-.mainDrawer.collapsed #ptv-sidebar-links .ptv-custom-sidebar-link {
-  justify-content: center !important;
-  padding: 0.75rem 0.45rem !important;
-  gap: 0 !important;
-}
-
-.mainDrawer[style*="width: 80px"] #ptv-sidebar-links .navMenuOptionText,
-.mainDrawer.collapsed #ptv-sidebar-links .navMenuOptionText {
-  display: none !important;
-}
-/* custom svg icons */
-.ptv-sidebar-icon-img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  filter: brightness(0.95) drop-shadow(0 0 4px rgba(155,107,255,0.25));
-  transition: transform 0.18s ease, filter 0.18s ease;
-}
-
-/* hover effect */
-.ptv-custom-sidebar-link:hover .ptv-sidebar-icon-img {
-  transform: scale(1.08);
-  filter: brightness(1.1) drop-shadow(0 0 6px rgba(155,107,255,0.4));
-}
 
 /* ===== layout.css ===== */
 
@@ -670,48 +498,43 @@ a.navMenuOption.selected,
 }
 
 /* =========================
-   PIGGIETV SIDEBAR LOGO
+   FIXED SIDEBAR LOGO
    ========================= */
 
 #ptv-sidebar-logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.35rem 0.4rem 0.95rem !important;
-  margin: 0 0 0.8rem !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 14px 10px 16px;
+  margin-bottom: 10px;
 }
 
+/* NORMAL (always default) */
 .ptv-sidebar-logo-img {
-  width: 180px;
-  max-width: 100%;
-  height: auto;
-  display: block;
+  width: 190px !important;
+  max-width: 85%;
+  height: auto !important;
   object-fit: contain;
-  filter:
-    drop-shadow(0 10px 22px rgba(140, 110, 255, 0.22))
-    drop-shadow(0 0 14px rgba(200, 140, 255, 0.12));
+  display: block;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 8px 22px rgba(140,110,255,0.25));
 }
 
-.mainDrawer:not(.expanded) #ptv-sidebar-logo,
-.mainDrawer.collapsed #ptv-sidebar-logo {
-  padding: 0.4rem 0.2rem 0.7rem !important;
-  margin-bottom: 0.55rem !important;
+/* hover polish */
+#ptv-sidebar-logo:hover .ptv-sidebar-logo-img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 12px 28px rgba(155,107,255,0.35));
 }
 
-.mainDrawer:not(.expanded) .ptv-sidebar-logo-img,
+/* ONLY shrink when truly collapsed */
 .mainDrawer.collapsed .ptv-sidebar-logo-img {
-  width: 38px;
-  height: 38px;
-}
-
-#ptv-sidebar-logo + .navMenuOption,
-#ptv-sidebar-logo + .navMenuHeader {
-  margin-top: 0.2rem !important;
+  width: 42px !important;
+  height: 42px !important;
 }
 
 /* =========================
    CUSTOM SIDEBAR LINKS
+   MATCH NATIVE ICON ALIGNMENT
    ========================= */
 
 #ptv-sidebar-links {
@@ -724,9 +547,10 @@ a.navMenuOption.selected,
 #ptv-sidebar-links .ptv-custom-sidebar-link {
   display: flex !important;
   align-items: center !important;
-  gap: 1rem !important;
+  gap: 0.9rem !important;            /* match native */
   min-height: 44px !important;
-  padding: 0.85rem 1rem !important;
+  margin: 0.16rem 0 !important;      /* match native */
+  padding: 0.7rem 0.8rem !important; /* match native */
   border-radius: 14px !important;
   color: var(--ptv-text, rgba(245, 247, 255, 0.92)) !important;
   background: transparent !important;
@@ -735,72 +559,83 @@ a.navMenuOption.selected,
     background 0.18s ease,
     border-color 0.18s ease,
     box-shadow 0.18s ease,
-    transform 0.18s ease !important;
+    transform 0.18s ease,
+    opacity 0.18s ease !important;
 }
 
 #ptv-sidebar-links .ptv-custom-sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(155, 107, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  border-color: rgba(155, 107, 255, 0.14) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    0 0 0 1px rgba(155, 107, 255, 0.03) !important;
   transform: translateX(2px);
+  opacity: 1;
 }
 
 #ptv-sidebar-links .ptv-custom-sidebar-icon,
 #ptv-sidebar-links .navMenuOptionIcon {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  flex: 0 0 24px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  width: 24px !important;
-  min-width: 24px !important;
-  height: 24px !important;
-  flex: 0 0 24px !important;
-  opacity: 1 !important;
-  overflow: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
+  vertical-align: middle !important;
 }
 
 #ptv-sidebar-links .navMenuOptionText {
   display: inline-block !important;
   font-size: 1rem !important;
   font-weight: 500 !important;
+  line-height: 1.2 !important;
+  margin-left: 0.15rem !important;   /* match native */
   white-space: nowrap !important;
   overflow: visible !important;
   text-overflow: clip !important;
 }
 
-/* inline svg icons */
-#ptv-sidebar-links .ptv-sidebar-icon-svg {
-  width: 20px !important;
-  height: 20px !important;
+#ptv-sidebar-links .ptv-sidebar-icon-svg,
+#ptv-sidebar-links .ptv-sidebar-icon-img {
+  width: 24px !important;
+  height: 24px !important;
   display: block !important;
-  color: rgba(210, 218, 255, 0.92) !important;
-  fill: currentColor !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: 0 0 24px !important;
+  transform-origin: center center !important;
   transition: transform 0.18s ease, filter 0.18s ease, color 0.18s ease !important;
 }
 
-/* img icon */
+#ptv-sidebar-links .ptv-sidebar-icon-svg {
+  color: rgba(210, 218, 255, 0.92) !important;
+  fill: currentColor !important;
+}
+
 #ptv-sidebar-links .ptv-sidebar-icon-img {
-  width: 20px !important;
-  height: 20px !important;
-  display: block !important;
-  object-fit: contain !important;
-  opacity: 1 !important;
-  visibility: visible !important;
   filter: brightness(1) drop-shadow(0 0 4px rgba(155, 107, 255, 0.25)) !important;
-  transition: transform 0.18s ease, filter 0.18s ease !important;
+}
+
+#ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-svg,
+#ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-img {
+  transform: scale(1.08);
 }
 
 #ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-svg {
-  transform: scale(1.08);
   color: #ffffff !important;
   filter: drop-shadow(0 0 6px rgba(155, 107, 255, 0.35));
 }
 
 #ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-img {
-  transform: scale(1.08);
   filter: brightness(1.08) drop-shadow(0 0 6px rgba(155, 107, 255, 0.4)) !important;
 }
 
@@ -853,6 +688,54 @@ a.navMenuOption.selected,
   filter: drop-shadow(0 0 8px rgba(180, 120, 255, 0.85));
   opacity: 1 !important;
 }
+
+/* =========================
+   NATIVE SIDEBAR ICONS
+   ========================= */
+
+/* Hide glyph text, keep element for background svg */
+.navMenuOption .navMenuOptionIcon {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  opacity: 0.95 !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    opacity 0.18s ease !important;
+}
+
+/* kill pseudo icon glyphs too */
+.navMenuOption .navMenuOptionIcon::before {
+  display: none !important;
+  content: none !important;
+}
+
+.navMenuOption:hover .navMenuOptionIcon {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 6px rgba(140, 100, 255, 0.55));
+  opacity: 1 !important;
+}
+
+.navMenuOption-selected .navMenuOptionIcon,
+.navMenuOption.selected .navMenuOptionIcon,
+.navMenuOption[aria-selected="true"] .navMenuOptionIcon {
+  filter: drop-shadow(0 0 8px rgba(180, 120, 255, 0.85));
+  opacity: 1 !important;
+}
+
 
 /* =========================
    CORE JELLYFIN SIDEBAR MAP
@@ -989,14 +872,17 @@ a.navMenuOption.selected,
 
 /* Settings */
 .navMenuOption[data-id="settings"] .navMenuOptionIcon,
+.navMenuOption[data-itemid="settings"] .navMenuOptionIcon,
+a.navMenuOption.btnSettings .navMenuOptionIcon,
 .navMenuOption[href*="/settings"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/settings.svg");
+  background-image: url("https://theme.piggietv.com/assets/icons/settings.svg") !important;
 }
 
 /* Log out */
-.navMenuOption[data-id="logout"] .navMenuOptionIcon,
-.navMenuOption[href*="/logout"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/logout.svg");
+.navMenuOption[data-itemid="logout"] .navMenuOptionIcon,
+a.navMenuOption.btnLogout .navMenuOptionIcon,
+a.navMenuOption[data-itemid="logout"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/logout.svg") !important;
 }
 
 /* =========================
@@ -1005,43 +891,96 @@ a.navMenuOption.selected,
 
 /* Request */
 .navMenuOption[href*="request.piggietv.com"] .navMenuOptionIcon,
-.navMenuOption[data-id="request"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/request.svg");
+.navMenuOption[data-id="request"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="request.piggietv.com"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="request.piggietv.com"] .ptv-custom-sidebar-icon {
+  background-image: url("https://theme.piggietv.com/assets/icons/request.svg") !important;
 }
 
 /* Games */
 .navMenuOption[href*="emu.piggietv.com"] .navMenuOptionIcon,
-.navMenuOption[data-id="games"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/games.svg");
+.navMenuOption[data-id="games"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="emu.piggietv.com"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="emu.piggietv.com"] .ptv-custom-sidebar-icon {
+  background-image: url("https://theme.piggietv.com/assets/icons/games.svg") !important;
 }
 
 /* Library / Books external */
 .navMenuOption[href*="books.piggietv.com"] .navMenuOptionIcon,
-.navMenuOption[data-id="library"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/library.svg");
+.navMenuOption[data-id="library"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="books.piggietv.com"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="books.piggietv.com"] .ptv-custom-sidebar-icon {
+  background-image: url("https://theme.piggietv.com/assets/icons/library.svg") !important;
 }
 
 /* Discord */
 .navMenuOption[href*="discord.gg"] .navMenuOptionIcon,
-.navMenuOption[data-id="discord"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/discord.svg");
+.navMenuOption[data-id="discord"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="discord.gg"] .navMenuOptionIcon,
+#ptv-sidebar-links .ptv-custom-sidebar-link[href*="discord.gg"] .ptv-custom-sidebar-icon {
+  background-image: url("https://theme.piggietv.com/assets/icons/discord.svg") !important;
 }
+
+/* =========================
+   LIBRARY-SPECIFIC OVERRIDES
+   MUST BE BELOW GENERIC MOVIES/TV RULES
+   ========================= */
+
 /* Anime */
-.navMenuOption[data-id="anime"] .navMenuOptionIcon,
-.navMenuOption[href*="Anime"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/anime.svg");
+a.navMenuOption.lnkMediaFolder[href*="topParentId=0c41907140d802bb58430fed7e2cd79e"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/anime.svg") !important;
 }
 
 /* Anime Movies */
-.navMenuOption[data-id="animovie"] .navMenuOptionIcon,
-.navMenuOption[href*="AniMovie"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/animovie.svg");
+a.navMenuOption.lnkMediaFolder[href*="topParentId=abebc196cc1b8bbf6f8bb5ca7b5ad6f1"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/animovie.svg") !important;
+}
+
+/* Cartoons */
+a.navMenuOption.lnkMediaFolder[href*="topParentId=bdf38141c3a366eb1a2a8240d2e65e68"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/cartoons.svg") !important;
+}
+
+/* Collections */
+a.navMenuOption.lnkMediaFolder[href*="/list?parentId="] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/collections.svg") !important;
 }
 
 /* Metadata Manager */
-.navMenuOption[data-id="metadata-manager"] .navMenuOptionIcon,
-.navMenuOption[href*="metadata"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/metadata-manager.svg");
+a.navMenuOption[href*="metadata"] .navMenuOptionIcon,
+a.navMenuOption[data-itemid="metadata-manager"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/metadata-manager.svg") !important;
+}
+
+/* Sign Out */
+a.navMenuOption.btnLogout .navMenuOptionIcon,
+a.navMenuOption[data-itemid="logout"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/logout.svg") !important;
+}
+
+/* =========================
+   FINAL FORCE OVERRIDES
+   ========================= */
+
+/* Anime */
+a.navMenuOption.lnkMediaFolder[href*="topParentId=0c41907140d802bb58430fed7e2cd79e"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/anime.svg") !important;
+}
+
+/* Anime Movies */
+a.navMenuOption.lnkMediaFolder[href*="topParentId=abebc196cc1b8bbf6f8bb5ca7b5ad6f1"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/animovie.svg") !important;
+}
+
+/* Cartoons */
+a.navMenuOption.lnkMediaFolder[href*="topParentId=bdf38141c3a366eb1a2a8240d2e65e68"] .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/cartoons.svg") !important;
+}
+
+/* Settings */
+a.navMenuOption[data-itemid="settings"] .navMenuOptionIcon,
+a.navMenuOption.btnSettings .navMenuOptionIcon {
+  background-image: url("https://theme.piggietv.com/assets/icons/settings.svg") !important;
 }
 
 /* ===== home.css ===== */
@@ -1364,7 +1303,7 @@ a.navMenuOption.selected,
 /* ===== login.css ===== */
 /* =========================
    PIGGIETV LOGIN
-   CLEAN BASE FOR JS
+   CLEAN FINAL
    ========================= */
 
 /* Page shell */
@@ -1379,26 +1318,32 @@ a.navMenuOption.selected,
 }
 
 /* =========================
-   LOGIN BACKGROUND 
+   LOGIN BACKGROUND
    ========================= */
 
+#loginPage {
+  min-height: 100vh !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* actual login backdrop layer */
+#loginPage .backgroundContainer,
 #loginPage #backdropContainer,
-body:not(.libraryDocument) #backdropContainer {
-  background:
-    linear-gradient(rgba(10, 10, 18, 0.65), rgba(10, 10, 18, 0.85)),
-    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center / cover no-repeat !important;
-
-  opacity: 1 !important;
-}
-
+#loginPage .backdropContainer,
 #loginPage .backgroundImage,
-#loginPage .backdropImage,
-#loginPage .backgroundContainer {
-  filter: brightness(0.94) contrast(1.03) !important;
+#loginPage .backdropImage {
+  background:
+    linear-gradient(rgba(10, 10, 18, 0.52), rgba(10, 10, 18, 0.78)),
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
   opacity: 1 !important;
+  filter: brightness(0.94) contrast(1.03) !important;
 }
 
-/* Soft ambient glow */
+/* ambient glow */
 #loginPage::before {
   content: "";
   position: fixed;
@@ -1422,6 +1367,9 @@ body:not(.libraryDocument) #backdropContainer {
   max-width: none !important;
   margin: 0 auto !important;
   gap: 0 !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 /* Keep both sections same width */
@@ -1590,125 +1538,8 @@ body:not(.libraryDocument) #backdropContainer {
   border-bottom: 1px solid rgba(255,255,255,0.05) !important;
 }
 
-/* Mobile */
-@media (max-width: 900px) {
-  #loginPage .manualLoginForm,
-  #loginPage .visualLoginForm,
-  #loginPage .readOnlyContent {
-    max-width: 92vw !important;
-  }
-
-  #loginPage .manualLoginForm {
-    padding: 22px 18px 16px !important;
-    border-radius: 24px !important;
-  }
-}
 /* =========================
    JS INJECTED LOGIN HEADER
-   ========================= */
-
-#ptv-login-header {
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.ptv-login-logo {
-  width: 240px;
-  max-width: 90%;
-  display: block;
-  margin: 0 auto 6px auto;
-  filter: drop-shadow(0 12px 26px rgba(140,110,255,0.28));
-}
-
-.ptv-login-tagline {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  color: rgba(255,255,255,0.78);
-}
-/* =========================
-   JS LOGIN ACTIONS
-   ========================= */
-
-#ptv-login-actions {
-  margin-top: 10px;
-  display: grid;
-  gap: 10px;
-}
-
-#ptv-login-actions .ptv-login-action {
-  min-height: 42px !important;
-  width: 100% !important;
-  border-radius: 14px !important;
-  font-weight: 700 !important;
-  text-align: center;
-  text-decoration: none !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-#ptv-login-actions .ptv-secondary {
-  background: rgba(20, 24, 40, 0.45) !important;
-  color: rgba(255,255,255,0.78) !important;
-
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  backdrop-filter: blur(8px);
-
-  font-weight: 600 !important;
-
-  transition: all 0.18s ease !important;
-}
-
-#ptv-login-actions .ptv-secondary:hover {
-  background: rgba(30, 36, 60, 0.65) !important;
-  color: #ffffff !important;
-  border-color: rgba(140,110,255,0.25) !important;
-
-  transform: translateY(-1px);
-}
-
-#ptv-login-actions .ptv-discord {
-  background: linear-gradient(90deg, #5865f2, #7289da) !important;
-  color: #ffffff !important;
-  border: none !important;
-
-  box-shadow:
-    0 12px 28px rgba(88, 101, 242, 0.25),
-    0 0 18px rgba(114, 137, 218, 0.18);
-
-  font-weight: 800 !important;
-  letter-spacing: 0.04em;
-
-  transition: all 0.2s ease !important;
-}
-
-#ptv-login-actions .ptv-discord:hover {
-  transform: translateY(-2px) scale(1.02);
-  filter: brightness(1.08);
-}
-
-#ptv-login-actions {
-  margin-top: 14px;
-  padding-top: 6px;
-  display: grid;
-  gap: 10px;
-}
-#ptv-login-actions::before {
-  content: "";
-  display: block;
-  height: 1px;
-  margin-bottom: 6px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255,255,255,0.12),
-    transparent
-  );
-}
-/* =========================
-   JS LOGIN HEADER
    ========================= */
 
 #ptv-login-header {
@@ -1837,10 +1668,6 @@ body:not(.libraryDocument) #backdropContainer {
    MOUSE-REACTIVE BACKGROUND
    ========================= */
 
-#loginPage {
-  overflow: hidden;
-}
-
 #ptv-bg-glow {
   position: fixed;
   inset: 0;
@@ -1858,6 +1685,56 @@ body:not(.libraryDocument) #backdropContainer {
     );
   transition: background-position 0.08s linear;
   mix-blend-mode: screen;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  #loginPage .manualLoginForm,
+  #loginPage .visualLoginForm,
+  #loginPage .readOnlyContent {
+    max-width: 92vw !important;
+  }
+
+  #loginPage .manualLoginForm {
+    padding: 22px 18px 16px !important;
+    border-radius: 24px !important;
+  }
+}
+/* =========================
+   FORCE LOGIN BACKGROUND (REAL TARGET)
+   ========================= */
+
+#loginPage .pageBackground {
+  background:
+    linear-gradient(rgba(10, 10, 18, 0.52), rgba(10, 10, 18, 0.78)),
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
+
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+
+  opacity: 1 !important;
+}
+/* =========================
+   FORCE REAL LOGIN BACKDROP
+   ========================= */
+
+#loginPage .backgroundContainer.withBackdrop,
+#loginPage .backgroundContainer,
+.backgroundContainer.withBackdrop {
+  background:
+    linear-gradient(rgba(10, 10, 18, 0.42), rgba(10, 10, 18, 0.68)),
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
+  background-color: transparent !important;
+  opacity: 1 !important;
+}
+
+/* stop Jellyfin's dark filler from flattening the page */
+#loginPage .backgroundContainer.withBackdrop::before,
+#loginPage .backgroundContainer::before,
+.backgroundContainer.withBackdrop::before {
+  content: none !important;
+  display: none !important;
 }
 
 /* ===== details\hero.css ===== */

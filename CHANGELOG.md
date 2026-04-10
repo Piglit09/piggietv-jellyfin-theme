@@ -6,6 +6,9 @@
 ```md
 # Changelog
 
+## v1.5.2 - 2026-04-10
+- login background bug fix
+
 ## v1.5.1 - 2026-04-09
 - Background changed to static (for now)
 - added custom side bar links with icons

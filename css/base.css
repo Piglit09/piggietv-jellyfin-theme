@@ -1,6 +1,6 @@
 /* =========================
    PIGGIETV BASE v4
-   CLEAN HIERARCHY
+   CLEANED BASE ONLY
    ========================= */
 
 :root {
@@ -25,12 +25,10 @@
    ========================= */
 
 html,
-body,
-.emby-app,
-.mainAnimatedPage,
-.pageContainer,
-.skinBody,
-.skinBody-withHeader,
+body {
+  overflow-y: auto !important;
+}
+
 .emby-scroll-y {
   overflow-y: auto !important;
 }
@@ -129,7 +127,6 @@ select:focus {
    PRIMARY BUTTONS ONLY
    ========================= */
 
-/* Only true call-to-action buttons */
 .button-submit,
 button[type="submit"],
 .emby-button.submit,
@@ -219,7 +216,6 @@ button[type="submit"]:hover,
    SETTINGS PAGE ROWS
    ========================= */
 
-/* Scope this to settings containers only */
 .settingsContainer .listItem,
 .userSettingsContainer .listItem,
 .sectionedSettings .listItem,
@@ -240,48 +236,6 @@ button[type="submit"]:hover,
   background: rgba(255, 255, 255, 0.05) !important;
   border-color: rgba(155, 107, 255, 0.18) !important;
   box-shadow: var(--ptv-glow) !important;
-}
-
-/* =========================
-   SIDEBAR: KEEP DARK
-   ========================= */
-
-.mainDrawer,
-.drawer-open,
-.navMenu,
-nav[is="emby-scroller"] {
-  background: rgba(10, 10, 16, 0.96) !important;
-  backdrop-filter: blur(12px);
-}
-
-.navMenuOption,
-a.navMenuOption,
-.drawer-open .navMenuOption {
-  background: transparent !important;
-  color: var(--ptv-text) !important;
-  border: 1px solid transparent !important;
-  border-radius: 14px !important;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease !important;
-}
-
-.navMenuOption:hover,
-a.navMenuOption:hover,
-.drawer-open .navMenuOption:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(155, 107, 255, 0.16) !important;
-  box-shadow: none !important;
-}
-
-.navMenuOption-selected,
-a.navMenuOption-selected,
-.drawer-open .navMenuOption-selected {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(155, 107, 255, 0.22) !important;
-  box-shadow: inset 3px 0 0 var(--ptv-accent) !important;
-  color: #fff !important;
 }
 
 /* =========================
@@ -337,46 +291,9 @@ a.navMenuOption-selected,
 }
 
 /* =========================
-   SIDEBAR LOGO (FIXED)
+   FINAL HEADER BRANDING FIX
    ========================= */
 
-#ptv-sidebar-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px 12px 18px;
-  margin-bottom: 8px;
-}
-
-/* NORMAL SIZE (default state) */
-.ptv-sidebar-logo-img {
-  width: 160px !important;
-  max-width: 90%;
-  height: auto !important;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  filter: drop-shadow(0 8px 20px rgba(140,110,255,0.22));
-}
-
-/* HOVER POLISH */
-#ptv-sidebar-logo:hover .ptv-sidebar-logo-img {
-  transform: scale(1.04);
-  filter: drop-shadow(0 10px 28px rgba(155,107,255,0.35));
-}
-
-/* TRUE collapsed state (VERY narrow sidebar only) */
-.mainDrawer[style*="width: 80px"] .ptv-sidebar-logo-img,
-.mainDrawer.collapsed .ptv-sidebar-logo-img {
-  width: 44px !important;
-  height: 44px !important;
-}
-
-/* =========================
-   FINAL HEADER BRANDING FIX (SAFE)
-   ========================= */
-
-/* Remove Jellyfin default logo rendering ONLY */
 .skinHeader .pageTitleWithLogo,
 .skinHeader .pageTitleWithDefaultLogo {
   background: none !important;
@@ -384,20 +301,17 @@ a.navMenuOption-selected,
   color: transparent !important;
 }
 
-/* DO NOT nuke entire header contents — only hide text */
 .skinHeader .pageTitleWithLogo span,
 .skinHeader .pageTitleWithDefaultLogo span {
   display: none !important;
 }
 
-/* Keep layout intact */
 .skinHeader .headerBranding,
 .skinHeader .pageTitle {
   display: flex !important;
   align-items: center !important;
 }
 
-/* Our injected logo container */
 .skinHeader .ptv-brand-replaced {
   display: flex !important;
   align-items: center !important;
@@ -406,7 +320,6 @@ a.navMenuOption-selected,
   padding: 0 !important;
 }
 
-/* Logo itself */
 .skinHeader .ptv-header-logo {
   height: 34px !important;
   width: auto !important;
@@ -415,121 +328,36 @@ a.navMenuOption-selected,
   display: block !important;
 }
 
-/* Prevent overflow/stretch bug (THIS fixes your screenshot issue) */
 .skinHeader {
   overflow: hidden !important;
 }
 
-/* Prevent giant ghost background rendering */
 .skinHeader * {
   background-size: contain !important;
 }
+
 /* =========================
-   APP BACKGROUND (FINAL FIX)
+   APP BACKGROUND
    ========================= */
 
-/* Paint the actual visible background layer */
-body,
-.emby-app,
 body.libraryDocument .backgroundContainer,
 .libraryDocument .backgroundContainer {
   background:
     linear-gradient(rgba(7, 7, 13, 0.68), rgba(7, 7, 13, 0.84)),
     url("https://theme.piggietv.com/assets/backgrounds/PiggieTVBG.png") center center / cover no-repeat !important;
   opacity: 1 !important;
-}
-
-/* Kill Jellyfin dynamic backdrop layer */
-body.libraryDocument .backgroundContainer,
-.libraryDocument .backgroundContainer {
   background-position: center center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
 }
+
+body:not(.libraryDocument) {
+  background: var(--ptv-bg) !important;
+}
+
 /* =========================
-   PIGGIETV SIDEBAR LINKS
+   SIDEBAR RULES REMOVED
+   This file is now base.css only.
+   Sidebar logo, sidebar links, nav items,
+   and icon mapping belong in sidebar.css.
    ========================= */
-
-#ptv-sidebar-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.15rem 0.55rem 0.7rem;
-  margin-bottom: 0.4rem;
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.9rem;
-  min-height: 44px;
-  padding: 0.8rem 0.95rem !important;
-  border-radius: 14px !important;
-  color: var(--ptv-text) !important;
-  background: transparent !important;
-  border: 1px solid transparent !important;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease !important;
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(155, 107, 255, 0.18) !important;
-  box-shadow: 0 0 14px rgba(155, 107, 255, 0.10) !important;
-  transform: translateX(2px);
-}
-
-#ptv-sidebar-links .navMenuOptionIcon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 24px;
-  min-width: 24px;
-}
-
-#ptv-sidebar-links .navMenuOptionIcon .md-icon {
-  font-size: 1.15rem !important;
-  line-height: 1 !important;
-}
-
-#ptv-sidebar-links .navMenuOptionText {
-  font-size: 1rem !important;
-  font-weight: 500 !important;
-  white-space: nowrap;
-}
-
-/* collapsed sidebar */
-.mainDrawer[style*="width: 80px"] #ptv-sidebar-links,
-.mainDrawer.collapsed #ptv-sidebar-links {
-  padding-left: 0.3rem;
-  padding-right: 0.3rem;
-}
-
-.mainDrawer[style*="width: 80px"] #ptv-sidebar-links .ptv-custom-sidebar-link,
-.mainDrawer.collapsed #ptv-sidebar-links .ptv-custom-sidebar-link {
-  justify-content: center !important;
-  padding: 0.75rem 0.45rem !important;
-  gap: 0 !important;
-}
-
-.mainDrawer[style*="width: 80px"] #ptv-sidebar-links .navMenuOptionText,
-.mainDrawer.collapsed #ptv-sidebar-links .navMenuOptionText {
-  display: none !important;
-}
-/* custom svg icons */
-.ptv-sidebar-icon-img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  filter: brightness(0.95) drop-shadow(0 0 4px rgba(155,107,255,0.25));
-  transition: transform 0.18s ease, filter 0.18s ease;
-}
-
-/* hover effect */
-.ptv-custom-sidebar-link:hover .ptv-sidebar-icon-img {
-  transform: scale(1.08);
-  filter: brightness(1.1) drop-shadow(0 0 6px rgba(155,107,255,0.4));
-}
