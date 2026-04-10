@@ -358,11 +358,64 @@ body:not(.libraryDocument) {
 }
 
 /* =========================
-   SIDEBAR RULES REMOVED
-   This file is now base.css only.
-   Sidebar logo, sidebar links, nav items,
-   and icon mapping belong in sidebar.css.
+   PIGGIETV PLAYBACK HEADER LOGO FIX
    ========================= */
+
+/* keep playback top bar visible enough for branding */
+.videoOsdHeader,
+.skinHeader-withBackground,
+.skinHeader.focuscontainer-x {
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 10, 18, 0.72),
+    rgba(8, 10, 18, 0.08)
+  ) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* force branded header container to stay visible in playback */
+.videoOsdHeader .ptv-brand-replaced,
+.skinHeader .ptv-brand-replaced {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* playback logo sizing */
+.videoOsdHeader .ptv-header-logo,
+.skinHeader .ptv-header-logo {
+  height: 28px !important;
+  width: auto !important;
+  max-width: 160px !important;
+  display: block !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 4px 12px rgba(140,110,255,0.22)) !important;
+}
+
+/* stop Jellyfin from hiding the title area during playback */
+.videoOsdHeader .headerTop,
+.videoOsdHeader .headerLeft,
+.videoOsdHeader .pageTitle,
+.videoOsdHeader .headerBranding {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* hide stock text if it comes back */
+.videoOsdHeader .pageTitleWithLogo,
+.videoOsdHeader .pageTitleWithDefaultLogo {
+  background: none !important;
+  background-image: none !important;
+  color: transparent !important;
+}
+
+.videoOsdHeader .pageTitleWithLogo span,
+.videoOsdHeader .pageTitleWithDefaultLogo span {
+  display: none !important;
+}
 
 /* ===== layout.css ===== */
 
