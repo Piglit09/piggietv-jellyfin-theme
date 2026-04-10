@@ -24,6 +24,7 @@ $cssOrder = @(
     "dashboard.css",
     "settings.css",
     "login.css",
+    "playback.css",
     "details\hero.css",
     "details\base.css",
     "details\series.css",

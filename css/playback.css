@@ -1,0 +1,420 @@
+/* =========================
+   PIGGIETV PLAYBACK
+   CLEAN FINAL
+   ========================= */
+
+/* keep video picture clean */
+.videoPlayerContainer,
+.videoOsd,
+.skinVideo,
+.videoPlayerPage {
+  background: transparent !important;
+}
+
+/* remove extra dark overlays if present */
+.videoOsd::before,
+.videoPlayerContainer::before,
+.skinVideo::before,
+.videoPlayerPage::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* lighter playback top gradient */
+.videoOsdHeader,
+.skinHeader-withBackground,
+.skinHeader.focuscontainer-x {
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 10, 18, 0.18),
+    rgba(8, 10, 18, 0.00)
+  ) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* keep playback branding visible when controls are visible */
+.videoOsdHeader .ptv-brand-replaced,
+.skinHeader .ptv-brand-replaced {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* playback logo sizing */
+.videoOsdHeader .ptv-header-logo,
+.skinHeader .ptv-header-logo {
+  height: 28px !important;
+  width: auto !important;
+  max-width: 160px !important;
+  display: block !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 4px 12px rgba(140,110,255,0.22)) !important;
+}
+
+/* keep title zone alive in playback UI */
+.videoOsdHeader .headerTop,
+.videoOsdHeader .headerLeft,
+.videoOsdHeader .pageTitle,
+.videoOsdHeader .headerBranding {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* hide stock text if Jellyfin brings it back */
+.videoOsdHeader .pageTitleWithLogo,
+.videoOsdHeader .pageTitleWithDefaultLogo {
+  background: none !important;
+  background-image: none !important;
+  color: transparent !important;
+}
+
+.videoOsdHeader .pageTitleWithLogo span,
+.videoOsdHeader .pageTitleWithDefaultLogo span {
+  display: none !important;
+}
+
+/* controls row polish */
+.videoOsdBottom {
+  background: linear-gradient(
+    to top,
+    rgba(8, 10, 18, 0.30),
+    rgba(8, 10, 18, 0.00)
+  ) !important;
+}
+
+/* playback buttons */
+.videoOsdBottom .btnPrevious,
+.videoOsdBottom .btnPause,
+.videoOsdBottom .btnPlay,
+.videoOsdBottom .btnNext,
+.videoOsdBottom .btnAudio,
+.videoOsdBottom .btnSubtitles,
+.videoOsdBottom .btnSettings,
+.videoOsdBottom .btnFullscreen,
+.videoOsdBottom .btnPip {
+  border-radius: 999px !important;
+  background: rgba(18, 18, 26, 0.38) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+.videoOsdBottom button:hover,
+.videoOsdBottom .iconButton:hover {
+  background: rgba(24, 24, 34, 0.58) !important;
+  border-color: rgba(155, 107, 255, 0.22) !important;
+  box-shadow: 0 0 12px rgba(155, 107, 255, 0.12) !important;
+  transform: translateY(-1px);
+}
+
+/* cleaner progress rail */
+.mdl-slider-background-lower,
+.sliderBubble .mdl-slider-background-lower,
+.videoOsdPositionSlider .mdl-slider-background-lower {
+  background: linear-gradient(90deg, #7fe0ff, #c88cff, #ff93c3) !important;
+}
+
+.mdl-slider-background-upper,
+.sliderBubble .mdl-slider-background-upper,
+.videoOsdPositionSlider .mdl-slider-background-upper {
+  background: rgba(255, 255, 255, 0.28) !important;
+}
+
+/* subtle chapter / timestamp text polish */
+.videoOsdBottom,
+.videoOsdBottom span,
+.videoOsdBottom .secondaryText {
+  color: rgba(245, 247, 255, 0.92) !important;
+}
+/* =========================
+   KILL ALL GLOBAL DIMMING IN PLAYBACK
+   ========================= */
+
+/* main playback container */
+.videoPlayerPage,
+.videoPlayerContainer,
+.skinVideo {
+  background: transparent !important;
+}
+
+/* remove ANY overlays from base/login CSS */
+.videoPlayerPage .backgroundContainer,
+.videoPlayerPage .backgroundContainer.withBackdrop,
+.videoPlayerContainer .backgroundContainer,
+.skinVideo .backgroundContainer {
+  display: none !important;
+}
+
+/* kill pseudo overlays */
+.videoPlayerPage::before,
+.videoPlayerPage::after,
+.videoPlayerContainer::before,
+.videoPlayerContainer::after,
+.skinVideo::before,
+.skinVideo::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* make sure video itself is untouched */
+video,
+.htmlVideoPlayer {
+  filter: none !important;
+  opacity: 1 !important;
+}
+/* =========================
+   PIGGIETV PLAYBACK
+   CINEMATIC MODE
+   ========================= */
+
+/* ---------------------------------
+   1) KEEP VIDEO CLEAN
+   --------------------------------- */
+
+.videoPlayerPage,
+.videoPlayerContainer,
+.skinVideo,
+.videoOsd,
+.htmlVideoPlayerContainer {
+  background: transparent !important;
+}
+
+/* kill global theme overlays leaking into playback */
+.videoPlayerPage .backgroundContainer,
+.videoPlayerPage .backgroundContainer.withBackdrop,
+.videoPlayerContainer .backgroundContainer,
+.videoPlayerContainer .backgroundContainer.withBackdrop,
+.skinVideo .backgroundContainer,
+.skinVideo .backgroundContainer.withBackdrop,
+.videoOsd::before,
+.videoOsd::after,
+.videoPlayerPage::before,
+.videoPlayerPage::after,
+.videoPlayerContainer::before,
+.videoPlayerContainer::after,
+.skinVideo::before,
+.skinVideo::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+/* never dim the actual video element */
+video,
+.htmlVideoPlayer,
+.htmlVideo {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* ---------------------------------
+   2) CINEMATIC TOP BAR
+   --------------------------------- */
+
+.videoOsdHeader,
+.skinHeader-withBackground,
+.skinHeader.focuscontainer-x {
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 8, 16, 0.22),
+    rgba(6, 8, 16, 0.04),
+    rgba(6, 8, 16, 0)
+  ) !important;
+  backdrop-filter: blur(6px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+/* keep branding alive when OSD is visible */
+.videoOsdHeader .ptv-brand-replaced,
+.skinHeader .ptv-brand-replaced {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* playback logo */
+.videoOsdHeader .ptv-header-logo,
+.skinHeader .ptv-header-logo {
+  height: 28px !important;
+  width: auto !important;
+  max-width: 160px !important;
+  display: block !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 4px 12px rgba(140, 110, 255, 0.18)) !important;
+}
+
+/* hide stock title text */
+.videoOsdHeader .pageTitleWithLogo,
+.videoOsdHeader .pageTitleWithDefaultLogo {
+  background: none !important;
+  background-image: none !important;
+  color: transparent !important;
+}
+
+.videoOsdHeader .pageTitleWithLogo span,
+.videoOsdHeader .pageTitleWithDefaultLogo span {
+  display: none !important;
+}
+
+/* keep left header zone active */
+.videoOsdHeader .headerTop,
+.videoOsdHeader .headerLeft,
+.videoOsdHeader .pageTitle,
+.videoOsdHeader .headerBranding {
+  display: flex !important;
+  align-items: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ---------------------------------
+   3) CINEMATIC BOTTOM CONTROLS
+   --------------------------------- */
+
+.videoOsdBottom {
+  background: linear-gradient(
+    to top,
+    rgba(6, 8, 16, 0.34),
+    rgba(6, 8, 16, 0.12),
+    rgba(6, 8, 16, 0)
+  ) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* timeline spacing / polish */
+.videoOsdBottom,
+.videoOsdBottom span,
+.videoOsdBottom .secondaryText,
+.videoOsdBottom .osdTimeText {
+  color: rgba(245, 247, 255, 0.94) !important;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------------------------------
+   4) GLASS CONTROL BUTTONS
+   --------------------------------- */
+
+.videoOsdBottom button,
+.videoOsdBottom .iconButton,
+.videoOsdBottom .btnPrevious,
+.videoOsdBottom .btnPause,
+.videoOsdBottom .btnPlay,
+.videoOsdBottom .btnNext,
+.videoOsdBottom .btnAudio,
+.videoOsdBottom .btnSubtitles,
+.videoOsdBottom .btnSettings,
+.videoOsdBottom .btnFullscreen,
+.videoOsdBottom .btnPip,
+.videoOsdBottom .btnUserData {
+  border-radius: 999px !important;
+  background: rgba(18, 20, 32, 0.34) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+.videoOsdBottom button:hover,
+.videoOsdBottom .iconButton:hover {
+  background: rgba(24, 28, 42, 0.52) !important;
+  border-color: rgba(155, 107, 255, 0.22) !important;
+  box-shadow: 0 0 12px rgba(155, 107, 255, 0.12) !important;
+  transform: translateY(-1px);
+}
+
+/* main play button slightly stronger */
+.videoOsdBottom .btnPause,
+.videoOsdBottom .btnPlay {
+  background: rgba(28, 30, 46, 0.52) !important;
+  border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ---------------------------------
+   5) PROGRESS BAR
+   --------------------------------- */
+
+/* played portion */
+.mdl-slider-background-lower,
+.sliderBubble .mdl-slider-background-lower,
+.videoOsdPositionSlider .mdl-slider-background-lower {
+  background: linear-gradient(90deg, #7fe0ff, #c88cff, #ff93c3) !important;
+}
+
+/* unplayed portion */
+.mdl-slider-background-upper,
+.sliderBubble .mdl-slider-background-upper,
+.videoOsdPositionSlider .mdl-slider-background-upper {
+  background: rgba(255, 255, 255, 0.24) !important;
+}
+
+/* knob */
+.mdl-slider::-webkit-slider-thumb,
+.videoOsdPositionSlider input[type="range"]::-webkit-slider-thumb {
+  background: #ffffff !important;
+  border: 2px solid rgba(155, 107, 255, 0.45) !important;
+  box-shadow: 0 0 10px rgba(155, 107, 255, 0.16) !important;
+}
+
+/* ---------------------------------
+   6) SUBTLE SIDE VIGNETTE
+   --------------------------------- */
+
+/* adds cinematic feel without crushing the frame */
+.videoOsd::after {
+  content: "";
+  display: block !important;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.08)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.06), transparent 22%);
+}
+
+/* ---------------------------------
+   7) OPTIONAL OSD AUTO-HIDE FRIENDLY
+   --------------------------------- */
+
+/* keep clean when controls fade */
+.videoOsd-hidden .videoOsdHeader,
+.videoOsd-hidden .videoOsdBottom {
+  opacity: 0 !important;
+}
+
+/* when visible, keep them smooth */
+.videoOsdHeader,
+.videoOsdBottom {
+  transition: opacity 0.2s ease, background 0.2s ease !important;
+}
+/* =========================
+   BLACK LETTERBOX (SIDE BARS)
+   ========================= */
+
+/* main player background */
+.videoPlayerPage,
+.videoPlayerContainer,
+.skinVideo,
+.htmlVideoPlayerContainer {
+  background-color: #000 !important;
+}
+
+/* fallback in case Jellyfin uses other wrappers */
+.videoPlayerPage * {
+  background-color: transparent;
+}
+
+.videoPlayerPage {
+  background-color: #000 !important;
+}

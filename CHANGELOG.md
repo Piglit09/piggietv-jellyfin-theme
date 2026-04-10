@@ -7,6 +7,9 @@
 # Changelog
 
 ## v1.5.3 - 2026-04-10
+- playback ui improvments
+
+# v1.5.3 - 2026-04-10
 - playback bug fixed
 
 ## v1.5.2 - 2026-04-10
