@@ -22,27 +22,16 @@ jobs:
 
       - name: Build CSS
         run: |
-          mkdir -p dist
-          cat \
-            css/base.css \
-            css/layout.css \
-            css/sidebar.css \
-            css/home.css \
-            css/dashboard.css \
-            css/settings.css \
-            css/login.css \
-            css/details/hero.css \
-            css/details/base.css \
-            css/details/series.css \
-            css/details/movies.css \
-            css/details/episodes.css \
-            css/responsive.css \
-            > dist/custom.css
+          if [ -f ist/PiggeTV.css ]; then
+            cp dist/PiggeTV.css dist/PiggieTV.css
+          else
+            touch dist/custom.js
+          fi
 
       - name: Build JS
         run: |
           if [ -f js/custom.js ]; then
-            cp js/custom.js dist/custom.js
+            cp dist/PiggieTV.js dist/PiggieTV.js
           else
             touch dist/custom.js
           fi
