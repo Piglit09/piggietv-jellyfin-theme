@@ -1,0 +1,27 @@
+/* ===== PIGGIETV DETAILS HERO ===== */
+
+/* backdrop tuning */
+#itemDetailPage .itemBackdrop {
+  filter: blur(14px) saturate(1.04) brightness(0.42) !important;
+  transform: scale(1.03);
+  opacity: 0.9 !important;
+}
+
+/* cinematic page wash */
+#itemDetailPage::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9, 12, 24, 0.26) 0%,
+      rgba(9, 12, 24, 0.42) 34%,
+      rgba(9, 12, 24, 0.76) 100%
+    ),
+    radial-gradient(circle at 18% 18%, rgba(125, 214, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(167, 139, 250, 0.10), transparent 30%),
+    radial-gradient(circle at 55% 80%, rgba(255, 141, 195, 0.08), transparent 32%);
+}

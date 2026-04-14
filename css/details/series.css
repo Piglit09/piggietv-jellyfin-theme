@@ -1,0 +1,10 @@
+/* ===== PIGGIETV SERIES ===== */
+
+#itemDetailPage .itemProgressBarForeground {
+  background: linear-gradient(
+    90deg,
+    #7dd6ff 0%,
+    #a78bfa 55%,
+    #ff8dc3 100%
+  ) !important;
+}

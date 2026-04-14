@@ -1,35 +1,57 @@
-window.PTV = window.PTV || {};
+/* ===== PIGGIETV LOGIN EFFECTS ===== */
+(function () {
+  function isLoginPage() {
+    return !!document.querySelector("#loginPage");
+  }
 
-window.PTV.pulseSignIn = function () {
-  const submitBtn = window.PTV.getSubmitButton();
-  if (!submitBtn) return;
+  function getLoginCard() {
+    return (
+      document.querySelector("#loginPage .manualLoginForm") ||
+      document.querySelector("#loginPage form")
+    );
+  }
 
-  submitBtn.classList.remove("ptv-enter-pulse");
-  void submitBtn.offsetWidth;
-  submitBtn.classList.add("ptv-enter-pulse");
+  function initGlow() {
+    const card = getLoginCard();
+    if (!card || card.dataset.ptvGlow === "true") return;
 
-  window.setTimeout(() => {
-    submitBtn.classList.remove("ptv-enter-pulse");
-  }, 700);
-};
+    card.dataset.ptvGlow = "true";
 
-window.PTV.bindEnterPulse = function () {
-  if (!document.body || document.body.dataset.ptvEnterBound === "1") return;
-  document.body.dataset.ptvEnterBound = "1";
+    const glow = document.createElement("div");
+    glow.className = "ptv-mouse-glow";
+    card.appendChild(glow);
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter") return;
-    if (!document.querySelector("#loginPage")) return;
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-    const tag = document.activeElement?.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "BUTTON") {
-      window.PTV.pulseSignIn();
-    }
-  });
-};
+      glow.style.setProperty("--x", `${x}px`);
+      glow.style.setProperty("--y", `${y}px`);
+    });
+  }
 
-window.PTV.runLoginEnhancements = function () {
-  window.PTV.injectLoginHeader();
-  window.PTV.injectLoginButtons();
-  window.PTV.autofocusUsername();
-};
+  function apply() {
+    if (!isLoginPage()) return;
+    initGlow();
+  }
+
+  function init() {
+    apply();
+
+    const observer = new MutationObserver(() => {
+      apply();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();

@@ -1,435 +1,408 @@
-/* =========================
-   PIGGIETV LOGIN
-   CLEAN FINAL
-   ========================= */
+/* ===== PIGGIETV LOGIN PAGE ===== */
 
-/* Page shell */
+/* ---------- PAGE BACKGROUND ---------- */
+
 #loginPage,
-#loginPage .padded-left.padded-right.padded-bottom-page,
 #loginPage .readOnlyContent,
-#loginPage .formDialogContent,
-#loginPage form {
+#loginPage .padded-left.padded-right.padded-bottom-page {
   background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
 }
-
-/* =========================
-   LOGIN BACKGROUND
-   ========================= */
 
 #loginPage {
-  min-height: 100vh !important;
-  position: relative !important;
-  overflow: hidden !important;
+  min-height: 100vh;
+  position: relative;
 }
 
-/* actual login backdrop layer */
-#loginPage .backgroundContainer,
-#loginPage #backdropContainer,
-#loginPage .backdropContainer,
-#loginPage .backgroundImage,
-#loginPage .backdropImage {
-  background:
-    linear-gradient(rgba(10, 10, 18, 0.52), rgba(10, 10, 18, 0.78)),
-    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
-  background-position: center center !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  opacity: 1 !important;
-  filter: brightness(0.94) contrast(1.03) !important;
-}
-
-/* ambient glow */
 #loginPage::before {
   content: "";
   position: fixed;
   inset: 0;
-  pointer-events: none;
-  z-index: 0;
   background:
-    radial-gradient(circle at 22% 20%, rgba(110, 190, 255, 0.14), transparent 28%),
-    radial-gradient(circle at 78% 18%, rgba(255, 120, 220, 0.12), transparent 26%),
-    radial-gradient(circle at 18% 78%, rgba(90, 210, 255, 0.10), transparent 28%);
-  filter: blur(28px);
-  opacity: 0.42;
+    linear-gradient(rgba(9, 12, 25, 0.34), rgba(9, 12, 25, 0.42)),
+    var(--ptv-login-bg) center center / cover no-repeat;
+  z-index: -2;
 }
 
-/* Center layout */
+#loginPage::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+/* ---------- HIDE STOCK LOGIN BRANDING ---------- */
+
+#loginPage h1,
+#loginPage h2,
+#loginPage .pageTitle,
+#loginPage .sectionTitle,
+#loginPage .welcomeMessage,
+#loginPage .headerLogo,
+#loginPage .pageTitleWithLogo {
+  display: none !important;
+}
+
+/* ---------- LAYOUT ---------- */
+
+/* center only the real login area */
 #loginPage .readOnlyContent {
+  min-height: 100vh;
   display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
   justify-content: center !important;
-  max-width: none !important;
-  margin: 0 auto !important;
-  gap: 0 !important;
-  min-height: 100vh !important;
-  position: relative !important;
-  z-index: 1 !important;
+  align-items: center !important;
+  padding: 24px 0 !important;
 }
 
-/* Keep both sections same width */
-#loginPage .manualLoginForm,
+/* do NOT force these into full-height flex containers */
+#loginPage .padded-left.padded-right.padded-bottom-page,
 #loginPage .visualLoginForm {
-  width: min(420px, 92vw) !important;
-  max-width: min(420px, 92vw) !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  min-height: auto !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+/* ---------- LOGIN CARD ---------- */
+
+#loginPage .manualLoginForm {
+  width: min(92vw, 470px);
+  margin: 0 auto !important;
+  padding: 28px 24px 22px;
+  border-radius: 28px;
+  background: var(--ptv-card-bg) !important;
+  border: 1px solid var(--ptv-card-border);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  animation: ptvLoginFadeUp 0.45s ease;
+}
+
+#loginPage .manualLoginForm::before {
+  content: "";
+  position: absolute;
+  inset: auto -20% -25% -20%;
+  height: 45%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 183, 77, 0.22), transparent 30%),
+    radial-gradient(circle at 50% 70%, rgba(138, 92, 246, 0.18), transparent 28%),
+    radial-gradient(circle at 80% 40%, rgba(94, 234, 212, 0.16), transparent 25%);
+  pointer-events: none;
+  filter: blur(24px);
+}
+
+#loginPage .manualLoginForm::after {
+  content: "";
+  position: absolute;
+  inset: -18% -12%;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(125, 214, 255, 0.14), transparent 25%),
+    radial-gradient(circle at 75% 30%, rgba(168, 139, 250, 0.16), transparent 28%),
+    radial-gradient(circle at 55% 85%, rgba(255, 141, 195, 0.14), transparent 26%);
+  filter: blur(30px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* keep content above effects */
+#loginPage .manualLoginForm > * {
   position: relative;
   z-index: 1;
 }
 
-/* Main glass card */
-#loginPage .manualLoginForm {
-  background: rgba(58, 70, 108, 0.26) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  border-radius: 28px !important;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.28),
-    0 0 0 1px rgba(255, 255, 255, 0.03),
-    0 0 24px rgba(120, 160, 255, 0.14) !important;
-  backdrop-filter: blur(18px) saturate(1.08) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(1.08) !important;
-  padding: 24px 22px 16px !important;
-}
+/* ---------- BRAND ---------- */
 
-/* Keep stock title hidden — JS will inject custom header */
-#loginPage h1,
-#loginPage .sectionTitle,
-#loginPage .pageTitle {
-  display: none !important;
-}
-
-/* Remove old pseudo-element logo/tagline hacks */
-#loginPage .manualLoginForm::before,
-#loginPage .manualLoginForm::after,
-#loginPage .visualLoginForm::before,
-#loginPage .visualLoginForm::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* Labels */
-#loginPage .inputLabel,
-#loginPage label,
-#loginPage .emby-input-label {
-  color: rgba(245, 247, 255, 0.88) !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-}
-
-/* Inputs */
-#loginPage .emby-input,
-#loginPage .emby-textarea,
-#loginPage input {
-  min-height: 44px !important;
-  border-radius: 14px !important;
-  background: rgba(25, 31, 52, 0.58) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  color: #fff !important;
-  box-shadow: none !important;
-}
-
-#loginPage .emby-input:focus,
-#loginPage .emby-textarea:focus,
-#loginPage input:focus {
-  border-color: rgba(140, 170, 255, 0.42) !important;
-  box-shadow:
-    0 0 0 2px rgba(140, 170, 255, 0.12),
-    0 0 16px rgba(120, 160, 255, 0.10) !important;
-  outline: none !important;
-}
-
-/* Remember me */
-#loginPage .checkboxContainer,
-#loginPage .emby-checkbox-label,
-#loginPage .rememberMe {
-  color: rgba(245, 247, 255, 0.92) !important;
-  font-weight: 600 !important;
-}
-
-/* Primary button */
-#loginPage .button-submit,
-#loginPage button[type="submit"],
-#loginPage .emby-button.submit,
-#loginPage .emby-button.button-submit {
-  min-height: 46px !important;
-  width: 100% !important;
-  border-radius: 14px !important;
-  border: none !important;
-  color: #1b1b2b !important;
-  font-weight: 800 !important;
-  background: linear-gradient(90deg, #7fe0ff, #c88cff, #ff93c3) !important;
-  box-shadow:
-    0 10px 22px rgba(107, 155, 255, 0.16),
-    0 0 18px rgba(200, 140, 255, 0.14) !important;
-  transition:
-    transform 0.18s ease,
-    filter 0.18s ease !important;
-}
-
-#loginPage .button-submit:hover,
-#loginPage button[type="submit"]:hover,
-#loginPage .emby-button.submit:hover,
-#loginPage .emby-button.button-submit:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.03);
-}
-
-/* Secondary section kept for future JS injection */
-#loginPage .visualLoginForm {
-  margin-top: 10px !important;
-  padding: 0 !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* Secondary buttons */
-#loginPage .emby-button:not(.button-submit):not([type="submit"]) {
-  min-height: 42px !important;
-  width: 100% !important;
-  border-radius: 14px !important;
-  background: rgba(34, 40, 64, 0.62) !important;
-  color: #f5f7ff !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: none !important;
-  font-weight: 700 !important;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    transform 0.18s ease !important;
-}
-
-#loginPage .emby-button:not(.button-submit):not([type="submit"]):hover {
-  background: rgba(44, 52, 82, 0.72) !important;
-  border-color: rgba(160, 180, 255, 0.22) !important;
-  transform: translateY(-1px);
-}
-
-/* Clean spacing */
-#loginPage .inputContainer,
-#loginPage .checkboxContainer,
-#loginPage .formSubmit,
-#loginPage .manualLoginForm .emby-button,
-#loginPage .visualLoginForm .emby-button {
-  margin-bottom: 10px !important;
-}
-
-/* Hide default extra login buttons — JS will replace them */
-#loginPage .readOnlyContent .btnQuick,
-#loginPage .readOnlyContent .btnForgotPassword,
-#loginPage .readOnlyContent .btnSelectServer {
-  display: none !important;
-}
-
-/* Header strip */
-.skinHeader {
-  background: linear-gradient(
-    to bottom,
-    rgba(10,12,20,0.42),
-    rgba(10,12,20,0.12)
-  ) !important;
-  backdrop-filter: blur(8px) !important;
-  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-}
-
-/* =========================
-   JS INJECTED LOGIN HEADER
-   ========================= */
-
-#ptv-login-header {
+.ptv-login-brand {
+  position: relative;
+  z-index: 1;
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .ptv-login-logo {
-  width: 240px;
-  max-width: 90%;
+  width: min(100%, 350px);
+  max-height: 300px;
+  object-fit: contain;
   display: block;
-  margin: 0 auto 6px auto;
-  filter: drop-shadow(0 12px 26px rgba(140,110,255,0.28));
+  margin: 0 auto 10px;
+  filter: drop-shadow(0 8px 18px rgba(133, 103, 255, 0.26));
 }
 
 .ptv-login-tagline {
-  font-size: 10px;
+  font-size: 0.92rem;
   font-weight: 700;
-  letter-spacing: 0.28em;
-  color: rgba(255,255,255,0.78);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ptv-muted);
+  text-align: center;
 }
 
-/* =========================
-   JS LOGIN ACTIONS
-   ========================= */
+/* ---------- LABELS ---------- */
 
-#ptv-login-actions {
-  margin-top: 14px;
-  padding-top: 6px;
-  display: grid;
+#loginPage label,
+#loginPage .inputLabel,
+#loginPage .emby-input-label,
+#loginPage .checkboxLabel {
+  color: var(--ptv-text) !important;
+  font-weight: 700;
+}
+
+/* ---------- INPUTS ---------- */
+
+#loginPage input[type="text"],
+#loginPage input[type="password"],
+#loginPage input[type="email"],
+#loginPage .emby-input {
+  background: var(--ptv-input-bg) !important;
+  border: 2px solid transparent !important;
+  border-radius: 16px !important;
+  color: #fff !important;
+  min-height: 54px;
+  padding: 12px 16px !important;
+  box-shadow: inset 0 0 0 1px var(--ptv-input-border);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+#loginPage input:hover,
+#loginPage .emby-input:hover {
+  box-shadow:
+    inset 0 0 0 1px rgba(145, 176, 255, 0.55),
+    0 0 0 1px rgba(145, 176, 255, 0.08);
+}
+
+#loginPage input:focus,
+#loginPage .emby-input:focus {
+  border-color: rgba(125, 163, 255, 0.7) !important;
+  box-shadow:
+    0 0 0 3px rgba(105, 143, 255, 0.2),
+    inset 0 0 0 1px rgba(125, 163, 255, 0.7) !important;
+}
+
+/* ---------- CHECKBOX ---------- */
+
+#loginPage .checkboxContainer {
+  margin: 10px 0 16px;
+  display: flex;
+  align-items: center;
   gap: 10px;
 }
 
-#ptv-login-actions::before {
-  content: "";
-  display: block;
-  height: 1px;
-  margin-bottom: 6px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255,255,255,0.12),
-    transparent
-  );
+#loginPage .checkboxLabel {
+  line-height: 1.2;
 }
 
-#ptv-login-actions .ptv-login-action {
-  min-height: 42px !important;
-  width: 100% !important;
-  border-radius: 14px !important;
-  font-weight: 700 !important;
-  text-align: center;
-  text-decoration: none !important;
+#loginPage .emby-checkbox:checked + span,
+#loginPage .checkboxOutline {
+  border-color: #30c8ff !important;
+}
+
+#loginPage .emby-checkbox:checked + span {
+  background: #24c2ff !important;
+}
+
+/* ---------- BUTTONS ---------- */
+
+#loginPage .raised {
+  border: 0 !important;
+  border-radius: 16px !important;
+  min-height: 54px;
+  font-size: 1rem;
+  font-weight: 800;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#loginPage .raised:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+#loginPage .raised:active {
+  transform: translateY(0) scale(0.99);
+}
+
+#loginPage .raised::after,
+.ptv-extra-btn::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    #7dd6ff,
+    #a78bfa,
+    #ff8dc3,
+    #7dd6ff
+  );
+  opacity: 0;
+  filter: blur(10px);
+  z-index: -1;
+  transition: opacity 0.25s ease;
+}
+
+#loginPage .raised:hover::after,
+.ptv-extra-btn:hover::after {
+  opacity: 0.6;
+}
+
+#loginPage .btnManualLogin {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    120deg,
+    #7dd6ff 0%,
+    #a78bfa 35%,
+    #ff8dc3 70%,
+    #7dd6ff 100%
+  ) !important;
+  background-size: 220% 220% !important;
+  animation: ptvGradientShift 6s ease infinite;
+  box-shadow:
+    0 10px 28px rgba(207, 139, 211, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  color: white !important;
+}
+
+#loginPage .btnManualLogin:hover {
+  box-shadow:
+    0 16px 34px rgba(207, 139, 211, 0.32),
+    0 0 22px rgba(125, 214, 255, 0.18),
+    0 0 30px rgba(167, 139, 250, 0.16);
+}
+
+#loginPage .btnManualLogin::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -140%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 35%,
+    rgba(255, 255, 255, 0.38) 50%,
+    rgba(255, 255, 255, 0.12) 65%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  animation: ptvButtonSweep 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+#loginPage .btnForgotPassword,
+#loginPage .btnQuick {
+  background: var(--ptv-btn-bg) !important;
+  color: #fff !important;
+}
+
+#loginPage .btnForgotPassword:hover,
+#loginPage .btnQuick:hover {
+  background: var(--ptv-btn-hover) !important;
+}
+
+/* ---------- EXTRA ACTION BUTTONS ---------- */
+
+.ptv-extra-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* make ALL extra links look like buttons */
+.ptv-extra-actions a {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
+  gap: 10px;
+
+  height: 44px;
+  border-radius: 14px;
+
+  background: rgba(20, 26, 50, 0.55);
+  border: 1px solid rgba(140, 0, 243, 0.25);
+
+  color: #8c00f3 !important;
+  font-weight: 600;
+  text-decoration: none !important;
+
+  transition: all 0.2s ease;
 }
 
-#ptv-login-actions .ptv-secondary {
-  background: rgba(20, 24, 40, 0.45) !important;
-  color: rgba(255,255,255,0.78) !important;
-  border: 1px solid rgba(255,255,255,0.08) !important;
-  backdrop-filter: blur(8px);
-  box-shadow: none !important;
-  font-weight: 600 !important;
-  transition: all 0.18s ease !important;
-}
-
-#ptv-login-actions .ptv-secondary:hover {
-  background: rgba(30, 36, 60, 0.65) !important;
-  color: #ffffff !important;
-  border-color: rgba(140,110,255,0.25) !important;
-  transform: translateY(-1px);
-}
-
-#ptv-login-actions .ptv-discord {
-  background: linear-gradient(90deg, #5865f2, #7289da) !important;
-  color: #ffffff !important;
-  border: none !important;
+/* hover glow */
+.ptv-extra-actions a:hover {
+  background: rgba(30, 10, 60, 0.7);
+  color: #f300b1 !important;
+  border-color: rgba(243, 0, 177, 0.4);
   box-shadow:
-    0 12px 28px rgba(88, 101, 242, 0.25),
-    0 0 18px rgba(114, 137, 218, 0.18) !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.04em;
-  transition: all 0.2s ease !important;
+    0 0 12px rgba(155, 63, 183, 0.35),
+    inset 0 0 8px rgba(155, 63, 183, 0.2);
 }
 
-#ptv-login-actions .ptv-discord:hover {
-  transform: translateY(-2px) scale(1.02);
-  filter: brightness(1.08);
+/* kill oversized images */
+.ptv-extra-actions img {
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px !important;
+  object-fit: contain;
+  display: block;
 }
 
-/* =========================
-   ENTER KEY PULSE
-   ========================= */
+/* ---------- MOUSE GLOW ---------- */
 
-#loginPage .button-submit.ptv-enter-pulse,
-#loginPage .emby-button.submit.ptv-enter-pulse,
-#loginPage .emby-button.button-submit.ptv-enter-pulse {
-  animation: ptv-signin-pulse 0.65s ease;
-}
-
-@keyframes ptv-signin-pulse {
-  0% {
-    box-shadow:
-      0 10px 22px rgba(107, 155, 255, 0.16),
-      0 0 18px rgba(200, 140, 255, 0.14);
-    transform: scale(1);
-  }
-  35% {
-    box-shadow:
-      0 12px 28px rgba(107, 155, 255, 0.22),
-      0 0 28px rgba(200, 140, 255, 0.28);
-    transform: scale(1.015);
-  }
-  100% {
-    box-shadow:
-      0 10px 22px rgba(107, 155, 255, 0.16),
-      0 0 18px rgba(200, 140, 255, 0.14);
-    transform: scale(1);
-  }
-}
-
-/* =========================
-   MOUSE-REACTIVE BACKGROUND
-   ========================= */
-
-#ptv-bg-glow {
-  position: fixed;
+.ptv-mouse-glow {
+  position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  --ptv-x: 50%;
-  --ptv-y: 50%;
+  border-radius: inherit;
   background:
     radial-gradient(
-      420px circle at var(--ptv-x) var(--ptv-y),
-      rgba(120, 190, 255, 0.10),
-      rgba(200, 140, 255, 0.07) 28%,
-      rgba(255, 120, 220, 0.04) 45%,
-      transparent 68%
+      220px circle at var(--x, 50%) var(--y, 50%),
+      rgba(125, 214, 255, 0.18),
+      transparent 40%
+    ),
+    radial-gradient(
+      260px circle at var(--x, 50%) var(--y, 50%),
+      rgba(168, 139, 250, 0.16),
+      transparent 50%
     );
-  transition: background-position 0.08s linear;
-  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
-/* Mobile */
-@media (max-width: 900px) {
-  #loginPage .manualLoginForm,
-  #loginPage .visualLoginForm,
-  #loginPage .readOnlyContent {
-    max-width: 92vw !important;
-  }
+#loginPage .manualLoginForm:hover .ptv-mouse-glow {
+  opacity: 1;
+}
 
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 640px) {
   #loginPage .manualLoginForm {
-    padding: 22px 18px 16px !important;
-    border-radius: 24px !important;
+    width: min(94vw, 470px);
+    padding: 22px 18px 18px;
+    border-radius: 22px;
   }
-}
-/* =========================
-   FORCE LOGIN BACKGROUND (REAL TARGET)
-   ========================= */
 
-#loginPage .pageBackground {
-  background:
-    linear-gradient(rgba(10, 10, 18, 0.52), rgba(10, 10, 18, 0.78)),
-    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
+  .ptv-login-logo {
+    width: min(100%, 320px);
+    max-height: 120px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 14px;
+    filter: drop-shadow(0 10px 24px rgba(133, 103, 255, 0.35));
+  }
 
-  background-position: center center !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-
-  opacity: 1 !important;
-}
-/* =========================
-   FORCE REAL LOGIN BACKDROP
-   ========================= */
-
-#loginPage .backgroundContainer.withBackdrop,
-#loginPage .backgroundContainer,
-.backgroundContainer.withBackdrop {
-  background:
-    linear-gradient(rgba(10, 10, 18, 0.42), rgba(10, 10, 18, 0.68)),
-    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png") center center / cover no-repeat !important;
-  background-color: transparent !important;
-  opacity: 1 !important;
-}
-
-/* stop Jellyfin's dark filler from flattening the page */
-#loginPage .backgroundContainer.withBackdrop::before,
-#loginPage .backgroundContainer::before,
-.backgroundContainer.withBackdrop::before {
-  content: none !important;
-  display: none !important;
+  .ptv-login-tagline {
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+  }
 }

@@ -5,11 +5,13 @@
 
 @import url("base.css");
 @import url("layout.css");
+@import url("header.css");
 @import url("sidebar.css");
 @import url("home.css");
 @import url("dashboard.css");
 @import url("settings.css");
 @import url("login.css");
+@import url("playback.css");
 
 /* details */
 @import url("details/hero.css");
@@ -18,5 +20,5 @@
 @import url("details/movies.css");
 @import url("details/episodes.css");
 
-/* responsive LAST */
-@import url("responsive.css");
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap');

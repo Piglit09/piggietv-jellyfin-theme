@@ -1,111 +1,165 @@
-# PIGGIETV THEME BUILD SCRIPT
+[CmdletBinding()]
+param(
+    [switch]$NoVersionBump
+)
 
-Write-Host "Building PiggieTV Theme..." -ForegroundColor Cyan
+$ErrorActionPreference = "Stop"
 
-# Paths
-$root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$projectRoot = Resolve-Path "$root\.."
+# Repo root = parent of /scripts
+$RepoRoot = Split-Path -Parent $PSScriptRoot
+$CssDir   = Join-Path $RepoRoot "css"
+$JsDir    = Join-Path $RepoRoot "js"
+$DistDir  = Join-Path $RepoRoot "dist"
 
-$cssPath = "$projectRoot\css"
-$jsPath = "$projectRoot\js"
-$distPath = "$projectRoot\dist"
+$OutputCss = Join-Path $DistDir "PiggieTV.css"
+$OutputJs  = Join-Path $DistDir "PiggieTV.js"
+$VersionJson = Join-Path $DistDir "version.json"
 
-# Ensure dist folder exists
-if (!(Test-Path $distPath)) {
-    New-Item -ItemType Directory -Path $distPath | Out-Null
+function Ensure-Dir {
+    param([string]$Path)
+    if (-not (Test-Path $Path)) {
+        New-Item -ItemType Directory -Path $Path -Force | Out-Null
+    }
 }
 
-# Build CSS
-$cssOrder = @(
+function Read-Utf8NoBom {
+    param([string]$Path)
+    if (-not (Test-Path $Path)) {
+        throw "Missing file: $Path"
+    }
+    return [System.IO.File]::ReadAllText($Path, [System.Text.Encoding]::UTF8)
+}
+
+function Write-Utf8NoBom {
+    param(
+        [string]$Path,
+        [string]$Content
+    )
+    $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    [System.IO.File]::WriteAllText($Path, $Content, $Utf8NoBom)
+}
+
+function Get-VersionValue {
+    param([string]$Path)
+
+    if (-not (Test-Path $Path)) {
+        return "2.0.0"
+    }
+
+    try {
+        $json = Get-Content $Path -Raw | ConvertFrom-Json
+        if ($json.version) {
+            return [string]$json.version
+        }
+    } catch {
+        Write-Warning "version.json exists but could not be parsed. Resetting to 2.0.0"
+    }
+
+    return "2.0.0"
+}
+
+function Increment-Version {
+    param([string]$Version)
+
+    $parts = $Version.Split(".")
+    if ($parts.Count -lt 3) {
+        return "2.0.0"
+    }
+
+    $major = [int]$parts[0]
+    $minor = [int]$parts[1]
+    $patch = [int]$parts[2]
+
+    $patch++
+    return "$major.$minor.$patch"
+}
+
+Ensure-Dir $DistDir
+
+# Build order matters
+$CssFiles = @(
     "base.css",
     "layout.css",
+    "header.css",
     "sidebar.css",
     "home.css",
     "dashboard.css",
     "settings.css",
     "login.css",
     "playback.css",
+
     "details\hero.css",
     "details\base.css",
     "details\series.css",
     "details\movies.css",
-    "details\episodes.css",
-    "responsive.css"
-)
+    "details\episodes.css";
 
-$cssOutput = "$distPath\custom.css"
+) | ForEach-Object { Join-Path $CssDir $_ }
 
-Write-Host "Building CSS..." -ForegroundColor Yellow
-
-if (Test-Path $cssOutput) {
-    Remove-Item $cssOutput
-}
-
-foreach ($file in $cssOrder) {
-    $fullPath = Join-Path $cssPath $file
-
-    if (Test-Path $fullPath) {
-        Write-Host ("  + " + $file)
-        Add-Content -Path $cssOutput -Value ""
-        Add-Content -Path $cssOutput -Value ("/* ===== " + $file + " ===== */")
-        Get-Content $fullPath | Add-Content $cssOutput
-    }
-    else {
-        Write-Host ("  Missing: " + $file) -ForegroundColor DarkYellow
-    }
-}
-
-# Build JS
-$jsSourcePath = "$projectRoot\js"
-$jsOutput = "$distPath\custom.js"
-
-$jsFiles = @(
-    "core\logger.js",
-    "core\helpers.js",
+$JsFiles = @(
     "branding\header-logo.js",
-    "branding\sidebar-logo.js",
-    "login\login-header.js",
+    "ui\header-icons.js",
+    "ui\playback-icons.js",
     "login\login-actions.js",
-    "login\login-focus.js",
     "login\login-effects.js",
-    "ui\background-glow.js",
     "ui\sidebar-links.js",
-    "ui\home-backdrop.js",
-    "core\observer.js",
-    "core\init.js"
-)
+    "ui\home-backdrop.js";
 
-Write-Host "Building JS..." -ForegroundColor Yellow
+) | ForEach-Object { Join-Path $JsDir $_ }
 
-if (Test-Path $jsOutput) {
-    Remove-Item $jsOutput
-}
+# Validate all inputs before writing outputs
+$Missing = @()
 
-"/* AUTO-BUILT FILE - DO NOT EDIT */`n" | Set-Content $jsOutput
-
-$missingJs = @()
-
-foreach ($file in $jsFiles) {
-    $fullPath = Join-Path $jsSourcePath $file
-
-    if (Test-Path $fullPath) {
-        Write-Host ("  + " + $file)
-        Add-Content -Path $jsOutput -Value ""
-        Add-Content -Path $jsOutput -Value ("/* ===== " + $file + " ===== */")
-        Get-Content $fullPath | Add-Content $jsOutput
-    }
-    else {
-        Write-Host ("  Missing: " + $file) -ForegroundColor DarkYellow
-        $missingJs += $file
+foreach ($file in $CssFiles + $JsFiles) {
+    if (-not (Test-Path $file)) {
+        $Missing += $file
     }
 }
 
-if ($missingJs.Count -gt 0) {
-    Write-Host ""
-    Write-Host "JS build finished with missing files." -ForegroundColor Red
-    $missingJs | ForEach-Object { Write-Host ("  - " + $_) -ForegroundColor Red }
+if ($Missing.Count -gt 0) {
+    Write-Error ("Build aborted. Missing source files:`n - " + ($Missing -join "`n - "))
     exit 1
 }
-else {
-    Write-Host "[OK] JS build complete" -ForegroundColor Green
+
+# Build CSS
+$CssBuilder = New-Object System.Text.StringBuilder
+[void]$CssBuilder.AppendLine("/* AUTO-BUILT FILE - DO NOT EDIT */")
+[void]$CssBuilder.AppendLine("")
+
+foreach ($file in $CssFiles) {
+    $name = Split-Path $file -Leaf
+    [void]$CssBuilder.AppendLine("/* ===== $name ===== */")
+    [void]$CssBuilder.AppendLine((Read-Utf8NoBom $file).TrimEnd())
+    [void]$CssBuilder.AppendLine("")
 }
+
+Write-Utf8NoBom -Path $OutputCss -Content $CssBuilder.ToString()
+
+# Build JS
+$JsBuilder = New-Object System.Text.StringBuilder
+[void]$JsBuilder.AppendLine("/* AUTO-BUILT FILE - DO NOT EDIT */")
+[void]$JsBuilder.AppendLine("")
+
+foreach ($file in $JsFiles) {
+    $relative = $file.Substring($RepoRoot.Length).TrimStart('\')
+    [void]$JsBuilder.AppendLine("/* ===== $relative ===== */")
+    [void]$JsBuilder.AppendLine((Read-Utf8NoBom $file).TrimEnd())
+    [void]$JsBuilder.AppendLine("")
+}
+
+Write-Utf8NoBom -Path $OutputJs -Content $JsBuilder.ToString()
+
+# Version bump
+$currentVersion = Get-VersionValue $VersionJson
+$newVersion = if ($NoVersionBump) { $currentVersion } else { Increment-Version $currentVersion }
+
+$versionObj = @{
+    version   = $newVersion
+    builtAt   = (Get-Date).ToString("o")
+} | ConvertTo-Json
+
+Write-Utf8NoBom -Path $VersionJson -Content ($versionObj + "`n")
+
+Write-Host "CSS build complete: $OutputCss" -ForegroundColor Green
+Write-Host "JS build complete:  $OutputJs" -ForegroundColor Green
+Write-Host "Version:            $newVersion" -ForegroundColor Cyan

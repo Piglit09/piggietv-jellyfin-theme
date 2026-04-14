@@ -1,0 +1,250 @@
+/* ===== PIGGIETV SETTINGS ===== */
+
+/* ---------- GLOBAL BACKDROP CLEANUP ---------- */
+
+html,
+body {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+#reactRoot,
+.libraryDocument,
+.userPreferencesPage,
+.skinBody,
+.mainAnimatedPages,
+.page,
+.pageContainer,
+.pageContent,
+.view,
+.readOnlyContent,
+.backgroundContainer,
+.backdropContainer,
+#myPreferencesMenuPage {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* ---------- BACKDROP LAYER ---------- */
+
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+}
+
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::before,
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::before {
+  background-image: var(
+    --ptv-backdrop-image,
+    url("https://theme.piggietv.com/assets/backgrounds/login-bg.png")
+  );
+  background-size: cover;
+  background-position: center center;
+  filter: blur(12px) saturate(1.08) brightness(0.38);
+  transform: scale(1.03);
+}
+
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::after {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(6, 8, 18, 0.42) 0%,
+      rgba(6, 8, 18, 0.62) 35%,
+      rgba(6, 8, 18, 0.82) 100%
+    ),
+    radial-gradient(circle at center, rgba(125, 214, 255, 0.035), transparent 45%);
+}
+
+/* ---------- PAGE LAYOUT ---------- */
+
+#myPreferencesMenuPage,
+.userPreferencesPage {
+  z-index: 2 !important;
+  background: transparent !important;
+}
+
+#myPreferencesMenuPage .readOnlyContent,
+.userPreferencesPage .readOnlyContent,
+#myPreferencesMenuPage .padded-left.padded-right.padded-bottom-page,
+.userPreferencesPage .padded-left.padded-right.padded-bottom-page {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ---------- SECTION WRAPPERS ---------- */
+
+#myPreferencesMenuPage .verticalSection,
+.userPreferencesPage .verticalSection {
+  margin: 0 0 22px 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#myPreferencesMenuPage .sectionTitle,
+.userPreferencesPage .sectionTitle,
+#myPreferencesMenuPage .headerUsername,
+.userPreferencesPage .headerUsername {
+  margin: 0 0 16px 0 !important;
+  color: #fff !important;
+}
+
+/* ---------- REAL SETTINGS ROWS ---------- */
+
+#myPreferencesMenuPage a.emby-button.listItem-border,
+.userPreferencesPage a.emby-button.listItem-border {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+
+  width: 100% !important;
+  min-height: 56px !important;
+  margin: 6px 0 !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+
+  position: relative !important;
+  overflow: hidden !important;
+
+  border-radius: var(--ptv-radius-card) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: rgba(14, 18, 36, 0.22) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.03),
+    0 8px 20px rgba(0, 0, 0, 0.12) !important;
+
+  color: rgba(245, 247, 255, 0.95) !important;
+  text-decoration: none !important;
+
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+/* content above shimmer */
+#myPreferencesMenuPage a.emby-button.listItem-border > *,
+.userPreferencesPage a.emby-button.listItem-border > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* hover */
+#myPreferencesMenuPage a.emby-button.listItem-border:hover,
+.userPreferencesPage a.emby-button.listItem-border:hover {
+  background: rgba(49, 63, 110, 0.35) !important;
+  box-shadow: var(--ptv-glass-glow) !important;
+  transform: translateX(2px) !important;
+}
+
+/* active / selected */
+#myPreferencesMenuPage a.emby-button.listItem-border.emby-button-active,
+.userPreferencesPage a.emby-button.listItem-border.emby-button-active,
+#myPreferencesMenuPage a.emby-button.listItem-border.selected,
+.userPreferencesPage a.emby-button.listItem-border.selected {
+  background: var(--ptv-glass-bg-strong) !important;
+  box-shadow:
+    0 0 12px rgba(125, 214, 255, 0.35),
+    0 0 22px rgba(167, 139, 250, 0.25) !important;
+}
+
+/* shimmer */
+@keyframes ptvSettingsSweep {
+  0%, 100% {
+    transform: translateX(-140%) skewX(-18deg);
+    opacity: 0;
+  }
+  45% {
+    opacity: 0;
+  }
+  55% {
+    opacity: 0.55;
+  }
+  70% {
+    transform: translateX(140%) skewX(-18deg);
+    opacity: 0.22;
+  }
+}
+
+#myPreferencesMenuPage a.emby-button.listItem-border::after,
+.userPreferencesPage a.emby-button.listItem-border::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transform: translateX(-140%) skewX(-18deg);
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(125, 214, 255, 0.10) 46%,
+    rgba(167, 139, 250, 0.22) 50%,
+    rgba(255, 141, 195, 0.12) 54%,
+    transparent 62%,
+    transparent 100%
+  );
+}
+
+#myPreferencesMenuPage a.emby-button.listItem-border:hover::after,
+.userPreferencesPage a.emby-button.listItem-border:hover::after {
+  animation: ptvSettingsSweep 1.1s ease forwards;
+}
+
+/* ---------- ICON / LABEL ALIGNMENT ---------- */
+
+#myPreferencesMenuPage .listItemIcon,
+.userPreferencesPage .listItemIcon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 22px !important;
+  height: 22px !important;
+  margin-right: 12px !important;
+}
+
+#myPreferencesMenuPage .listItemBodyText,
+.userPreferencesPage .listItemBodyText,
+#myPreferencesMenuPage .navMenuOptionText,
+.userPreferencesPage .navMenuOptionText {
+  color: rgba(245, 247, 255, 0.95) !important;
+}
+
+/* ===== REMOVE DEFAULT JELLYFIN HOVER ===== */
+
+#myPreferencesMenuPage a.emby-button.listItem-border:hover,
+.userPreferencesPage a.emby-button.listItem-border:hover {
+  background-color: transparent !important;
+}
+
+/* also kill internal hover layers */
+#myPreferencesMenuPage .listItem:hover,
+.userPreferencesPage .listItem:hover,
+#myPreferencesMenuPage .listItemBody:hover,
+.userPreferencesPage .listItemBody:hover {
+  background: transparent !important;
+}
+
+/* remove pseudo hover overlays */
+#myPreferencesMenuPage .listItem::before,
+.userPreferencesPage .listItem::before,
+#myPreferencesMenuPage .listItem::after,
+.userPreferencesPage .listItem::after {
+  background: none !important;
+}

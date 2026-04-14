@@ -1,0 +1,50 @@
+/* ===== REUSABLE PTV BUTTONS ===== */
+.ptv-extra-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 54px;
+  border-radius: 16px;
+  background: var(--ptv-btn-bg);
+  color: #fff !important;
+  text-decoration: none !important;
+  font-size: 1rem;
+  font-weight: 800;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ptv-extra-btn:hover {
+  background: var(--ptv-btn-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.ptv-extra-btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.ptv-extra-btn.discord {
+  background: linear-gradient(180deg, rgba(52, 65, 112, 0.9), rgba(38, 49, 88, 0.92));
+}
+
+.ptv-extra-btn.discord::after {
+  background: linear-gradient(
+    120deg,
+    #5865f2,
+    #7dd6ff,
+    #a78bfa,
+    #5865f2
+  );
+}
+
+/* ===== REUSABLE BUTTON ICON ===== */
+.ptv-btn-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  object-fit: contain;
+  filter: brightness(1.1);
+}
+

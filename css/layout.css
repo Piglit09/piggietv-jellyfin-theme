@@ -1,0 +1,8 @@
+.cardOverlayButton:hover .ptv-icon-card,
+.itemAction:hover .ptv-icon-card,
+.cardOverlayContainer button:hover .ptv-icon-card {
+  transform: scale(1.08);
+  filter:
+    drop-shadow(0 0 8px rgba(125, 214, 255, 0.22))
+    drop-shadow(0 0 14px rgba(255, 141, 195, 0.14));
+}

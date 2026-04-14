@@ -1,311 +1,232 @@
-/* =========================
-   PIGGIETV HOME
-   CLEANED FINAL
-   ========================= */
+/* ===== PIGGIETV HOME ===== */
 
-/* Layout + spacing */
-.homeSectionsContainer,
-.section0,
-.section1,
-.section2,
-.verticalSection {
-  position: relative;
-  min-width: 0;
+/* ---------- PAGE / LAYOUT CLEANUP ---------- */
+html,
+body,
+.skinBody,
+.mainAnimatedPages {
+  overflow-y: auto !important;
 }
 
-.homeSectionsContainer {
-  padding-top: 0.65rem !important;
-  background: none !important;
+body {
+  overflow-x: hidden !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
-.homePage .sections {
-  padding-top: 0.4rem !important;
+.page,
+.pageContainer,
+.libraryDocument,
+.view,
+.mainDrawer-content,
+.skinBody,
+#reactRoot,
+.backgroundContainer,
+.backdropContainer,
+.readOnlyContent {
+  background: transparent !important;
+  background-color: transparent !important;
+  max-height: none !important;
 }
 
-.verticalSection {
-  margin-bottom: 2.5rem !important;
+/* ---------- DYNAMIC BACKDROP ---------- */
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
 }
 
-.itemsContainer {
-  gap: 1rem !important;
-  padding-bottom: 0.25rem !important;
-  overflow: visible !important;
-  min-width: 0;
-}
-
-/* Section titles */
-.homePage .sectionTitle,
-.homePage .sectionTitleText,
-.homePage h2.sectionTitle,
-.homePage h3.sectionTitle {
-  position: relative;
-  color: #f5f7ff !important;
-  font-size: 1.65rem !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.02em !important;
-  margin-bottom: 1rem !important;
-  padding-left: 0.4rem;
-}
-
-.homePage .sectionTitle::before {
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::before,
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::after {
   content: "";
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 18px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #9b6bff, rgba(155, 107, 255, 0.2));
+  inset: 0;
 }
 
-.homePage .sectionTitle::after {
-  content: "";
-  display: block;
-  width: 36px;
-  height: 3px;
-  margin-top: 6px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #9b6bff, rgba(155, 107, 255, 0.2));
-  opacity: 0.8;
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::before {
+  background-image: var(--ptv-backdrop-image);
+  background-size: cover;
+  background-position: center center;
+  filter: blur(12px) saturate(1.08) brightness(0.60);
+  transform: scale(1.03);
 }
 
-/* Cards */
-.homePage .cardBox,
-.homePage .visualCardBox,
-.skinBody .homePage .cardBox,
-.skinBody .homePage .visualCardBox {
+#ptv-dynamic-backdrop.ptv-dynamic-backdrop::after {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(6, 8, 18, 0.15) 0%,
+      rgba(6, 8, 18, 0.35) 30%,
+      rgba(6, 8, 18, 0.60) 100%
+    ),
+    radial-gradient(circle at center, rgba(125, 214, 255, 0.04), transparent 45%);
+}
+
+/* ---------- HOMEPAGE TRANSPARENT HEADER ---------- */
+.homePage .skinHeader,
+.homePage .skinHeader-withBackground,
+.homePage .skinHeader-blurred,
+.homePage .headerTop,
+.homePage .skinHeader.semiTransparent {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.homePage .skinHeader::before,
+.homePage .skinHeader::after,
+.homePage .headerTop::before,
+.homePage .headerTop::after {
+  content: none !important;
+  display: none !important;
+}
+
+.homePage .skinHeader {
   position: relative !important;
-  z-index: 1;
-  min-width: 0;
-  border-radius: 18px !important;
-  overflow: hidden !important;
-  background: rgba(12, 12, 18, 0.34) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translateZ(0);
-  background-clip: padding-box !important;
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease,
-    filter 0.18s ease !important;
+  z-index: 10 !important;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(10, 12, 24, 0.58) 0%,
+    rgba(10, 12, 24, 0.24) 42%,
+    rgba(10, 12, 24, 0.00) 100%
+  ) !important;
 }
 
-.homePage .cardScalable {
-  min-width: 0;
-  transition:
-    transform 0.18s ease,
-    filter 0.18s ease !important;
+/* beat Jellyfin theme defaults */
+html body .homePage .skinHeader-withBackground,
+html body .homePage .skinHeader.skinHeader-withBackground,
+html body .homePage .skinHeader-blurred {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-.homePage .cardBox:hover,
-.homePage .visualCardBox:hover {
-  transform: translateY(-4px) scale(1.01);
-  border-color: rgba(155, 107, 255, 0.26) !important;
+/* ---------- HEADER BUTTONS ---------- */
+.homePage .headerButton,
+.homePage .paper-icon-button-light {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.homePage .headerButton:hover,
+.homePage .paper-icon-button-light:hover {
+  background: rgba(49, 63, 110, 0.28) !important;
   box-shadow:
-    0 14px 30px rgba(0, 0, 0, 0.45),
-    0 0 18px rgba(155, 107, 255, 0.16) !important;
-  filter: brightness(1.03);
+    0 0 10px rgba(125, 214, 255, 0.20),
+    0 0 16px rgba(167, 139, 250, 0.14) !important;
+  border-radius: 12px !important;
 }
 
-.homePage .cardScalable:hover {
-  transform: translateY(-3px);
+/* ---------- REMOVE GLOBAL HEADER GLASS ---------- */
+.homePage .skinHeader::after {
+  display: none !important;
+  content: none !important;
 }
 
-/* Inner card layers */
-.homePage .cardImage,
-.homePage .cardPadder,
-.homePage .cardContent,
-.homePage .cardOverlayContainer,
-.homePage .cardImageContainer {
-  border-radius: 18px !important;
-  overflow: hidden !important;
-}
-
-/* Card text */
-.homePage .cardText,
-.homePage .cardText-first,
-.homePage .cardText-secondary {
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.homePage .cardText-first {
-  font-size: 1rem !important;
-  line-height: 1.2 !important;
-  font-weight: 600 !important;
-}
-
-.homePage .cardText-secondary {
-  font-size: 0.88rem !important;
-  line-height: 1.2 !important;
-  opacity: 0.9;
-  color: rgba(220, 226, 245, 0.78) !important;
-}
-
-/* Overlay buttons */
-.homePage .cardOverlayButton,
-.homePage .cardOverlayFab-primary,
-.homePage .listViewUserDataButtons button,
-.homePage .cardOverlayContainer button,
-.homePage .cardOverlayButton-br {
+/* ---------- HOME TABS ONLY ---------- */
+.homePage .headerTabs,
+.homePage .sectionTabs,
+.homePage .emby-tabs,
+.homePage .emby-tab-bar {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  padding: 6px !important;
+  min-height: 56px !important;
+  background: rgba(18, 24, 48, 0.55) !important;
+  border: 1px solid rgba(125, 214, 255, 0.12) !important;
   border-radius: 999px !important;
-  backdrop-filter: blur(10px);
-}
-
-.homePage .cardOverlayButton,
-.homePage .cardOverlayFab-primary {
-  background: rgba(16, 18, 30, 0.72) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: none !important;
-}
-
-.homePage .cardOverlayButton:hover,
-.homePage .cardOverlayFab-primary:hover {
-  background: rgba(28, 30, 48, 0.92) !important;
-  border-color: rgba(155, 107, 255, 0.24) !important;
-  box-shadow: 0 0 14px rgba(155, 107, 255, 0.16) !important;
-}
-
-/* Scroll buttons */
-.homePage .emby-scrollbuttons {
-  padding-inline: 0.25rem !important;
-}
-
-.homePage .emby-scrollbuttons .btnPrevious,
-.homePage .emby-scrollbuttons .btnNext,
-.homePage .itemsContainer .btnPrevious,
-.homePage .itemsContainer .btnNext,
-.homePage .btnPrevious,
-.homePage .btnNext {
-  z-index: 5 !important;
-  border-radius: 999px !important;
-  background: rgba(18, 18, 26, 0.78) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: none !important;
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease !important;
-}
-
-.homePage .emby-scrollbuttons .btnPrevious:hover,
-.homePage .emby-scrollbuttons .btnNext:hover,
-.homePage .itemsContainer .btnPrevious:hover,
-.homePage .itemsContainer .btnNext:hover {
-  background: rgba(24, 24, 34, 0.96) !important;
-  border-color: rgba(155, 107, 255, 0.24) !important;
-  box-shadow: 0 0 14px rgba(155, 107, 255, 0.14) !important;
-  transform: translateY(-1px);
-}
-
-/* Tabs */
-.homePage .emby-tabs-slider,
-.homePage .emby-tabs {
-  margin-top: 0.55rem !important;
-  margin-bottom: 1.35rem !important;
-}
-
-.homePage .emby-tabs {
-  gap: 0.6rem;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.05) !important;
 }
 
 .homePage .emby-tab-button {
-  min-width: 110px;
+  position: relative;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  padding: 0 18px !important;
+  margin: 0 4px !important;
   border-radius: 999px !important;
-  padding: 0.5rem 1.1rem !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: transparent !important;
+  color: #8c00f3 !important;
   transition:
+    color 0.18s ease,
     background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease !important;
+    transform 0.18s ease,
+    box-shadow 0.18s ease !important;
+}
+
+.homePage .emby-tab-button .tabText,
+.homePage .emby-tab-button span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  color: inherit !important;
+}
+
+/* shimmer sweep */
+@keyframes ptvTabSweep {
+  0%, 100% {
+    transform: translateX(-140%) skewX(-18deg);
+    opacity: 0;
+  }
+  55% {
+    opacity: 0.55;
+  }
+  70% {
+    transform: translateX(140%) skewX(-18deg);
+    opacity: 0.2;
+  }
+}
+
+.homePage .emby-tab-button::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-140%) skewX(-18deg);
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(125,214,255,0.10) 46%,
+    rgba(167,139,250,0.22) 50%,
+    rgba(255,141,195,0.12) 54%,
+    transparent 62%
+  );
+}
+
+.homePage .emby-tab-button:hover::after {
+  animation: ptvTabSweep 1.1s ease forwards;
 }
 
 .homePage .emby-tab-button:hover {
-  background: rgba(255, 255, 255, 0.09) !important;
-  border-color: rgba(155, 107, 255, 0.2) !important;
-  box-shadow: 0 0 14px rgba(155, 107, 255, 0.12);
+  color: #f300b1 !important;
+  background: rgba(49, 63, 110, 0.35) !important;
+  box-shadow: var(--ptv-glass-glow) !important;
   transform: translateY(-1px);
 }
 
-.homePage .emby-tab-button-active {
-  background: linear-gradient(
-    90deg,
-    rgba(155, 107, 255, 0.18),
-    rgba(155, 107, 255, 0.06)
-  ) !important;
-  border-color: rgba(155, 107, 255, 0.35) !important;
+.homePage .emby-tab-button.emby-tab-button-active {
+  color: #9b3fb7 !important;
+  background: rgba(49, 63, 110, 0.35) !important;
   box-shadow:
-    0 0 16px rgba(155, 107, 255, 0.18),
-    inset 0 0 12px rgba(155, 107, 255, 0.08);
-}
-
-/* Context menu */
-.actionSheetMenu,
-.focuscontainer-x .actionSheetMenu,
-.dialog-container .actionSheetMenu,
-.actionSheetMenu .actionsheetList {
-  background: linear-gradient(
-    180deg,
-    rgba(16, 18, 30, 0.96),
-    rgba(10, 12, 20, 0.98)
-  ) !important;
-  border: 1px solid rgba(155, 107, 255, 0.12) !important;
-  border-radius: 18px !important;
-  backdrop-filter: blur(14px);
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.55),
-    0 0 22px rgba(155, 107, 255, 0.12) !important;
-}
-
-.actionSheetMenu .listItem,
-.actionSheetMenu .actionSheetItem {
-  background: transparent !important;
-  border-radius: 12px !important;
-  border: none !important;
-  transition:
-    background 0.16s ease,
-    transform 0.16s ease !important;
-}
-
-.actionSheetMenu .listItem:hover,
-.actionSheetMenu .actionSheetItem:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  transform: translateX(3px);
-}
-
-.actionSheetMenu .listItem i,
-.actionSheetMenu .actionSheetItem i {
-  transition:
-    transform 0.16s ease,
-    filter 0.16s ease !important;
-}
-
-.actionSheetMenu .listItem:hover i,
-.actionSheetMenu .actionSheetItem:hover i {
-  transform: scale(1.12);
-  filter: drop-shadow(0 0 6px rgba(155, 107, 255, 0.3));
-}
-
-/* Mobile */
-@media (max-width: 900px) {
-  .verticalSection {
-    margin-bottom: 2rem !important;
-  }
-
-  .homePage .emby-tab-button {
-    min-width: 92px;
-  }
-
-  .homePage .sectionTitle,
-  .homePage .sectionTitleText,
-  .homePage h2.sectionTitle,
-  .homePage h3.sectionTitle {
-    font-size: 1.3rem !important;
-  }
+    0 0 12px rgba(125,214,255,0.35),
+    0 0 22px rgba(167,139,250,0.25) !important;
 }

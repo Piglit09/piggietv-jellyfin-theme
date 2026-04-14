@@ -1,615 +1,275 @@
-/* =========================
-   PIGGIETV SIDEBAR
-   CLEAN FINAL + PRODUCTION ICON MAP
-   ========================= */
+/* ===== PIGGIETV SIDEBAR ===== */
 
-/* ---------- Drawer shell ---------- */
-.mainDrawer,
-.navMenu,
-nav[is="emby-scroller"] {
-  background:
-    linear-gradient(180deg, rgba(10, 10, 18, 0.97), rgba(6, 6, 12, 0.99)) !important;
-  backdrop-filter: blur(14px);
-  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
-}
+/* ---------- BASE ---------- */
 
-.mainDrawer {
-  box-shadow:
-    6px 0 24px rgba(0, 0, 0, 0.45),
-    inset -1px 0 0 rgba(255, 255, 255, 0.03);
-}
-
-.navMenu {
-  padding: 0.85rem 0.7rem 1rem !important;
-}
-
-/* ---------- Section headers ---------- */
-.navMenu .navMenuHeader,
-.mainDrawer .navMenuHeader,
-.navMenu h2,
-.navMenu h3 {
-  color: rgba(255, 255, 255, 0.76) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.02em;
-  font-size: 0.98rem !important;
-  margin: 1.1rem 0 0.45rem !important;
-  padding: 0 0.55rem !important;
-}
-
-/* ---------- Base nav items ---------- */
 .navMenuOption,
-a.navMenuOption,
-.drawer-open .navMenuOption {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.9rem !important;
-  min-height: 44px !important;
-  margin: 0.16rem 0 !important;
-  padding: 0.7rem 0.8rem !important;
-  border-radius: 14px !important;
-  background: transparent !important;
-  border: 1px solid transparent !important;
-  color: rgba(245, 247, 255, 0.92) !important;
-  opacity: 0.92;
+.ptv-custom-link {
+  position: relative;
+  z-index: 2;
+  border-radius: var(--ptv-radius-card);
   transition:
     background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
     transform 0.18s ease,
-    opacity 0.18s ease !important;
+    box-shadow 0.18s ease,
+    opacity 0.18s ease;
 }
 
-.navMenuHeader + .navMenuOption {
-  margin-top: 0.25rem !important;
+/* icon + text layering */
+.navMenuOptionText,
+.navMenuOptionIcon,
+.ptv-custom-link .navMenuOptionIcon {
+  position: relative;
+  z-index: 2;
 }
+
+.ptv-icon-sidebar {
+  width: 20px !important;
+  height: 20px !important;
+  opacity: 0.9;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    opacity 0.18s ease;
+}
+
+/* ---------- HOVER (GLASS + SHIMMER) ---------- */
 
 .navMenuOption:hover,
-a.navMenuOption:hover,
-.drawer-open .navMenuOption:hover {
-  background: rgba(255, 255, 255, 0.045) !important;
-  border-color: rgba(155, 107, 255, 0.14) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    0 0 0 1px rgba(155, 107, 255, 0.03) !important;
+.ptv-custom-link:hover {
+  background: rgba(49, 63, 110, 0.28) !important;
+  box-shadow: var(--ptv-glass-glow) !important;
   transform: translateX(2px);
+}
+
+/* shimmer sweep (matches settings) */
+@keyframes ptvSidebarSweep {
+  0%, 100% {
+    transform: translateX(-140%) skewX(-18deg);
+    opacity: 0;
+  }
+  55% {
+    opacity: 0.55;
+  }
+  70% {
+    transform: translateX(140%) skewX(-18deg);
+    opacity: 0.22;
+  }
+}
+
+.navMenuOption::after,
+.ptv-custom-link::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transform: translateX(-140%) skewX(-18deg);
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(125, 214, 255, 0.10) 46%,
+    rgba(167, 139, 250, 0.22) 50%,
+    rgba(255, 141, 195, 0.12) 54%,
+    transparent 62%
+  );
+}
+
+.navMenuOption:hover::after,
+.ptv-custom-link:hover::after {
+  animation: ptvSidebarSweep 1.1s ease forwards;
+}
+
+/* icon glow */
+.navMenuOption:hover .ptv-icon-sidebar,
+.ptv-custom-link:hover .ptv-icon-sidebar {
+  transform: scale(1.08);
+  filter:
+    drop-shadow(0 0 8px rgba(125, 214, 255, 0.22))
+    drop-shadow(0 0 12px rgba(167, 139, 250, 0.14));
   opacity: 1;
 }
 
-/* support old + new selected states */
-.navMenuOption-selected,
-a.navMenuOption-selected,
-.drawer-open .navMenuOption-selected,
+/* ---------- ACTIVE ---------- */
+
+.navMenuOption.navMenuOption-selected,
+.navMenuOption.emby-button-active,
+.navMenuOptionActive,
 .navMenuOption.selected,
-a.navMenuOption.selected,
-.navMenuOption[aria-selected="true"] {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(155, 107, 255, 0.10),
-      rgba(255, 79, 163, 0.04)
-    ) !important;
-  border-color: rgba(155, 107, 255, 0.18) !important;
+.ptv-custom-link.ptv-custom-active {
+  background: var(--ptv-glass-bg-strong) !important;
   box-shadow:
-    inset 3px 0 0 #9b6bff,
-    0 0 14px rgba(155, 107, 255, 0.08) !important;
-  color: #ffffff !important;
-  opacity: 1;
+    0 0 12px rgba(125, 214, 255, 0.35),
+    0 0 22px rgba(167, 139, 250, 0.25) !important;
+  transform: translateX(3px);
 }
 
-/* ---------- Text ---------- */
-.navMenuOptionText {
-  color: inherit !important;
-  font-weight: 500 !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-left: 0.15rem !important;
-}
-
-/* ---------- Scrollbar ---------- */
-.mainDrawer ::-webkit-scrollbar,
-.navMenu ::-webkit-scrollbar {
-  width: 8px;
-}
-
-.mainDrawer ::-webkit-scrollbar-track,
-.navMenu ::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.mainDrawer ::-webkit-scrollbar-thumb,
-.navMenu ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.10);
+/* active indicator bar */
+.navMenuOption.navMenuOption-selected::before,
+.navMenuOption.selected::before,
+.ptv-custom-link.ptv-custom-active::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
   border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    #7dd6ff,
+    #a78bfa,
+    #ff8dc3
+  );
+  box-shadow:
+    0 0 10px rgba(125, 214, 255, 0.35),
+    0 0 14px rgba(167, 139, 250, 0.2);
 }
 
-.mainDrawer ::-webkit-scrollbar-thumb:hover,
-.navMenu ::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 107, 255, 0.24);
-}
+/* ---------- SECTION TITLE ---------- */
 
-/* =========================
-   FIXED SIDEBAR LOGO
-   ========================= */
-
-#ptv-sidebar-logo {
+.ptv-custom-section-title {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 14px 10px 16px;
-  margin-bottom: 10px;
+  gap: 10px;
+  padding: 1.05em 1.35em 0.55em !important;
+  position: relative;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.95);
 }
 
-/* NORMAL (always default) */
-.ptv-sidebar-logo-img {
-  width: 190px !important;
-  max-width: 85%;
-  height: auto !important;
-  object-fit: contain;
-  display: block;
-  transition: transform 0.2s ease, filter 0.2s ease;
-  filter: drop-shadow(0 8px 22px rgba(140,110,255,0.25));
+.ptv-custom-section-title::after {
+  content: "";
+  position: absolute;
+  left: 1.35em;
+  right: 1.35em;
+  bottom: -2px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(125, 214, 255, 0.14),
+    rgba(167, 139, 250, 0.18),
+    transparent
+  );
 }
 
-/* hover polish */
-#ptv-sidebar-logo:hover .ptv-sidebar-logo-img {
-  transform: scale(1.05);
-  filter: drop-shadow(0 12px 28px rgba(155,107,255,0.35));
-}
+/* ---------- CUSTOM LINKS ---------- */
 
-/* ONLY shrink when truly collapsed */
-.mainDrawer.collapsed .ptv-sidebar-logo-img {
-  width: 42px !important;
-  height: 42px !important;
-}
-
-/* =========================
-   CUSTOM SIDEBAR LINKS
-   MATCH NATIVE ICON ALIGNMENT
-   ========================= */
-
-#ptv-sidebar-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  margin: 0.35rem 0 0.65rem;
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link {
+a.navMenuOption.ptv-custom-link {
   display: flex !important;
   align-items: center !important;
-  gap: 0.9rem !important;            /* match native */
-  min-height: 44px !important;
-  margin: 0.16rem 0 !important;      /* match native */
-  padding: 0.7rem 0.8rem !important; /* match native */
-  border-radius: 14px !important;
-  color: var(--ptv-text, rgba(245, 247, 255, 0.92)) !important;
-  background: transparent !important;
-  border: 1px solid transparent !important;
+  width: calc(100% - 1.4em) !important;
+  margin: 0.15em 0.7em !important;
+  padding: 0.85em 1em !important;
+  box-sizing: border-box;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+/* ---------- BRAND HEADER ---------- */
+
+.ptv-sidebar-top {
+  padding: 1.2em 1em 0.6em;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.ptv-sidebar-top::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(125, 214, 255, 0.2),
+    rgba(167, 139, 250, 0.25),
+    rgba(255, 141, 195, 0.2),
+    transparent
+  );
+}
+
+.ptv-sidebar-logo {
+  width: 160px !important;
+  max-height: 80px !important;
+  opacity: 0.95;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.ptv-sidebar-top:hover .ptv-sidebar-logo {
+  transform: scale(1.04);
+  filter:
+    drop-shadow(0 0 18px rgba(125, 214, 255, 0.4))
+    drop-shadow(0 0 26px rgba(167, 139, 250, 0.35));
+}
+
+/* ===== SIDEBAR SPOTLIGHT FOLLOWER ===== */
+
+/* single floating glow */
+.ptv-sidebar-spotlight {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 44px;
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+
+  background:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(125, 214, 255, 0.16),
+      rgba(167, 139, 250, 0.12) 42%,
+      rgba(255, 141, 195, 0.08) 68%,
+      transparent 100%
+    );
+
+  filter: blur(12px);
+  transform: translateY(0);
   transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease,
-    opacity 0.18s ease !important;
+    transform 0.22s ease,
+    opacity 0.18s ease,
+    height 0.18s ease;
 }
 
-#ptv-sidebar-links .ptv-custom-sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.045) !important;
-  border-color: rgba(155, 107, 255, 0.14) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    0 0 0 1px rgba(155, 107, 255, 0.03) !important;
-  transform: translateX(2px);
-  opacity: 1;
+/* keep actual items above spotlight */
+.navMenuOption,
+.ptv-custom-link,
+.ptv-custom-section-title,
+.ptv-custom-divider,
+.ptv-sidebar-top {
+  position: relative;
+  z-index: 1;
 }
 
-#ptv-sidebar-links .ptv-custom-sidebar-icon,
-#ptv-sidebar-links .navMenuOptionIcon {
-  width: 24px !important;
-  height: 24px !important;
-  min-width: 24px !important;
-  min-height: 24px !important;
-  flex: 0 0 24px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  vertical-align: middle !important;
+/* ===== SIDEBAR BACKGROUND ===== */
+
+.mainDrawer,
+.mainDrawer-scrollContainer,
+.mainDrawer-content {
+  background: #12002ced !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
 }
 
-#ptv-sidebar-links .navMenuOptionText {
-  display: inline-block !important;
-  font-size: 1rem !important;
-  font-weight: 500 !important;
-  line-height: 1.2 !important;
-  margin-left: 0.15rem !important;   /* match native */
-  white-space: nowrap !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-}
+/* subtle inner glow so it doesn't look flat */
+.mainDrawer::before,
+.mainDrawer-scrollContainer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 
-#ptv-sidebar-links .ptv-sidebar-icon-svg,
-#ptv-sidebar-links .ptv-sidebar-icon-img {
-  width: 24px !important;
-  height: 24px !important;
-  display: block !important;
-  object-fit: contain !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  flex: 0 0 24px !important;
-  transform-origin: center center !important;
-  transition: transform 0.18s ease, filter 0.18s ease, color 0.18s ease !important;
-}
-
-#ptv-sidebar-links .ptv-sidebar-icon-svg {
-  color: rgba(210, 218, 255, 0.92) !important;
-  fill: currentColor !important;
-}
-
-#ptv-sidebar-links .ptv-sidebar-icon-img {
-  filter: brightness(1) drop-shadow(0 0 4px rgba(155, 107, 255, 0.25)) !important;
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-svg,
-#ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-img {
-  transform: scale(1.08);
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-svg {
-  color: #ffffff !important;
-  filter: drop-shadow(0 0 6px rgba(155, 107, 255, 0.35));
-}
-
-#ptv-sidebar-links .ptv-custom-sidebar-link:hover .ptv-sidebar-icon-img {
-  filter: brightness(1.08) drop-shadow(0 0 6px rgba(155, 107, 255, 0.4)) !important;
-}
-
-/* =========================
-   PIGGIETV SIDEBAR ICON SYSTEM
-   ========================= */
-
-/* Hide default icon glyphs in native nav only */
-.navMenu .material-icons,
-.navMenu .md-icon,
-.navMenu i.material-icons,
-.navMenuOption .md-icon,
-.navMenuOption i.material-icons {
-  display: none !important;
-}
-
-/* Base icon box */
-.navMenuOption .navMenuOptionIcon {
-  width: 24px !important;
-  height: 24px !important;
-  min-width: 24px !important;
-  min-height: 24px !important;
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  display: inline-block !important;
-  opacity: 0.95 !important;
-  transition:
-    transform 0.18s ease,
-    filter 0.18s ease,
-    opacity 0.18s ease !important;
-}
-
-/* keep layout clean */
-.navMenuOption {
-  align-items: center !important;
-}
-
-/* Hover */
-.navMenuOption:hover .navMenuOptionIcon {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 6px rgba(140, 100, 255, 0.55));
-  opacity: 1 !important;
-}
-
-/* Active / selected */
-.navMenuOption-selected .navMenuOptionIcon,
-.navMenuOption.selected .navMenuOptionIcon,
-.navMenuOption[aria-selected="true"] .navMenuOptionIcon {
-  filter: drop-shadow(0 0 8px rgba(180, 120, 255, 0.85));
-  opacity: 1 !important;
-}
-
-/* =========================
-   NATIVE SIDEBAR ICONS
-   ========================= */
-
-/* Hide glyph text, keep element for background svg */
-.navMenuOption .navMenuOptionIcon {
-  width: 24px !important;
-  height: 24px !important;
-  min-width: 24px !important;
-  min-height: 24px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  opacity: 0.95 !important;
-  color: transparent !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
-  text-indent: -9999px !important;
-  overflow: hidden !important;
-  transition:
-    transform 0.18s ease,
-    filter 0.18s ease,
-    opacity 0.18s ease !important;
-}
-
-/* kill pseudo icon glyphs too */
-.navMenuOption .navMenuOptionIcon::before {
-  display: none !important;
-  content: none !important;
-}
-
-.navMenuOption:hover .navMenuOptionIcon {
-  transform: scale(1.08);
-  filter: drop-shadow(0 0 6px rgba(140, 100, 255, 0.55));
-  opacity: 1 !important;
-}
-
-.navMenuOption-selected .navMenuOptionIcon,
-.navMenuOption.selected .navMenuOptionIcon,
-.navMenuOption[aria-selected="true"] .navMenuOptionIcon {
-  filter: drop-shadow(0 0 8px rgba(180, 120, 255, 0.85));
-  opacity: 1 !important;
-}
-
-
-/* =========================
-   CORE JELLYFIN SIDEBAR MAP
-   ========================= */
-
-/* Home */
-.navMenuOption[data-id="home"] .navMenuOptionIcon,
-.navMenuOption[href*="/home"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/home.svg");
-}
-
-/* Search */
-.navMenuOption[data-id="search"] .navMenuOptionIcon,
-.navMenuOption[href*="/search"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/search.svg");
-}
-
-/* Favorites */
-.navMenuOption[data-id="favorites"] .navMenuOptionIcon,
-.navMenuOption[href*="/favorites"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/favorites.svg");
-}
-
-/* Library / My Media */
-.navMenuOption[data-id="myMedia"] .navMenuOptionIcon,
-.navMenuOption[data-id="libraries"] .navMenuOptionIcon,
-.navMenuOption[href*="/libraries"] .navMenuOptionIcon,
-.navMenuOption[href*="/items"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/library.svg");
-}
-
-/* Live TV */
-.navMenuOption[data-id="livetv"] .navMenuOptionIcon,
-.navMenuOption[href*="/livetv"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/live-tv.svg");
-}
-
-/* Movies */
-.navMenuOption[data-id="movies"] .navMenuOptionIcon,
-.navMenuOption[href*="collectionType=movies"] .navMenuOptionIcon,
-.navMenuOption[href*="/movies"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/movies.svg");
-}
-
-/* TV Shows */
-.navMenuOption[data-id="tvshows"] .navMenuOptionIcon,
-.navMenuOption[href*="collectionType=tvshows"] .navMenuOptionIcon,
-.navMenuOption[href*="/tvshows"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/tv.svg");
-}
-
-/* Music */
-.navMenuOption[data-id="music"] .navMenuOptionIcon,
-.navMenuOption[href*="collectionType=music"] .navMenuOptionIcon,
-.navMenuOption[href*="/music"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/music.svg");
-}
-
-/* Books */
-.navMenuOption[data-id="books"] .navMenuOptionIcon,
-.navMenuOption[href*="collectionType=books"] .navMenuOptionIcon,
-.navMenuOption[href*="/books"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/books.svg");
-}
-
-/* Collections */
-.navMenuOption[data-id="collections"] .navMenuOptionIcon,
-.navMenuOption[href*="/collections"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/collections.svg");
-}
-
-/* Playlists */
-.navMenuOption[data-id="playlists"] .navMenuOptionIcon,
-.navMenuOption[href*="/playlists"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/playlists.svg");
-}
-
-/* Downloads */
-.navMenuOption[data-id="downloads"] .navMenuOptionIcon,
-.navMenuOption[href*="/downloads"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/downloads.svg");
-}
-
-/* Continue Watching / Resume */
-.navMenuOption[data-id="resume"] .navMenuOptionIcon,
-.navMenuOption[href*="/resume"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/resume.svg");
-}
-
-/* Devices */
-.navMenuOption[data-id="devices"] .navMenuOptionIcon,
-.navMenuOption[href*="/devices"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/devices.svg");
-}
-
-/* Dashboard / Admin */
-.navMenuOption[data-id="dashboard"] .navMenuOptionIcon,
-.navMenuOption[href*="/dashboard"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/dashboard.svg");
-}
-
-/* Plugins */
-.navMenuOption[data-id="plugins"] .navMenuOptionIcon,
-.navMenuOption[href*="/plugins"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/plugins.svg");
-}
-
-/* Scheduled Tasks */
-.navMenuOption[data-id="scheduledtasks"] .navMenuOptionIcon,
-.navMenuOption[href*="/scheduledtasks"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/tasks.svg");
-}
-
-/* Logs */
-.navMenuOption[data-id="log"] .navMenuOptionIcon,
-.navMenuOption[data-id="logs"] .navMenuOptionIcon,
-.navMenuOption[href*="/log"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/logs.svg");
-}
-
-/* Users */
-.navMenuOption[data-id="users"] .navMenuOptionIcon,
-.navMenuOption[href*="/users"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/user.svg");
-}
-
-/* Profile / Account */
-.navMenuOption[data-id="profile"] .navMenuOptionIcon,
-.navMenuOption[data-id="account"] .navMenuOptionIcon,
-.navMenuOption[href*="/mypreferencesmenu"] .navMenuOptionIcon,
-.navMenuOption[href*="/profile"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/user.svg");
-}
-
-/* Settings */
-.navMenuOption[data-id="settings"] .navMenuOptionIcon,
-.navMenuOption[data-itemid="settings"] .navMenuOptionIcon,
-a.navMenuOption.btnSettings .navMenuOptionIcon,
-.navMenuOption[href*="/settings"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/settings.svg") !important;
-}
-
-/* Log out */
-.navMenuOption[data-itemid="logout"] .navMenuOptionIcon,
-a.navMenuOption.btnLogout .navMenuOptionIcon,
-a.navMenuOption[data-itemid="logout"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/logout.svg") !important;
-}
-
-/* =========================
-   CUSTOM PIGGIETV FEATURE LINKS
-   ========================= */
-
-/* Request */
-.navMenuOption[href*="request.piggietv.com"] .navMenuOptionIcon,
-.navMenuOption[data-id="request"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="request.piggietv.com"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="request.piggietv.com"] .ptv-custom-sidebar-icon {
-  background-image: url("https://theme.piggietv.com/assets/icons/request.svg") !important;
-}
-
-/* Games */
-.navMenuOption[href*="emu.piggietv.com"] .navMenuOptionIcon,
-.navMenuOption[data-id="games"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="emu.piggietv.com"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="emu.piggietv.com"] .ptv-custom-sidebar-icon {
-  background-image: url("https://theme.piggietv.com/assets/icons/games.svg") !important;
-}
-
-/* Library / Books external */
-.navMenuOption[href*="books.piggietv.com"] .navMenuOptionIcon,
-.navMenuOption[data-id="library"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="books.piggietv.com"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="books.piggietv.com"] .ptv-custom-sidebar-icon {
-  background-image: url("https://theme.piggietv.com/assets/icons/library.svg") !important;
-}
-
-/* Discord */
-.navMenuOption[href*="discord.gg"] .navMenuOptionIcon,
-.navMenuOption[data-id="discord"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="discord.gg"] .navMenuOptionIcon,
-#ptv-sidebar-links .ptv-custom-sidebar-link[href*="discord.gg"] .ptv-custom-sidebar-icon {
-  background-image: url("https://theme.piggietv.com/assets/icons/discord.svg") !important;
-}
-
-/* =========================
-   LIBRARY-SPECIFIC OVERRIDES
-   MUST BE BELOW GENERIC MOVIES/TV RULES
-   ========================= */
-
-/* Anime */
-a.navMenuOption.lnkMediaFolder[href*="topParentId=0c41907140d802bb58430fed7e2cd79e"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/anime.svg") !important;
-}
-
-/* Anime Movies */
-a.navMenuOption.lnkMediaFolder[href*="topParentId=abebc196cc1b8bbf6f8bb5ca7b5ad6f1"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/animovie.svg") !important;
-}
-
-/* Cartoons */
-a.navMenuOption.lnkMediaFolder[href*="topParentId=bdf38141c3a366eb1a2a8240d2e65e68"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/cartoons.svg") !important;
-}
-
-/* Collections */
-a.navMenuOption.lnkMediaFolder[href*="/list?parentId="] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/collections.svg") !important;
-}
-
-/* Metadata Manager */
-a.navMenuOption[href*="metadata"] .navMenuOptionIcon,
-a.navMenuOption[data-itemid="metadata-manager"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/metadata-manager.svg") !important;
-}
-
-/* Sign Out */
-a.navMenuOption.btnLogout .navMenuOptionIcon,
-a.navMenuOption[data-itemid="logout"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/logout.svg") !important;
-}
-
-/* =========================
-   FINAL FORCE OVERRIDES
-   ========================= */
-
-/* Anime */
-a.navMenuOption.lnkMediaFolder[href*="topParentId=0c41907140d802bb58430fed7e2cd79e"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/anime.svg") !important;
-}
-
-/* Anime Movies */
-a.navMenuOption.lnkMediaFolder[href*="topParentId=abebc196cc1b8bbf6f8bb5ca7b5ad6f1"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/animovie.svg") !important;
-}
-
-/* Cartoons */
-a.navMenuOption.lnkMediaFolder[href*="topParentId=bdf38141c3a366eb1a2a8240d2e65e68"] .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/cartoons.svg") !important;
-}
-
-/* Settings */
-a.navMenuOption[data-itemid="settings"] .navMenuOptionIcon,
-a.navMenuOption.btnSettings .navMenuOptionIcon {
-  background-image: url("https://theme.piggietv.com/assets/icons/settings.svg") !important;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(125,214,255,0.08), transparent 35%),
+    radial-gradient(circle at 80% 20%, rgba(167,139,250,0.10), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(255,141,195,0.06), transparent 45%);
 }

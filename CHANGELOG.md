@@ -6,7 +6,15 @@
 ```md
 # Changelog
 
-## v1.5.3 - 2026-04-10
+## v2.0.1 - 2026-04-14
+- dynamic backdrops added
+- custom setting menu
+- added new css: Components, Header
+- removed css: Responsive
+- removed some of the seperate JS condensed them to other sections
+- General UI improvments
+
+## v1.5.4 - 2026-04-10
 - playback ui improvments
 
 # v1.5.3 - 2026-04-10
