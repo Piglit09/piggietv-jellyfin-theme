@@ -89,7 +89,7 @@ Paste this instead:
     if (document.querySelector("link[data-ptv-theme-css]")) return;
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = BASE + "/custom.css?v=" + encodeURIComponent(version);
+    link.href = BASE + "/PiggieTV.css?v=" + encodeURIComponent(version);
     link.setAttribute("data-ptv-theme-css", "1");
     document.head.appendChild(link);
   }
@@ -97,7 +97,7 @@ Paste this instead:
   function addJs(version) {
     if (document.querySelector("script[data-ptv-theme-js]")) return;
     const script = document.createElement("script");
-    script.src = BASE + "/custom.js?v=" + encodeURIComponent(version);
+    script.src = BASE + "/PiggieTV.js?v=" + encodeURIComponent(version);
     script.defer = true;
     script.setAttribute("data-ptv-theme-js", "1");
     document.head.appendChild(script);
