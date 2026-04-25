@@ -57,8 +57,8 @@ https://github.com/IAmParadox27/jellyfin-plugin-file-transformation
 
 Theme is served externally:
 
-- https://theme.piggietv.com/dist/custom.css
-- https://theme.piggietv.com/dist/custom.js
+- https://theme.piggietv.com/dist/PiggieTV.css
+- https://theme.piggietv.com/dist/PiggieTV.js
 - https://theme.piggietv.com/dist/version.json
 
 ---
