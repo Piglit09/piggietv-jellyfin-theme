@@ -134,14 +134,6 @@ Theme not updating
   - Verify version.json loads
   - Check JavaScript Injector is enabled
 
-Sidebar not opening
-  - Check browser console (F12)
-  - Usually caused by JS error or bad asset URL
-    
-Backdrop not switching
-  - JS not running OR CSS conflict
-  - Check .ptv-backdrop-layer exists
-
 Icons not showing
 
  Common mistake:
