@@ -65,16 +65,8 @@ Theme is served externally:
 
 ## ⚙️ Installation
 
-### 1. Add Custom CSS
 
-Jellyfin Dashboard → **General → Custom CSS**
-
-```css
-@import url("https://theme.piggietv.com/dist/custom.css");
-```
----
-
-### 2. Setup JavaScript Injector (AUTO-UPDATING)
+###  Setup JavaScript Injector (AUTO-UPDATING)
 
 ⚠️ Do NOT paste your full JS  
 ⚠️ Do NOT manually update versions  
